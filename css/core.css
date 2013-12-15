@@ -1,0 +1,157 @@
+#navbar {
+	min-height: 75px;
+	width: 100%;
+	padding-bottom: 0px;
+  float: top;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin:0;
+  padding:0px 0;
+  z-index: 1001;
+  background:#ff;
+  box-shadow:0px 0px 10px rgba(0, 0, 0, 0.15);
+   -webkit-transition: all 0.4s linear;
+   -moz-transition: all 0.4s linear;
+   -o-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+#logo {
+  float: left;
+  padding-top: 7px;
+  padding-left: 25px;
+}
+
+#navigation {
+  min-height: 100%;
+  width: auto;
+  padding-bottom: 0px;
+  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin:0;
+}
+
+#navigation #nav {
+  height: 75px;
+  margin-right: 20px;
+  top: 0;
+  margin: 0;
+}
+
+#navigation li {
+  position: relative;
+  float: left;
+  height: 100%;
+  list-style: none;
+  display: inline;
+}
+
+#navigation li a {
+  height:47px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 28px;
+  padding-bottom: 0px;
+  text-align: center;
+  vertical-align: baseline;
+  float: left;
+  display: block;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #444;
+  outline: none;
+  list-style: none;
+  display: inline;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#navigation li a:hover {
+  background: #eeeeff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#navigation li a.selected{
+  background: #e7e7ff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#panel_left_container {
+  min-width: 250px;
+  float: left;
+  top: 75px;
+  left: 0px;
+  bottom: 0px;
+  position: absolute;
+  background:#fff;
+  z-index: 1000;
+  box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
+   -webkit-transition: all 0.4s linear;
+   -moz-transition: all 0.4s linear;
+   -o-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+#panel_left {
+  position:inherit;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+#content_container {
+  left: 250px;
+  right: 0;
+  top:75px;
+  bottom: 0px;
+  background:#fff;
+  display: block;
+  position: absolute;
+  overflow: hidden;
+}
+
+#content {
+  height: 100%;
+  width: 100%;
+}
+
+#map { 
+  min-height: 100%;
+  min-width: 100%;
+}
+
+#panel_right_container {
+  min-height: 100%;
+  width: 250px;
+  display: block;
+  float: right;
+  top: 0px;
+  right: -250px;
+  position: absolute;
+  background:#fff;
+  z-index: 1000;
+  box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
+   -webkit-transition: all 0.4s linear;
+   -moz-transition: all 0.4s linear;
+   -o-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+#panel_right {
+  position:inherit;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}

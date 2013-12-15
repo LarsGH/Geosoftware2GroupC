@@ -1,12 +1,58 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title> Geosoftware2 GroupC </title>
-</head>
-<body>
+ <head>
 
-<div align="center">
-<h1> Applikation zur Exploration und Visualisierung von raum-zeitvarianten Fahrzeug-Messdaten </h1>
-</div>
+  <title>geoSoftware2</title>
 
-</body>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" type="text/css" href="css/core.css">
+  <link rel="stylesheet" href="css/leaflet.css" />
+
+  <script src="js/jquery-2.0.3.min.js"></script>
+  <script src="js/leaflet.js"></script>
+ </head>
+ 
+ <body>
+
+ 	<div id="navbar">
+
+ 		<div id="logo">
+ 			<img src="img/envirocar_logo.png"></img>
+ 		</div>
+
+ 		<div id="navigation">
+   			<ul id="nav">
+	    		<li><a href="#home">Home</a></li>
+	    		<li><a href="#expert">Expert</a></li>
+	 			<li><a href="#help">Help</a></li>
+	 			<li><a href="#about">About</a></li>
+	 		</ul>
+	 	</div>
+ 	</div>
+
+
+	<div id="panel_left_container">
+		<div id="panel_left">
+			Menu
+		</div>
+	</div>
+
+ 	<div id="content_container">
+ 		
+ 		<div id="content">
+ 			<div id="map"></div>
+ 		</div>
+
+ 		<div id="panel_right_container">
+ 			<div id="panel_right">
+				Info
+			</div>
+ 		</div>
+
+ 	</div>
+
+ 	<script src="js/core.js"></script>
+ </body>
+
 </html>
