@@ -101,13 +101,18 @@ class spatialFilter {
 	}
 	
 	/*
-	Check if the polygon is closed. Throws an Exception if the polygon is not closed.
+	Check if the polygon is closed and has at least 3 points. Throws an Exception otherwise.
 	The polygon has to be an array like this: 
 		array("lon"=>lonCoord, "lat"=>latCoord)
 	*/
 	function checkPolygon ($polygon){
 		$vertices_count = count($polygon); // Get number of vertices
-		if($polygon[0]!=$polygon[$vertices_count-1]){ // Compare first and last point
+		// Polygon needs at least 3 points (4 because first = last)
+		if($vertices_count < 4){ 
+			throw new Exception('Polygon needs at least 3 different points!');
+		}
+		// The first point needs to be equal to the last point
+		if($polygon[0]!=$polygon[$vertices_count-1]){ 
 			throw new Exception('Polygon not closed!');
 		}
 	}
