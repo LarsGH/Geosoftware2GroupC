@@ -42,7 +42,7 @@ class spatialFilter {
 				and $vertex1['lat'] != $vertex2['lat']) { 
 					// Check if the calculated lon-value of the point (xinters) is equal to the given lon value of the point
 					$xinters = ($point['lat'] - $vertex1['lat']) * ($vertex2['lon'] - $vertex1['lon']) / ($vertex2['lat'] - $vertex1['lat']) + $vertex1['lon']; 
-					//			y1							*							inclination								+	V1.lon
+					//                         y1                *                              inclination                                  +    V1.lon
 					if ($xinters == $point['lon']) { 
 						if($info == true){
 							$status =  "Inside (Boundary)"; // Infoprint for testing
@@ -115,6 +115,70 @@ class spatialFilter {
 		if($polygon[0]!=$polygon[$vertices_count-1]){ 
 			throw new Exception('Polygon not closed!');
 		}
+	}
+	
+	/*
+	Get the track-IDs from the points.
+	Works with runSpatialFilter() as parameter to get the tracks inside a polygon.
+	*/
+	function getTracks ($points){
+		$resultTracks = array(); // stores the track-IDs from the delivered points
+		foreach($points as $key => $point){
+			// Check if the points track exists in the result-array and adds it if it does not exist
+			if(!in_array($point['track'] , $resultTracks)){
+				array_push($resultTracks, $point['track']); // Add the track-ID to the result-array
+			}
+		}
+		return $resultTracks;
+	}
+	
+	/*
+	Get a boundigbox-array from the given polygon for pre-filtering.
+	The returned array has the following format: minx,miny,maxx,maxy.
+	*/
+	function getBBox ($polygon){
+		$minX=$polygon[0]['lon'];
+		$minY=$polygon[0]['lat'];
+		$maxX=$polygon[0]['lon'];
+		$maxY=$polygon[0]['lat'];
+		foreach($polygon as $key => $point){
+			// Set the lon value to the new minX if it is smaller then the current minX.
+			if($point['lon']<$minX){
+				$minX=$point['lon'];
+			}
+			// Set the lon value to the new maxX if it is bigger then the current maxX.
+			if($point['lon']>$maxX){
+				$maxX=$point['lon'];
+			}
+			// Set the lat value to the new minY if it is smaller then the current minY.
+			if($point['lat']<$minY){
+				$minY=$point['lat'];
+			}
+			// Set the lat value to the new maxY if it is smaller then the current maxY.
+			if($point['lat']>$maxY){
+				$maxY=$point['lat'];
+			}
+		}
+		// return the result array
+		return array("minX" => $minX, "minY" => $minY, "maxX" => $maxX, "maxY" => $maxY);
+	}
+	
+	/*
+	Create boundigbox-url (for the envirocar-API) from a bbox coordinate array.
+	This can be used for pre-filtering.
+	The array has to have the following format: minx,miny,maxx,maxy.
+	*/
+	function getBBoxURL($bbox){
+			$bboxURL = "https://envirocar.org/api/stable/tracks?bbox=";
+		$minX=$bbox['minX'];
+			$bboxURL .= $minX.",";
+		$minY=$bbox['minY'];
+			$bboxURL .= $minY.",";
+		$maxX=$bbox['maxX'];
+			$bboxURL .= $maxX.",";
+		$maxY=$bbox['maxY'];
+			$bboxURL .= $maxY;
+		return $bboxURL;
 	}
 	
 } // End of class
