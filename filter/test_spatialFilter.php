@@ -3,13 +3,13 @@
 
 // Use the spatialFilter.php
 require("spatialFilter.php");
-require("createJsonTracks.php");
+require("prefilter.php");
 
 // create spatialFilter
 $spatialFilter = new spatialFilter();
 
 // get track data with getJson
-$tracksJson = new getJson();
+$tracksJson = new prefilter();
 $exampleRequest = "https://envirocar.org/api/stable/tracks?contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z";
 $jsonTracks = $tracksJson -> getFilterTracks($exampleRequest);
 
