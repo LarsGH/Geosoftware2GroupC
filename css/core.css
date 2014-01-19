@@ -109,17 +109,17 @@ body, html {
   transition: all 0.4s linear;
 }
 
-#panel_left {
+.panel_left {
   position:inherit;
   height: 100%;
   width: 100%;
   padding: 10px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
--moz-box-sizing: border-box;    /* Firefox, other Gecko */
-box-sizing: border-box;
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
 
-#page_container {
+#page_inner {
   left: 250px;
   right: 0;
   top:75px;
@@ -130,9 +130,18 @@ box-sizing: border-box;
   overflow: hidden;
 }
 
-#page {
+#page_container {
   height: 100%;
   width: 100%;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+}
+
+.page h2{
+  padding-left: 10px;
 }
 
 #map { 
@@ -187,8 +196,6 @@ input[type="text"] {
   height:25px; 
 }
 
-#page h2{
-  padding-left: 10px;
-} 
-
-#ui-datepicker-div { font-size:11px; }
+#ui-datepicker-div {
+  font-size:11px;
+}

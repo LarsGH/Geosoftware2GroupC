@@ -53,8 +53,8 @@ var page = new function(){
 
 		page.currentPage = name;
 
-		$( "#panel_left" ).load( "pages/" + name + "_panel.html", function () {
-			$( "#page" ).load( "pages/" + name + "_page.html", function () {
+		$( "#panel_left_container" ).load( "pages.html #" + name + "_panel", function () {
+			$( "#page_container" ).load( "pages.html #" + name + "_page", function () {
 
 				page.afterLoad(name);
 			});
