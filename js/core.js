@@ -1,8 +1,8 @@
 /******************************************
-    core.js
+	core.js
 
-    - page class
-    - map class
+	- page class
+	- map class
 
 ******************************************/
 
@@ -66,13 +66,14 @@ var page = new function(){
 
 		switch (name) {
 
-		    case "home":
-		    	$('#filter_btn').off('click');
-		        break;
+			case "home":
+				$('#filter_btn').off('click');
+				page.hideInfo();
+				break;
 
-		    case "analyse":
-		        $("#analyse_btn").off('click');
-		        break;
+			case "analyse":
+				$("#analyse_btn").off('click');
+				break;
 		}
 	};
 
@@ -86,20 +87,20 @@ var page = new function(){
 
 		switch (name) {
 
-		    case "home":
-		        $("#filter_btn").click(function() {
+			case "home":
+				$("#filter_btn").click(function() {
 					page.load("analyse");
 				});
 				$( "#from_dt" ).datepicker();
 				$( "#to_dt" ).datepicker();
 				map.init();
-		        break;
+				break;
 
-		    case "analyse":
-		        $("#analyse_btn").click(function() {
+			case "analyse":
+				$("#analyse_btn").click(function() {
 					page.load("result");
 				});
-		        break;
+				break;
 		}
 	};
 
@@ -171,20 +172,51 @@ var map = new function() {
 	this.loadMeasurements = function() {
 		$.getJSON("json/measurements.json", function(json) {
 
-			for (var i = json.features.length - 1; i >= 0; i--) {
+			L.geoJson(json, {
+				style: function (feature) {
+					col = "white";
 
-				var circle = L.circle([json.features[i].geometry.coordinates[1], json.features[i].geometry.coordinates[0]], 10, {
-				    color: 'red',
-					fillColor: 'red',
-					fillOpacity: 0.75
-				});
+					if (feature.properties.phenomenons.Speed.value < 10)
+						col = "#0f0";
+					else if (feature.properties.phenomenons.Speed.value < 20)
+						col = "#4f0";
+					else if (feature.properties.phenomenons.Speed.value < 30)
+						col = "#8f0";
+					else if (feature.properties.phenomenons.Speed.value < 40)
+						col = "#cf0";
+					else if (feature.properties.phenomenons.Speed.value < 50)
+						col = "#ff0";
+					else if (feature.properties.phenomenons.Speed.value < 60)
+						col = "#fc0";
+					else if (feature.properties.phenomenons.Speed.value < 70)
+						col = "#f80";
+					else if (feature.properties.phenomenons.Speed.value < 80)
+						col = "#f40";
+					else
+						col = "#f00";
 
-				circle.on('click', function () {
-					page.toggleInfo();
-				});
-
-				circle.addTo(mapLeaflet);
-			};
+					return {
+						radius: 8,
+						color: "#000",
+						fillColor: col,
+					    weight: 0.5,
+					    opacity: 1,
+					    fillOpacity: 1
+					};
+				},
+				onEachFeature: function (feature, layer) {
+					layer.on('click', function (e) {
+						$('#panel_right_container').html(feature.properties.id + "<br>" + feature.properties.phenomenons.Speed.value);
+						page.showInfo();
+					});
+				},
+				pointToLayer: function (feature, latlng) {
+        			return L.circleMarker(latlng);
+    			},
+    			// filter: function(feature, layer) {
+				// 	return (feature.properties.phenomenons.Speed.value > 60);
+				// }
+			}).addTo(mapLeaflet);
 
 		});
 	};
