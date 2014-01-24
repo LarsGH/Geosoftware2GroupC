@@ -148,11 +148,12 @@ var page = new function(){
 
 // Map class
 // Description: Class for handling all Map related functions / events
-// Author: Peter Zimmerhof
+// Author: Peter Zimmerhof, André Wieghardt
 var map = new function() {
 
 	// Map variables
 	this.mapLeaflet = "";
+
 
 	// Initialization
 	this.init = function() {
@@ -162,14 +163,25 @@ var map = new function() {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(mapLeaflet);
-
-		var marker = new L.Marker(new L.LatLng(51.963491, 7.625840), {});
-
-		map.loadMeasurements();		
+		
+		map.loadScale();
+		map.loadSpeedMeasurements();
+		map.loadSpeedMeasurements2();	
+		map.loadLayerControl();
+		
 	};
-
+	
+	// Load the Scale
+	this.loadScale = function() {
+		L.control.scale({
+			position: 'bottomleft',
+			maxWidth: 150,
+			imperial: false
+		}).addTo(mapLeaflet);
+	};
+	
+	this.loadSpeedMeasurements = function() {
 	// Load test measurements from json
-	this.loadMeasurements = function() {
 		$.getJSON("json/measurements.json", function(json) {
 
 			L.geoJson(json, {
@@ -196,7 +208,7 @@ var map = new function() {
 						col = "#f00";
 
 					return {
-						radius: 8,
+						radius: 5,
 						color: "#000",
 						fillColor: col,
 					    weight: 0.5,
@@ -217,10 +229,73 @@ var map = new function() {
 				// 	return (feature.properties.phenomenons.Speed.value > 60);
 				// }
 			}).addTo(mapLeaflet);
-
+			
 		});
 	};
+	this.loadSpeedMeasurements2 = function() {
+	// Load test measurements from json
+	//after putting it into a seperate Layer it gets add to the map
+		
+		$.getJSON("json/measurements2.json", function(json) {
+		var myLayer = L.geoJson(json, {
+				style: function (feature) {
+					col = "white";
 
+					if (feature.properties.phenomenons.Speed.value < 10)
+						col = "#0f0";
+					else if (feature.properties.phenomenons.Speed.value < 20)
+						col = "#4f0";
+					else if (feature.properties.phenomenons.Speed.value < 30)
+						col = "#8f0";
+					else if (feature.properties.phenomenons.Speed.value < 40)
+						col = "#cf0";
+					else if (feature.properties.phenomenons.Speed.value < 50)
+						col = "#ff0";
+					else if (feature.properties.phenomenons.Speed.value < 60)
+						col = "#fc0";
+					else if (feature.properties.phenomenons.Speed.value < 70)
+						col = "#f80";
+					else if (feature.properties.phenomenons.Speed.value < 80)
+						col = "#f40";
+					else
+						col = "#f00";
+
+					return {
+						radius: 5,
+						color: "#000",
+						fillColor: col,
+					    weight: 0.5,
+					    opacity: 1,
+					    fillOpacity: 1
+					};
+				},
+				onEachFeature: function (feature, layer) {
+					layer.on('click', function (e) {
+						$('#panel_right_container').html(feature.properties.id + "<br>" + feature.properties.phenomenons.Speed.value);
+						page.showInfo();
+					});
+				},
+				pointToLayer: function (feature, latlng) {
+        			return L.circleMarker(latlng);
+    			},
+    			// filter: function(feature, layer) {
+				// 	return (feature.properties.phenomenons.Speed.value > 60);
+				// }
+				
+				
+			}).addTo(mapLeaflet);
+		});
+	};
+	
+	
+	this.loadLayerControl = function() {
+		//var baseLayers = {
+			//"Minimal": myLayer};
+		//loading the Layercontrol. This one is empty.
+		//The first null are Baselayers so only one can be activatet
+		//the second null are overlaylayers so there can be no layer and more than one
+		L.control.layers(null, null).addTo(mapLeaflet);
+	};
 };
 
 
