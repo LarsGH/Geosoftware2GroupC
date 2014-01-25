@@ -1,5 +1,8 @@
 <?php
-// @author Lars Syfuß
+/*
+@author Lars Syfuß
+*/
+
 class spatialFilter {
  
 	/*
@@ -10,8 +13,10 @@ class spatialFilter {
 	Infoprints can be enabled with the info parameter (default = false)
 	*/
 	function pointInPolygon($point, $vertices, $info = false) {
-		
 		try{
+			if($info == true){
+				echo "<u> function pointInPolygon() </u> </br>"; // Infoprint for testing
+			}
 			// Check if the polygon is closed
 			$this->checkPolygon($vertices);
 			$status; // Info-String for testing (just enabled if $info = true)
@@ -83,12 +88,12 @@ class spatialFilter {
 	
 	/*
 	Gets the points from the jsonTrack ( with the envirocar-query format: {tracks:[{},{},...]} )
-	Checks if the points are in the given polygon
+	Checks if the points are in the given polygon using the pointInPolygon() function
 	Returns just the points that are in the polygon ( in the envirocar-query format: {tracks:[{},{},...]} )
 	*/
 	function runSpatialFilter ($jsonTracks, $polygon, $info = false) {
 		if ($info == true){
-			echo "Logging for spatial filtering enabled: </br>";
+			echo "<u> function runSpatialFilter() </u> </br> Logging for spatial filtering enabled: </br>";
 		}
 		$decodedTracks = json_decode($jsonTracks, true); // decode tracks
 		// search every track
@@ -120,7 +125,10 @@ class spatialFilter {
 	The polygon has to be an array of points like this: 
 		array("lon"=>lonCoord, "lat"=>latCoord)
 	*/
-	function checkPolygon ($polygon){
+	function checkPolygon ($polygon, $info = false){
+		if($info == true){
+			echo "<u> function checkPolygon() </u> </br>"; // Infoprint for testing
+		}
 		$vertices_count = count($polygon); // Get number of vertices
 		// Polygon needs at least 3 points (4 because first = last)
 		if($vertices_count < 4){ 
@@ -136,7 +144,10 @@ class spatialFilter {
 	Get a boundingbox-array from the given polygon for pre-filtering.
 	The returned array has the following format: minx,miny,maxx,maxy.
 	*/
-	function getBBox ($polygon){
+	function getBBox ($polygon, $info = false){
+		if($info == true){
+			echo "<u> function getBBox() </u> </br>"; // Infoprint for testing
+		}
 		$minX=$polygon[0]['lon'];
 		$minY=$polygon[0]['lat'];
 		$maxX=$polygon[0]['lon'];
@@ -159,8 +170,14 @@ class spatialFilter {
 				$maxY=$point['lat'];
 			}
 		}
+		$bbox = array("minX" => $minX, "minY" => $minY, "maxX" => $maxX, "maxY" => $maxY);
+		if($info == true){
+			echo "The boundingbox is: </br>"; // Infoprint for testing
+			print_r($bbox);
+			echo "</br>";
+		}
 		// return the result array
-		return array("minX" => $minX, "minY" => $minY, "maxX" => $maxX, "maxY" => $maxY);
+		return $bbox;
 	}
 	
 	/*
@@ -168,7 +185,10 @@ class spatialFilter {
 	This can be used for pre-filtering.
 	The array has to have the following format: minx,miny,maxx,maxy.
 	*/
-	function getBBoxURL($bbox){
+	function getBBoxURL($bbox, $info = false){
+		if($info == true){
+			echo "<u> function getBBoxURL() </u> </br>"; // Infoprint for testing
+		}
 			$bboxURL = "https://envirocar.org/api/stable/tracks?bbox=";
 		$minX=$bbox['minX'];
 			$bboxURL .= $minX.",";
@@ -178,6 +198,9 @@ class spatialFilter {
 			$bboxURL .= $maxX.",";
 		$maxY=$bbox['maxY'];
 			$bboxURL .= $maxY;
+		if($info == true){
+			echo "The URL to request the boundingbox is: $bboxURL </br>"; // Infoprint for testing
+		}
 		return $bboxURL;
 	}
 	

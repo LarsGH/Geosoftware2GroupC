@@ -1,17 +1,19 @@
 <?php
-// @author Lars Syfuß
+/*
+@author Lars Syfuß
+*/
 
 // Use the spatialFilter.php
-require("spatialFilter.php");
-require("prefilter.php");
+require("spatialFilter.php"); // for testing
+require("filteroptions.php"); // for testing
 
 // create spatialFilter
 $spatialFilter = new spatialFilter();
 
 // get track data with getJson
-$tracksJson = new prefilter();
+$filteroptions = new filteroptions();
 $exampleRequest = "https://envirocar.org/api/stable/tracks?contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z";
-$jsonTracks = $tracksJson -> getFilterTracks($exampleRequest);
+$jsonTracks = $filteroptions -> getFilterTracks($exampleRequest);
 
 // Polygon array (at least 3 points + first and last point has to be the same)
 $polygon = array();
@@ -21,20 +23,27 @@ array_push( $polygon, array("lon" => 11.66, "lat" => 47.60 ));
 array_push( $polygon, array("lon" => 11.66, "lat" => 47.45 ));
 array_push( $polygon, array("lon" => 11.56, "lat" => 47.45 ));
 
-// Store just the points that are inside the given polygon.
+
+
+// Test runSpatialFilter()
+echo "<b>Test  runSpatialFilter() </b></br>";
 $spatialFilterResult = $spatialFilter->runSpatialFilter($jsonTracks, $polygon, true); //Logging enabled with true (last parameter)
+echo "</br></br>";
 // Print the result array (points).
 echo "</br> spatialFilterResult: </br>";
 print_r($spatialFilterResult);
+echo "</br></br>";
 
-// Test the bbox functions.
-$bbox = $spatialFilter->getBBox($polygon);
-echo "</br></br> Print the bbox from the given polygon: </br>";
-print_r($bbox);
 
-// Get the bbox-URL.
-$bboxURL = $spatialFilter->getBBoxURL($bbox);
-echo "</br></br> The bbox-URL is: " . $bboxURL . "</br>";
+// Test getBBox()
+echo "<b>Test  getBBox() </b></br>";
+$bbox = $spatialFilter->getBBox($polygon, true);
+echo "</br></br>";
+
+// Test getBBoxURL()
+echo "<b>Test  getBBoxURL() </b></br>";
+$bboxURL = $spatialFilter->getBBoxURL($bbox, true);
+echo "</br></br>";
 
 /*
 // Test the exception handling with a not closed polygon.
