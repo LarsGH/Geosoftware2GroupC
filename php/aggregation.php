@@ -1,6 +1,7 @@
 <?php
-
-//@author Lars Syfuß
+/*
+@author Lars Syfuß
+*/
 
 class aggregation{
 
@@ -11,6 +12,9 @@ class aggregation{
 	The result is an associated array like this: array("min" => $min, "max" => $max, "mean" => $mean, "sd" => $sd).
 	*/
 	function getAggregationResult($jsonTracks, $phenomenon, $info = false){
+		if($info == true){
+			echo "<u> function getAggregationResult() </u> </br>"; // Infoprint for testing
+		}
 		$decodedTracks = json_decode($jsonTracks, true); // decode tracks
 		$phenomenonArray = array(); // stores the phenomenon values
 		// Just for logging
@@ -23,7 +27,7 @@ class aggregation{
 				$allTracks++;
 			}
 			// Check if the track has the required phenomenon.
-			$availablePhenomenons = $this->getAvailablePhenomenons($track);
+			$availablePhenomenons = $this->getAvailablePhenomenons($track, false, true);
 			if(in_array($phenomenon, $availablePhenomenons)){
 				// Just for logging
 				if($info == true){
@@ -46,9 +50,12 @@ class aggregation{
 		$sd = $this->calculateSD($phenomenonArray); // statistical standard deviation (not empirical)
 		// Create the result array
 		$result = array("min" => $min, "max" => $max, "mean" => $mean, "sd" => $sd);
+		// Print Info
 		if($info == true){
-			echo "Found " . count($phenomenonArray) . " phenomenons ($phenomenon) in " . $trackCount . " from " .  
-			$allTracks ." tracks! </br>"; // Print Info
+			echo "</br> Found " . count($phenomenonArray) . " phenomenons ($phenomenon) in " . $trackCount . " from " .  
+			$allTracks ." tracks! </br> The result is: </br>";
+			print_r($result);
+			echo "</br>";
 		}
 		return $result;
 	}
@@ -57,11 +64,18 @@ class aggregation{
 	Function to calculate the statistical standard deviation (not the empirical).
 	The $values parameter needs to be an array!
 	*/
-	function calculateSD($values){
+	function calculateSD($values, $info = false){
+		if($info == true){
+			echo "<u> function calculateSD() </u> </br>"; // Infoprint for testing
+		}
 		if(is_array($values)){
 			$mean = array_sum($values) / count($values);
 			foreach($values as $key => $num) $devs[$key] = pow($num - $mean, 2);
-			return sqrt(array_sum($devs) / (count($devs)-1));
+			$sd = sqrt(array_sum($devs) / (count($devs)-1));
+			if($info == true){
+				echo "The standard deviation is: $sd </br>";
+			}
+			return $sd;
 		}
 	}
 
@@ -70,12 +84,20 @@ class aggregation{
 	Set $encoded to true if the $track-file is encoded.
 	The result is an array.
 	*/
-	function getAvailablePhenomenons($track, $encoded = false){
+	function getAvailablePhenomenons($track, $encoded = false, $info = false){
+		if($info == true){
+			echo "<u> function getAvailablePhenomenons() </u> </br>"; // Infoprint for testing
+		}
 		if($encoded == true){
 			$track = json_decode($track, true); 
 		}
 		// Just the first feature needs to be searched. 
-		$availablePhenomenons = array_keys($track["features"][0]["properties"]["phenomenons"]); 
+		$availablePhenomenons = array_keys($track["features"][0]["properties"]["phenomenons"]);
+		if($info == true){
+			echo "The available phenomenons are: </br>";
+			print_r($availablePhenomenons);
+			echo "</br>";
+		}
 		return $availablePhenomenons;
 	}
 
