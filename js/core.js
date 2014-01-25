@@ -165,8 +165,8 @@ var map = new function() {
 		}).addTo(mapLeaflet);
 		
 		map.loadScale();
-		map.loadSpeedMeasurements();
-		map.loadSpeedMeasurements2();	
+		map.loadSpeedMeasurements("json/measurements.json")
+		map.loadSpeedMeasurements("json/measurements2.json");	
 		map.loadLayerControl();
 		
 	};
@@ -180,9 +180,10 @@ var map = new function() {
 		}).addTo(mapLeaflet);
 	};
 	
-	this.loadSpeedMeasurements = function() {
 	// Load test measurements from json
-		$.getJSON("json/measurements.json", function(json) {
+	this.loadSpeedMeasurements = function(jsonFile) {
+	
+		$.getJSON(jsonFile, function(json) {
 
 			L.geoJson(json, {
 				style: function (feature) {
@@ -228,65 +229,11 @@ var map = new function() {
     			// filter: function(feature, layer) {
 				// 	return (feature.properties.phenomenons.Speed.value > 60);
 				// }
+
 			}).addTo(mapLeaflet);
 			
 		});
 	};
-	this.loadSpeedMeasurements2 = function() {
-	// Load test measurements from json
-	//after putting it into a seperate Layer it gets add to the map
-		
-		$.getJSON("json/measurements2.json", function(json) {
-		var myLayer = L.geoJson(json, {
-				style: function (feature) {
-					col = "white";
-
-					if (feature.properties.phenomenons.Speed.value < 10)
-						col = "#0f0";
-					else if (feature.properties.phenomenons.Speed.value < 20)
-						col = "#4f0";
-					else if (feature.properties.phenomenons.Speed.value < 30)
-						col = "#8f0";
-					else if (feature.properties.phenomenons.Speed.value < 40)
-						col = "#cf0";
-					else if (feature.properties.phenomenons.Speed.value < 50)
-						col = "#ff0";
-					else if (feature.properties.phenomenons.Speed.value < 60)
-						col = "#fc0";
-					else if (feature.properties.phenomenons.Speed.value < 70)
-						col = "#f80";
-					else if (feature.properties.phenomenons.Speed.value < 80)
-						col = "#f40";
-					else
-						col = "#f00";
-
-					return {
-						radius: 5,
-						color: "#000",
-						fillColor: col,
-					    weight: 0.5,
-					    opacity: 1,
-					    fillOpacity: 1
-					};
-				},
-				onEachFeature: function (feature, layer) {
-					layer.on('click', function (e) {
-						$('#panel_right_container').html(feature.properties.id + "<br>" + feature.properties.phenomenons.Speed.value);
-						page.showInfo();
-					});
-				},
-				pointToLayer: function (feature, latlng) {
-        			return L.circleMarker(latlng);
-    			},
-    			// filter: function(feature, layer) {
-				// 	return (feature.properties.phenomenons.Speed.value > 60);
-				// }
-				
-				
-			}).addTo(mapLeaflet);
-		});
-	};
-	
 	
 	this.loadLayerControl = function() {
 		//var baseLayers = {
