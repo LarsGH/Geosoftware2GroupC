@@ -167,7 +167,17 @@ var map = new function() {
 		map.loadScale();
 		map.loadSpeedMeasurements("json/measurements.json")
 		map.loadSpeedMeasurements("json/measurements2.json");	
+		map.loadSpeedMeasurements("json/measurements4.json");	
 		map.loadLayerControl();
+		
+		
+		//closing the Attribute panel if open by clicking on the map
+		function onMapClick(e) {
+			$('#panel_right_container').html;
+			page.hideInfo();
+		}
+
+		mapLeaflet.on('click', onMapClick);
 		
 	};
 	
@@ -219,10 +229,11 @@ var map = new function() {
 				},
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
-						$('#panel_right_container').html(feature.properties.id + "<br>" + feature.properties.phenomenons.Speed.value);
+						$('#panel_right_container').html("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value); //for later: feature.properties.phenomenons.TrackID.value
 						page.showInfo();
 					});
 				},
+				
 				pointToLayer: function (feature, latlng) {
         			return L.circleMarker(latlng);
     			},
