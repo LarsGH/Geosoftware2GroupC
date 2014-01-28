@@ -199,17 +199,19 @@ class timeFilter {
 	/*
 	This function can be used to create the URL for the envirocar request.
 	$starttime and $endtime must be in the following format: "2014-01-06 17:41:50"
+	The $limit parameter can set the result-limit. To have a better performance this value is set to 15 by default.
 	Returns an URL like this: "https://envirocar.org/api/stable/tracks?contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z"
-	This can be used for prefiltering.
+	This function can be used for pre-filtering.
 	*/
-	function getTimeintervalURL($starttime, $endtime, $info = false){
+	function getTimeintervalURL($starttime, $endtime, $limit = 15, $info = false){
 		if($info == true){
 			echo "<u> function getTimeintervalURL() </u> </br>"; // Infoprint for testing
 		}
 		// Edit the timestamp format
 		$start = substr(trim($starttime), 0, 10)."T".substr(trim($starttime),-8, 8)."Z";
 		$end = substr(trim($endtime), 0, 10)."T".substr(trim($endtime),-8, 8)."Z";
-		$timeURL = "https://envirocar.org/api/stable/tracks?contains=".$end.",".$start;
+		$timeURL = "https://envirocar.org/api/stable/tracks?limit=".$limit;
+		$timeURL .= "&contains=".$end.",".$start;
 		if($info == true){
 			echo "The URL to request the time interval is: $timeURL </br>"; // Infoprint for testing
 		}
