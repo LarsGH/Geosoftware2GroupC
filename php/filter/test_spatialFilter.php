@@ -13,7 +13,7 @@ $spatialFilter = new spatialFilter();
 // get track data with getJson
 $filteroptions = new filteroptions();
 $exampleRequest = "https://envirocar.org/api/stable/tracks?contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z";
-$jsonTracks = $filteroptions -> getFilterTracks($exampleRequest);
+$jsonTracks = $filteroptions -> createFilterTracks($exampleRequest);
 
 // Polygon array (at least 3 points + first and last point has to be the same)
 $polygon = array();
