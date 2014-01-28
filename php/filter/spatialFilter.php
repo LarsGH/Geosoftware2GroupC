@@ -182,14 +182,16 @@ class spatialFilter {
 	
 	/*
 	Create boundigbox-url (for the envirocar-API) from a bbox coordinate array.
-	This can be used for pre-filtering.
-	The array has to have the following format: minx,miny,maxx,maxy.
+	The array must have the following format: minx,miny,maxx,maxy.
+	The $limit parameter can set the result-limit. To have a better performance this value is set to 15 by default.
+	This function can be used for pre-filtering.
 	*/
-	function getBBoxURL($bbox, $info = false){
+	function getBBoxURL($bbox, $limit = 15, $info = false){
 		if($info == true){
 			echo "<u> function getBBoxURL() </u> </br>"; // Infoprint for testing
 		}
-			$bboxURL = "https://envirocar.org/api/stable/tracks?bbox=";
+		
+			$bboxURL = "https://envirocar.org/api/stable/tracks?limit=".$limit."&bbox=";
 		$minX=$bbox['minX'];
 			$bboxURL .= $minX.",";
 		$minY=$bbox['minY'];

@@ -42,7 +42,7 @@ echo "</br></br>";
 
 // Test getBBoxURL()
 echo "<b>Test  getBBoxURL() </b></br>";
-$bboxURL = $spatialFilter->getBBoxURL($bbox, true);
+$bboxURL = $spatialFilter->getBBoxURL($bbox, 15, true);
 echo "</br></br>";
 
 /*
