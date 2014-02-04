@@ -31,7 +31,7 @@ class filteroptions{
 	
 	/*
 	Get json from track-url. If $encoded = true the track will be encoded.
-	The trackID is added to the phenomenons of each feature!
+	The trackID is added to the properties of each feature!
 	*/
 	function createTrackFromID ($trackID, $encoded = false, $info = false){
 		if($info == true){
@@ -42,7 +42,7 @@ class filteroptions{
 		// add trackID to each feature
 		$featureCount = 0;
 		foreach($track["features"] as $feature){
-			$track["features"][$featureCount]["properties"]["phenomenons"]["trackID"] = "$trackID";
+			$track["features"][$featureCount]["properties"]["trackID"] = "$trackID";
 			$featureCount++;
 		}
 		if($encoded == true){
