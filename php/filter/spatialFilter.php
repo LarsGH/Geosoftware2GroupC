@@ -113,6 +113,7 @@ class spatialFilter {
 				}
 				$pointIndexCounter++;
 			}
+			$decodedTracks["tracks"][$trackIndexCounter]["features"] = array_values($decodedTracks["tracks"][$trackIndexCounter]["features"]);
 			$trackIndexCounter++;
 		}
 		$encodedTracks = json_encode($decodedTracks); // encode again
