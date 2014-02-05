@@ -24,7 +24,6 @@ array_push( $polygon, array("lon" => 11.66, "lat" => 47.45 ));
 array_push( $polygon, array("lon" => 11.56, "lat" => 47.45 ));
 
 
-
 // Test runSpatialFilter()
 echo "<b>Test  runSpatialFilter() </b></br>";
 $spatialFilterResult = $spatialFilter->runSpatialFilter($jsonTracks, $polygon, true); //Logging enabled with true (last parameter)
@@ -43,6 +42,11 @@ echo "</br></br>";
 // Test getBBoxURL()
 echo "<b>Test  getBBoxURL() </b></br>";
 $bboxURL = $spatialFilter->getBBoxURL($bbox, 15, true);
+echo "</br></br>";
+
+// Test createBBoxURLfromPolygon()
+echo "<b>Test  createBBoxURLfromPolygon() </b></br>";
+$bboxURL = $spatialFilter->createBBoxURLfromPolygon($polygon, 15, true);
 echo "</br></br>";
 
 /*
