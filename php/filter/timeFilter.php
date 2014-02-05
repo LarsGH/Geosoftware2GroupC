@@ -31,7 +31,7 @@ class timeFilter {
 
 	/*
 	Creates a timestamp from a string.
-	The function expects an envirocar properties time value (Example: "2014-01-06T17:41:50Z")
+	The function expects an envirocar properties time value format(Example: "2014-01-06T17:41:50Z")
 	or a string like this: "2014-01-06 17:41:50"
 	*/
 	function createTimestamp($timeString, $info = false){
