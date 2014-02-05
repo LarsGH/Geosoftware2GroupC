@@ -153,31 +153,45 @@ var map = new function() {
 
 	// Map variables
 	this.mapLeaflet = "";
+	this.sidebar = "";
 
 
 	// Initialization
 	this.init = function() {
-		mapLeaflet = L.map('map').setView([51.963491, 7.625840], 14);
-
-		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+		mapLeaflet = L.map('map', {
+			zoomsliderControl: true,
+			zoomControl: false,
+		}).setView([51.963491, 7.625840], 14);
+		
+		var osm = new L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(mapLeaflet);
+		});
+		
+		var NRWgeoWMS = L.tileLayer.wms("http://www.wms.nrw.de/geobasis/wms_nw_dtk10",{
+			layers: 'nw_dtk10_col',
+			minZoom: 14,
+			format: 'image/png'
+		});
+		
+		var ggl = new L.Google();
+		var ggl2 = new L.Google('TERRAIN');
+		mapLeaflet.addLayer(osm);
+		mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topo':NRWgeoWMS}, {}));
+		
+		sidebar = L.control.sidebar('sidebar', {
+			position: 'right'
+		});
+
+		mapLeaflet.addControl(sidebar);
 		
 		map.loadScale();
-		map.loadSpeedMeasurements("json/measurements.json")
-		map.loadSpeedMeasurements("json/measurements2.json");	
-		map.loadSpeedMeasurements("json/measurements4.json");	
-		map.loadLayerControl();
+		map.loadSpeedMeasurements("json/measurement	s.json")
+		map.loadSpeedMeasurements("json/measurements7.json");	
+		map.loadSpeedMeasurements("json/measurements6.json");
+		map.loadSpeedMeasurements("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=1&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
 		
-		
-		//closing the Attribute panel if open by clicking on the map
-		function onMapClick(e) {
-			$('#panel_right_container').html;
-			page.hideInfo();
-		}
-
-		mapLeaflet.on('click', onMapClick);
+		mapLeaflet.on('click', map.onMapClick);
 		
 	};
 	
@@ -190,33 +204,39 @@ var map = new function() {
 		}).addTo(mapLeaflet);
 	};
 	
+	this.onMapClick = function(e) {
+		sidebar.hide();
+	};
+	
 	// Load test measurements from json
 	this.loadSpeedMeasurements = function(jsonFile) {
 	
 		$.getJSON(jsonFile, function(json) {
-
+			
 			L.geoJson(json, {
 				style: function (feature) {
 					col = "white";
-
-					if (feature.properties.phenomenons.Speed.value < 10)
-						col = "#0f0";
-					else if (feature.properties.phenomenons.Speed.value < 20)
-						col = "#4f0";
-					else if (feature.properties.phenomenons.Speed.value < 30)
-						col = "#8f0";
-					else if (feature.properties.phenomenons.Speed.value < 40)
-						col = "#cf0";
-					else if (feature.properties.phenomenons.Speed.value < 50)
-						col = "#ff0";
-					else if (feature.properties.phenomenons.Speed.value < 60)
-						col = "#fc0";
-					else if (feature.properties.phenomenons.Speed.value < 70)
-						col = "#f80";
-					else if (feature.properties.phenomenons.Speed.value < 80)
-						col = "#f40";
-					else
-						col = "#f00";
+					if (feature.properties.phenomenons.Speed != null) { //only if there is a Speed Measurement the Color will be another than white
+						if (feature.properties.phenomenons.Speed.value < 10)
+							col = "#0f0";
+						else if (feature.properties.phenomenons.Speed.value < 20)
+							col = "#4f0";
+						else if (feature.properties.phenomenons.Speed.value < 30)
+							col = "#8f0";
+						else if (feature.properties.phenomenons.Speed.value < 40)
+							col = "#cf0";
+						else if (feature.properties.phenomenons.Speed.value < 50)
+							col = "#ff0";
+						else if (feature.properties.phenomenons.Speed.value < 60)
+							col = "#fc0";
+						else if (feature.properties.phenomenons.Speed.value < 70)
+							col = "#f80";
+						else if (feature.properties.phenomenons.Speed.value < 80)
+							col = "#f40";
+						else
+							col = "#f00";
+					}
+					else col = "#fff";
 
 					return {
 						radius: 5,
@@ -227,13 +247,14 @@ var map = new function() {
 					    fillOpacity: 1
 					};
 				},
+				
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
-						$('#panel_right_container').html("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value); //for later: feature.properties.phenomenons.TrackID.value
-						page.showInfo();
+						sidebar.setContent("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value);
+						sidebar.show();
 					});
 				},
-				
+								
 				pointToLayer: function (feature, latlng) {
         			return L.circleMarker(latlng);
     			},
@@ -244,15 +265,6 @@ var map = new function() {
 			}).addTo(mapLeaflet);
 			
 		});
-	};
-	
-	this.loadLayerControl = function() {
-		//var baseLayers = {
-			//"Minimal": myLayer};
-		//loading the Layercontrol. This one is empty.
-		//The first null are Baselayers so only one can be activatet
-		//the second null are overlaylayers so there can be no layer and more than one
-		L.control.layers(null, null).addTo(mapLeaflet);
 	};
 };
 
