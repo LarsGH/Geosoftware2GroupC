@@ -182,7 +182,7 @@ class spatialFilter {
 	}
 	
 	/*
-	Create boundigbox-url (for the envirocar-API) from a bbox coordinate array.
+	Create boundingbox-URL (for the envirocar-API) from a bbox coordinate array.
 	The array must have the following format: minx,miny,maxx,maxy.
 	The $limit parameter can set the result-limit. To have a better performance this value is set to 15 by default.
 	This function can be used for pre-filtering.
@@ -191,7 +191,6 @@ class spatialFilter {
 		if($info == true){
 			echo "<u> function getBBoxURL() </u> </br>"; // Infoprint for testing
 		}
-		
 			$bboxURL = "https://envirocar.org/api/stable/tracks?limit=".$limit."&bbox=";
 		$minX=$bbox['minX'];
 			$bboxURL .= $minX.",";
@@ -204,6 +203,20 @@ class spatialFilter {
 		if($info == true){
 			echo "The URL to request the boundingbox is: $bboxURL </br>"; // Infoprint for testing
 		}
+		return $bboxURL;
+	}
+	
+	/*
+	Create the boundingbox-URL from a given polygon.
+	Combines the functions getBBox() and getBBoxURL().
+	*/
+	function createBBoxURLfromPolygon($polygon, $limit = 15, $info = false){
+		if($info == true){
+			echo "<u> function createBBoxURLfromPolygon() </u> </br>"; // Infoprint for testing
+		}
+		// get the boundingbox
+		$bbox = $this->getBBox($polygon, $info);
+		$bboxURL = $this->getBBoxURL($bbox, $limit, $info);
 		return $bboxURL;
 	}
 	
