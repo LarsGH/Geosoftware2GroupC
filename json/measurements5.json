@@ -1,0 +1,2725 @@
+{
+	"type": "FeatureCollection",
+	"properties": {
+			"id": "52ebf0b8e4b0d8e8c2564466",
+			"sensor": {
+				"type": "car",
+				"properties": {
+					"id": "523c7338e4b060b8865cf231",
+					"model": "525",
+					"fuelType": "diesel",
+					"manufacturer": "BMW",
+					"constructionYear": 2012,
+					"engineDisplacement": 1995
+				}
+			},
+			"appVersion": "Version 0.8.0 (20), 1\/30\/14 12:55 PM",
+			"touVersion": "2013-10-01"
+		},
+		"features": [{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65322958,
+				51.95503541]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564468",
+				"time": "2014-01-31T18:31:25Z",
+				"phenomenons": {
+					"GPS VDOP": {
+						"value": 3.9,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 147,
+						"unit": "m"
+					},
+					"GPS Speed": {
+						"value": 1.8,
+						"unit": "km\/h"
+					},
+					"GPS HDOP": {
+						"value": 3.3,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 257.29998779297,
+						"unit": "deg"
+					},
+					"GPS Accuracy": {
+						"value": 296,
+						"unit": "%"
+					},
+					"GPS PDOP": {
+						"value": 5.1,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65281377,
+				51.95489446]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256446a",
+				"time": "2014-01-31T18:31:31Z",
+				"phenomenons": {
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"Engine Load": {
+						"value": 60,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"Rpm": {
+						"value": 784,
+						"unit": "u\/min"
+					},
+					"GPS Altitude": {
+						"value": 119,
+						"unit": "m"
+					},
+					"MAF": {
+						"value": 9.2200002670288,
+						"unit": "l\/s"
+					},
+					"GPS HDOP": {
+						"value": 1.3,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"Calculated MAF": {
+						"value": 13.333047702553,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 25,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.6,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 7.0292248249054,
+						"unit": "km\/h"
+					},
+					"GPS VDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 216.69999694824,
+						"unit": "deg"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS Accuracy": {
+						"value": 33,
+						"unit": "%"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65277447,
+				51.9547884]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256446c",
+				"time": "2014-01-31T18:31:36Z",
+				"phenomenons": {
+					"GPS Accuracy": {
+						"value": 12,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 779,
+						"unit": "u\/min"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Engine Load": {
+						"value": 60,
+						"unit": "%"
+					},
+					"MAF": {
+						"value": 8.1099996566772,
+						"unit": "l\/s"
+					},
+					"GPS HDOP": {
+						"value": 1.3,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"Intake Temperature": {
+						"value": 25,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.6,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 216.69999694824,
+						"unit": "deg"
+					},
+					"Calculated MAF": {
+						"value": 13.248015510572,
+						"unit": "g\/s"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS Altitude": {
+						"value": 115,
+						"unit": "m"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65272692,
+				51.95471053]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256446e",
+				"time": "2014-01-31T18:31:42Z",
+				"phenomenons": {
+					"GPS Altitude": {
+						"value": 99,
+						"unit": "m"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 780,
+						"unit": "u\/min"
+					},
+					"GPS Accuracy": {
+						"value": 13,
+						"unit": "%"
+					},
+					"GPS HDOP": {
+						"value": 1.3,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.136235328105,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 25,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.6,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"GPS VDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 14.239999771118,
+						"unit": "l\/s"
+					},
+					"Engine Load": {
+						"value": 59.607841491699,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65274016,
+				51.95470293]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564470",
+				"time": "2014-01-31T18:31:48Z",
+				"phenomenons": {
+					"GPS HDOP": {
+						"value": 1.2,
+						"unit": "precision"
+					},
+					"Speed": {
+						"value": 2,
+						"unit": "km\/h"
+					},
+					"GPS Accuracy": {
+						"value": 12,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 99,
+						"unit": "m"
+					},
+					"Intake Temperature": {
+						"value": 24,
+						"unit": "c"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"Rpm": {
+						"value": 782,
+						"unit": "u\/min"
+					},
+					"Intake Pressure": {
+						"value": 104,
+						"unit": "kPa"
+					},
+					"GPS VDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Engine Load": {
+						"value": 65.882354736328,
+						"unit": "%"
+					},
+					"GPS PDOP": {
+						"value": 1.5,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 9.2700004577637,
+						"unit": "l\/s"
+					},
+					"Calculated MAF": {
+						"value": 13.473341477475,
+						"unit": "g\/s"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65274628,
+				51.95470099]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564472",
+				"time": "2014-01-31T18:31:54Z",
+				"phenomenons": {
+					"GPS Accuracy": {
+						"value": 8,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 99,
+						"unit": "m"
+					},
+					"Engine Load": {
+						"value": 60.392158508301,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"MAF": {
+						"value": 12.470000267029,
+						"unit": "l\/s"
+					},
+					"Rpm": {
+						"value": 758,
+						"unit": "u\/min"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 104,
+						"unit": "kPa"
+					},
+					"Calculated MAF": {
+						"value": 13.148333663554,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 22,
+						"unit": "c"
+					},
+					"Speed": {
+						"value": 5,
+						"unit": "km\/h"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65276352,
+				51.95471747]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564474",
+				"time": "2014-01-31T18:32:00Z",
+				"phenomenons": {
+					"Engine Load": {
+						"value": 56.862743377686,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 102,
+						"unit": "m"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 10.770000457764,
+						"unit": "l\/s"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"GPS Accuracy": {
+						"value": 7,
+						"unit": "%"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"Calculated MAF": {
+						"value": 13.140173406506,
+						"unit": "g\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Rpm": {
+						"value": 775,
+						"unit": "u\/min"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Temperature": {
+						"value": 23,
+						"unit": "c"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65277063,
+				51.95471378]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564476",
+				"time": "2014-01-31T18:32:05Z",
+				"phenomenons": {
+					"GPS HDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"Speed": {
+						"value": 2,
+						"unit": "km\/h"
+					},
+					"MAF": {
+						"value": 18.799999237061,
+						"unit": "l\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"Rpm": {
+						"value": 1096,
+						"unit": "u\/min"
+					},
+					"Calculated MAF": {
+						"value": 19.12929988135,
+						"unit": "g\/s"
+					},
+					"Intake Pressure": {
+						"value": 105,
+						"unit": "kPa"
+					},
+					"GPS Accuracy": {
+						"value": 7,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 100,
+						"unit": "m"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Engine Load": {
+						"value": 70.588233947754,
+						"unit": "%"
+					},
+					"GPS PDOP": {
+						"value": 1.2,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Temperature": {
+						"value": 23,
+						"unit": "c"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65272375,
+				51.95477956]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564478",
+				"time": "2014-01-31T18:32:11Z",
+				"phenomenons": {
+					"Speed": {
+						"value": 2,
+						"unit": "km\/h"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"Engine Load": {
+						"value": 47.450981140137,
+						"unit": "%"
+					},
+					"GPS Speed": {
+						"value": 7.6367528915405,
+						"unit": "km\/h"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS Accuracy": {
+						"value": 4,
+						"unit": "%"
+					},
+					"MAF": {
+						"value": 10.939999580383,
+						"unit": "l\/s"
+					},
+					"GPS Bearing": {
+						"value": 320.60000610352,
+						"unit": "deg"
+					},
+					"Rpm": {
+						"value": 818,
+						"unit": "u\/min"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 14.005214044171,
+						"unit": "g\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 98,
+						"unit": "m"
+					},
+					"Intake Temperature": {
+						"value": 23,
+						"unit": "c"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65283537,
+				51.95474378]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256447a",
+				"time": "2014-01-31T18:32:17Z",
+				"phenomenons": {
+					"Calculated MAF": {
+						"value": 13.466973924118,
+						"unit": "g\/s"
+					},
+					"Rpm": {
+						"value": 779,
+						"unit": "u\/min"
+					},
+					"Engine Load": {
+						"value": 60.784313201904,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 92,
+						"unit": "m"
+					},
+					"Intake Pressure": {
+						"value": 104,
+						"unit": "kPa"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 8.2200002670288,
+						"unit": "l\/s"
+					},
+					"GPS Speed": {
+						"value": 6.4899922370911,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 1,
+						"unit": "km\/h"
+					},
+					"GPS Accuracy": {
+						"value": 7,
+						"unit": "%"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 100.69999694824,
+						"unit": "deg"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Temperature": {
+						"value": 23,
+						"unit": "c"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65291051,
+				51.95475412]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256447c",
+				"time": "2014-01-31T18:32:23Z",
+				"phenomenons": {
+					"Calculated MAF": {
+						"value": 13.394981127794,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 24,
+						"unit": "c"
+					},
+					"GPS Bearing": {
+						"value": 90.400001525879,
+						"unit": "deg"
+					},
+					"Engine Load": {
+						"value": 60.784313201904,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 5.9400000572205,
+						"unit": "l\/s"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"Rpm": {
+						"value": 785,
+						"unit": "u\/min"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS PDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Accuracy": {
+						"value": 7,
+						"unit": "%"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65288294,
+				51.95476632]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256447e",
+				"time": "2014-01-31T18:32:28Z",
+				"phenomenons": {
+					"Rpm": {
+						"value": 778,
+						"unit": "u\/min"
+					},
+					"Intake Temperature": {
+						"value": 24,
+						"unit": "c"
+					},
+					"Calculated MAF": {
+						"value": 13.146646742653,
+						"unit": "g\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"GPS PDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"MAF": {
+						"value": 12.300000190735,
+						"unit": "l\/s"
+					},
+					"Engine Load": {
+						"value": 54.509803771973,
+						"unit": "%"
+					},
+					"GPS Accuracy": {
+						"value": 5,
+						"unit": "%"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65287233,
+				51.95475382]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564480",
+				"time": "2014-01-31T18:32:34Z",
+				"phenomenons": {
+					"Intake Temperature": {
+						"value": 24,
+						"unit": "c"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"MAF": {
+						"value": 8.0799999237061,
+						"unit": "l\/s"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"Engine Load": {
+						"value": 57.647060394287,
+						"unit": "%"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"Calculated MAF": {
+						"value": 13.095952732077,
+						"unit": "g\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Rpm": {
+						"value": 775,
+						"unit": "u\/min"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65286883,
+				51.95475327]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564482",
+				"time": "2014-01-31T18:32:39Z",
+				"phenomenons": {
+					"Intake Temperature": {
+						"value": 24,
+						"unit": "c"
+					},
+					"MAF": {
+						"value": 6.2399997711182,
+						"unit": "l\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"Rpm": {
+						"value": 774,
+						"unit": "u\/min"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Engine Load": {
+						"value": 54.509803771973,
+						"unit": "%"
+					},
+					"Calculated MAF": {
+						"value": 13.079054728552,
+						"unit": "g\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65277217,
+				51.95476886]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564484",
+				"time": "2014-01-31T18:32:45Z",
+				"phenomenons": {
+					"GPS Bearing": {
+						"value": 280.70001220703,
+						"unit": "deg"
+					},
+					"Intake Pressure": {
+						"value": 147,
+						"unit": "kPa"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS Altitude": {
+						"value": 83,
+						"unit": "m"
+					},
+					"Engine Load": {
+						"value": 43.137256622314,
+						"unit": "%"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 14.539945220947,
+						"unit": "km\/h"
+					},
+					"Rpm": {
+						"value": 1796,
+						"unit": "u\/min"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"Speed": {
+						"value": 23,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 44.334797358283,
+						"unit": "g\/s"
+					},
+					"MAF": {
+						"value": 30.299999237061,
+						"unit": "l\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65211868,
+				51.95486057]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564486",
+				"time": "2014-01-31T18:32:51Z",
+				"phenomenons": {
+					"Engine Load": {
+						"value": 20.392156600952,
+						"unit": "%"
+					},
+					"GPS Accuracy": {
+						"value": 12,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 13,
+						"unit": "km\/h"
+					},
+					"Rpm": {
+						"value": 854,
+						"unit": "u\/min"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 0.99697875976562,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0,
+						"unit": "V"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"GPS Bearing": {
+						"value": 284.29998779297,
+						"unit": "deg"
+					},
+					"GPS Speed": {
+						"value": 16.224980163574,
+						"unit": "km\/h"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"Calculated MAF": {
+						"value": 14.771212843467,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 13.300000190735,
+						"unit": "l\/s"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65193527,
+				51.95482678]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564488",
+				"time": "2014-01-31T18:32:57Z",
+				"phenomenons": {
+					"Speed": {
+						"value": 2,
+						"unit": "km\/h"
+					},
+					"GPS HDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 780,
+						"unit": "u\/min"
+					},
+					"MAF": {
+						"value": 9.0799999237061,
+						"unit": "l\/s"
+					},
+					"GPS Altitude": {
+						"value": 83,
+						"unit": "m"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.665771484375,
+						"unit": "V"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 22,
+						"unit": "c"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS Speed": {
+						"value": 6.0373834133148,
+						"unit": "km\/h"
+					},
+					"Engine Load": {
+						"value": 62.745098114014,
+						"unit": "%"
+					},
+					"GPS Bearing": {
+						"value": 273.20001220703,
+						"unit": "deg"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS PDOP": {
+						"value": 1.2,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.399851919651,
+						"unit": "g\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65188272,
+				51.95481729]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256448a",
+				"time": "2014-01-31T18:33:03Z",
+				"phenomenons": {
+					"GPS HDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"GPS Accuracy": {
+						"value": 12,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 11,
+						"unit": "km\/h"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 84,
+						"unit": "m"
+					},
+					"Intake Pressure": {
+						"value": 127,
+						"unit": "kPa"
+					},
+					"Intake Temperature": {
+						"value": 21,
+						"unit": "c"
+					},
+					"MAF": {
+						"value": 17.940000534058,
+						"unit": "l\/s"
+					},
+					"GPS Bearing": {
+						"value": 260.5,
+						"unit": "deg"
+					},
+					"Calculated MAF": {
+						"value": 29.245850885222,
+						"unit": "g\/s"
+					},
+					"Rpm": {
+						"value": 1376,
+						"unit": "u\/min"
+					},
+					"GPS Speed": {
+						"value": 6.0373834133148,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.8279418945312,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.5179443359375,
+						"unit": "V"
+					},
+					"GPS PDOP": {
+						"value": 1.2,
+						"unit": "precision"
+					},
+					"Engine Load": {
+						"value": 54.901962280273,
+						"unit": "%"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65193944,
+				51.95469057]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256448c",
+				"time": "2014-01-31T18:33:09Z",
+				"phenomenons": {
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.3,
+						"unit": "precision"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Bearing": {
+						"value": 141.30000305176,
+						"unit": "deg"
+					},
+					"GPS Accuracy": {
+						"value": 13,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 85,
+						"unit": "m"
+					},
+					"Intake Pressure": {
+						"value": 141,
+						"unit": "kPa"
+					},
+					"GPS HDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 17.076298713684,
+						"unit": "km\/h"
+					},
+					"Calculated MAF": {
+						"value": 43.478571916639,
+						"unit": "g\/s"
+					},
+					"Speed": {
+						"value": 25,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.4434814453125,
+						"unit": "V"
+					},
+					"MAF": {
+						"value": 47.240001678467,
+						"unit": "l\/s"
+					},
+					"Engine Load": {
+						"value": 42.352939605713,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 1830,
+						"unit": "u\/min"
+					},
+					"GPS VDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.64697265625,
+						"unit": "ratio"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65262561,
+				51.95444091]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256448e",
+				"time": "2014-01-31T18:33:14Z",
+				"phenomenons": {
+					"MAF": {
+						"value": 16.049999237061,
+						"unit": "l\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Rpm": {
+						"value": 1109,
+						"unit": "u\/min"
+					},
+					"Intake Pressure": {
+						"value": 104,
+						"unit": "kPa"
+					},
+					"GPS Altitude": {
+						"value": 89,
+						"unit": "m"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.7655029296875,
+						"unit": "V"
+					},
+					"Engine Load": {
+						"value": 11.764705657959,
+						"unit": "%"
+					},
+					"GPS Speed": {
+						"value": 24.892770767212,
+						"unit": "km\/h"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"Speed": {
+						"value": 23,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS Bearing": {
+						"value": 120.69999694824,
+						"unit": "deg"
+					},
+					"GPS PDOP": {
+						"value": 1.2,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 19.368052164731,
+						"unit": "g\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65298168,
+				51.95439331]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564490",
+				"time": "2014-01-31T18:33:20Z",
+				"phenomenons": {
+					"Speed": {
+						"value": 11,
+						"unit": "km\/h"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 783,
+						"unit": "u\/min"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 12.800000190735,
+						"unit": "l\/s"
+					},
+					"GPS Speed": {
+						"value": 13.70839176178,
+						"unit": "km\/h"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"O2 Lambda Voltage": {
+						"value": 1.14990234375,
+						"unit": "V"
+					},
+					"Engine Load": {
+						"value": 40.784313201904,
+						"unit": "%"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"GPS Bearing": {
+						"value": 106.30000305176,
+						"unit": "deg"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"Calculated MAF": {
+						"value": 13.411674188357,
+						"unit": "g\/s"
+					},
+					"GPS Altitude": {
+						"value": 95,
+						"unit": "m"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65287897,
+				51.95415254]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564492",
+				"time": "2014-01-31T18:33:26Z",
+				"phenomenons": {
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"Speed": {
+						"value": 17,
+						"unit": "km\/h"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Engine Load": {
+						"value": 40,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 1269,
+						"unit": "u\/min"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.7789611816406,
+						"unit": "ratio"
+					},
+					"GPS Speed": {
+						"value": 17.932372283936,
+						"unit": "km\/h"
+					},
+					"Intake Pressure": {
+						"value": 110,
+						"unit": "kPa"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 192.69999694824,
+						"unit": "deg"
+					},
+					"MAF": {
+						"value": 11.829999923706,
+						"unit": "l\/s"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.4991455078125,
+						"unit": "V"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS Altitude": {
+						"value": 97,
+						"unit": "m"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 23.521194643428,
+						"unit": "g\/s"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65279027,
+				51.95394319]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564494",
+				"time": "2014-01-31T18:33:32Z",
+				"phenomenons": {
+					"GPS Bearing": {
+						"value": 200.10000610352,
+						"unit": "deg"
+					},
+					"Rpm": {
+						"value": 777,
+						"unit": "u\/min"
+					},
+					"GPS PDOP": {
+						"value": 1.3,
+						"unit": "precision"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"MAF": {
+						"value": 8.0799999237061,
+						"unit": "l\/s"
+					},
+					"Speed": {
+						"value": 8,
+						"unit": "km\/h"
+					},
+					"Intake Pressure": {
+						"value": 101,
+						"unit": "kPa"
+					},
+					"GPS HDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.133621588992,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 21,
+						"unit": "c"
+					},
+					"GPS Speed": {
+						"value": 10.495713043213,
+						"unit": "km\/h"
+					},
+					"GPS Altitude": {
+						"value": 100,
+						"unit": "m"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"GPS VDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.9688720703125,
+						"unit": "V"
+					},
+					"Engine Load": {
+						"value": 38.431373596191,
+						"unit": "%"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65260726,
+				51.95394885]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564496",
+				"time": "2014-01-31T18:33:38Z",
+				"phenomenons": {
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"Engine Load": {
+						"value": 45.882354736328,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 17,
+						"unit": "km\/h"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Intake Pressure": {
+						"value": 116,
+						"unit": "kPa"
+					},
+					"MAF": {
+						"value": 16.799999237061,
+						"unit": "l\/s"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Calculated MAF": {
+						"value": 26.094220234123,
+						"unit": "g\/s"
+					},
+					"GPS PDOP": {
+						"value": 1,
+						"unit": "precision"
+					},
+					"GPS Speed": {
+						"value": 10.495713043213,
+						"unit": "km\/h"
+					},
+					"GPS Altitude": {
+						"value": 100,
+						"unit": "m"
+					},
+					"GPS Bearing": {
+						"value": 276.79998779297,
+						"unit": "deg"
+					},
+					"Rpm": {
+						"value": 1335,
+						"unit": "u\/min"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.499755859375,
+						"unit": "V"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.7819519042969,
+						"unit": "ratio"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65222595,
+				51.95400986]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c2564498",
+				"time": "2014-01-31T18:33:44Z",
+				"phenomenons": {
+					"GPS Speed": {
+						"value": 15.37920627594,
+						"unit": "km\/h"
+					},
+					"Engine Load": {
+						"value": 65.490196228027,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.4283447265625,
+						"unit": "V"
+					},
+					"Speed": {
+						"value": 17,
+						"unit": "km\/h"
+					},
+					"GPS Altitude": {
+						"value": 96,
+						"unit": "m"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Calculated MAF": {
+						"value": 23.509399503195,
+						"unit": "g\/s"
+					},
+					"GPS Bearing": {
+						"value": 269.10000610352,
+						"unit": "deg"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 1280,
+						"unit": "u\/min"
+					},
+					"Intake Pressure": {
+						"value": 109,
+						"unit": "kPa"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.6149597167969,
+						"unit": "ratio"
+					},
+					"MAF": {
+						"value": 17.829999923706,
+						"unit": "l\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65171386,
+				51.95392829]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256449a",
+				"time": "2014-01-31T18:33:50Z",
+				"phenomenons": {
+					"GPS PDOP": {
+						"value": 1.4,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.843505859375,
+						"unit": "V"
+					},
+					"GPS Speed": {
+						"value": 18.792551994324,
+						"unit": "km\/h"
+					},
+					"Engine Load": {
+						"value": 21.176469802856,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"Speed": {
+						"value": 17,
+						"unit": "km\/h"
+					},
+					"GPS Altitude": {
+						"value": 96,
+						"unit": "m"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Bearing": {
+						"value": 259.5,
+						"unit": "deg"
+					},
+					"Intake Pressure": {
+						"value": 105,
+						"unit": "kPa"
+					},
+					"GPS HDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 1252,
+						"unit": "u\/min"
+					},
+					"GPS VDOP": {
+						"value": 0.9,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"MAF": {
+						"value": 11.520000457764,
+						"unit": "l\/s"
+					},
+					"Calculated MAF": {
+						"value": 22.151273356437,
+						"unit": "g\/s"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65131935,
+				51.95391753]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256449c",
+				"time": "2014-01-31T18:33:56Z",
+				"phenomenons": {
+					"Calculated MAF": {
+						"value": 24.758336351802,
+						"unit": "g\/s"
+					},
+					"GPS Speed": {
+						"value": 18.792551994324,
+						"unit": "km\/h"
+					},
+					"Intake Temperature": {
+						"value": 19,
+						"unit": "c"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Engine Load": {
+						"value": 42.745098114014,
+						"unit": "%"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 109,
+						"unit": "kPa"
+					},
+					"GPS Altitude": {
+						"value": 94,
+						"unit": "m"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.8770751953125,
+						"unit": "V"
+					},
+					"Rpm": {
+						"value": 1348,
+						"unit": "u\/min"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"MAF": {
+						"value": 20.159999847412,
+						"unit": "l\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Speed": {
+						"value": 18,
+						"unit": "km\/h"
+					},
+					"GPS Bearing": {
+						"value": 271,
+						"unit": "deg"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65096975,
+				51.95398531]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c256449e",
+				"time": "2014-01-31T18:34:02Z",
+				"phenomenons": {
+					"GPS Speed": {
+						"value": 15.37920627594,
+						"unit": "km\/h"
+					},
+					"Rpm": {
+						"value": 777,
+						"unit": "u\/min"
+					},
+					"Speed": {
+						"value": 11,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage": {
+						"value": 1.075927734375,
+						"unit": "V"
+					},
+					"Calculated MAF": {
+						"value": 13.308902738638,
+						"unit": "g\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 92,
+						"unit": "m"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 8.3299999237061,
+						"unit": "l\/s"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"GPS Accuracy": {
+						"value": 15,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"Engine Load": {
+						"value": 46.666667938232,
+						"unit": "%"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"GPS Bearing": {
+						"value": 290.10000610352,
+						"unit": "deg"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65084357,
+				51.95395195]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644a0",
+				"time": "2014-01-31T18:34:08Z",
+				"phenomenons": {
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS Bearing": {
+						"value": 245.69999694824,
+						"unit": "deg"
+					},
+					"GPS Altitude": {
+						"value": 92,
+						"unit": "m"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 104,
+						"unit": "kPa"
+					},
+					"GPS Accuracy": {
+						"value": 13,
+						"unit": "%"
+					},
+					"Calculated MAF": {
+						"value": 13.919150203147,
+						"unit": "g\/s"
+					},
+					"Engine Load": {
+						"value": 53.725490570068,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 6,
+						"unit": "km\/h"
+					},
+					"MAF": {
+						"value": 14.609999656677,
+						"unit": "l\/s"
+					},
+					"Intake Temperature": {
+						"value": 20,
+						"unit": "c"
+					},
+					"GPS Speed": {
+						"value": 8.297589969635,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.59033203125,
+						"unit": "V"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Rpm": {
+						"value": 797,
+						"unit": "u\/min"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65071318,
+				51.95391766]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644a2",
+				"time": "2014-01-31T18:34:14Z",
+				"phenomenons": {
+					"Engine Load": {
+						"value": 60.784313201904,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 780,
+						"unit": "u\/min"
+					},
+					"GPS Bearing": {
+						"value": 278.79998779297,
+						"unit": "deg"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"Intake Temperature": {
+						"value": 21,
+						"unit": "c"
+					},
+					"MAF": {
+						"value": 7.7699999809265,
+						"unit": "l\/s"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS Speed": {
+						"value": 6.4899922370911,
+						"unit": "km\/h"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.6248779296875,
+						"unit": "V"
+					},
+					"GPS Altitude": {
+						"value": 89,
+						"unit": "m"
+					},
+					"Speed": {
+						"value": 5,
+						"unit": "km\/h"
+					},
+					"GPS Accuracy": {
+						"value": 11,
+						"unit": "%"
+					},
+					"Calculated MAF": {
+						"value": 13.445406405184,
+						"unit": "g\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65069383,
+				51.95393471]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644a4",
+				"time": "2014-01-31T18:34:19Z",
+				"phenomenons": {
+					"GPS Altitude": {
+						"value": 90,
+						"unit": "m"
+					},
+					"Engine Load": {
+						"value": 60.784313201904,
+						"unit": "%"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.618620191958,
+						"unit": "g\/s"
+					},
+					"Intake Temperature": {
+						"value": 21,
+						"unit": "c"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.6824951171875,
+						"unit": "V"
+					},
+					"GPS Bearing": {
+						"value": 285,
+						"unit": "deg"
+					},
+					"Intake Pressure": {
+						"value": 105,
+						"unit": "kPa"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 9.5799999237061,
+						"unit": "l\/s"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"Rpm": {
+						"value": 775,
+						"unit": "u\/min"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65067856,
+				51.95393537]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644a6",
+				"time": "2014-01-31T18:34:25Z",
+				"phenomenons": {
+					"GPS Speed": {
+						"value": 5.4744864463806,
+						"unit": "km\/h"
+					},
+					"MAF": {
+						"value": 10.329999923706,
+						"unit": "l\/s"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Rpm": {
+						"value": 780,
+						"unit": "u\/min"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"Intake Temperature": {
+						"value": 21,
+						"unit": "c"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.584716796875,
+						"unit": "V"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS Bearing": {
+						"value": 285,
+						"unit": "deg"
+					},
+					"GPS Altitude": {
+						"value": 89,
+						"unit": "m"
+					},
+					"Engine Load": {
+						"value": 61.176471710205,
+						"unit": "%"
+					},
+					"Speed": {
+						"value": 1,
+						"unit": "km\/h"
+					},
+					"Calculated MAF": {
+						"value": 13.445406405184,
+						"unit": "g\/s"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"O2 Lambda Voltage ER": {
+						"value": 1.9999694824219,
+						"unit": "ratio"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.6506878,
+				51.9539521]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644a8",
+				"time": "2014-01-31T18:34:31Z",
+				"phenomenons": {
+					"O2 Lambda Voltage ER": {
+						"value": 1.9449462890625,
+						"unit": "ratio"
+					},
+					"Rpm": {
+						"value": 777,
+						"unit": "u\/min"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"Engine Load": {
+						"value": 58.823528289795,
+						"unit": "%"
+					},
+					"GPS Altitude": {
+						"value": 91,
+						"unit": "m"
+					},
+					"GPS HDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"MAF": {
+						"value": 5.9400000572205,
+						"unit": "l\/s"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 22,
+						"unit": "c"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.5587158203125,
+						"unit": "V"
+					},
+					"Intake Pressure": {
+						"value": 103,
+						"unit": "kPa"
+					},
+					"GPS Bearing": {
+						"value": 285,
+						"unit": "deg"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.348314027652,
+						"unit": "g\/s"
+					},
+					"GPS VDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [7.65068676,
+				51.95395258]
+			},
+			"properties": {
+				"id": "52ebf0b8e4b0d8e8c25644aa",
+				"time": "2014-01-31T18:34:37Z",
+				"phenomenons": {
+					"O2 Lambda Voltage ER": {
+						"value": 1.9489440917969,
+						"unit": "ratio"
+					},
+					"Throttle Position": {
+						"value": 87,
+						"unit": "%"
+					},
+					"O2 Lambda Voltage": {
+						"value": 0.5606689453125,
+						"unit": "V"
+					},
+					"GPS Altitude": {
+						"value": 92,
+						"unit": "m"
+					},
+					"GPS HDOP": {
+						"value": 0.8,
+						"unit": "precision"
+					},
+					"Calculated MAF": {
+						"value": 13.558968906598,
+						"unit": "g\/s"
+					},
+					"MAF": {
+						"value": 12.739999771118,
+						"unit": "l\/s"
+					},
+					"Engine Load": {
+						"value": 47.450981140137,
+						"unit": "%"
+					},
+					"GPS Accuracy": {
+						"value": 10,
+						"unit": "%"
+					},
+					"Intake Temperature": {
+						"value": 22,
+						"unit": "c"
+					},
+					"GPS VDOP": {
+						"value": 0.7,
+						"unit": "precision"
+					},
+					"Intake Pressure": {
+						"value": 102,
+						"unit": "kPa"
+					},
+					"Speed": {
+						"value": 0,
+						"unit": "km\/h"
+					},
+					"GPS Speed": {
+						"value": 5.4,
+						"unit": "km\/h"
+					},
+					"GPS PDOP": {
+						"value": 1.1,
+						"unit": "precision"
+					},
+					"Rpm": {
+						"value": 797,
+						"unit": "u\/min"
+					},
+					"trackID": "52ebf0b8e4b0d8e8c2564466"
+				}
+			}
+		}]
+	}

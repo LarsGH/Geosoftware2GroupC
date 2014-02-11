@@ -250,6 +250,17 @@ var map = new function() {
 				
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
+						
+						//highlighting the clicked point
+						selectedPoint = e.target;
+						selectedPoint.setStyle({
+							radius: 5.5,
+							color: "#ff4444",
+							weight: 3,
+							opacity: 0.75,
+							fillOpacity: 1
+						});
+						
 						sidebar.setContent("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value);
 						sidebar.show();
 					});

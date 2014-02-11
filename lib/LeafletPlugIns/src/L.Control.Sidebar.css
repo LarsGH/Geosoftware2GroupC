@@ -121,7 +121,7 @@
     }
 
     .leaflet-sidebar.right.visible ~ .leaflet-right {
-        right: 390px;
+        right: 305px;
     }
 }
 
@@ -135,7 +135,7 @@
     }
 
     .leaflet-sidebar.right.visible ~ .leaflet-right {
-        right: 460px;
+        right: 305px;
     }
 }
 
