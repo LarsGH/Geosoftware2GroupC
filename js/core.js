@@ -154,6 +154,7 @@ var map = new function() {
 	// Map variables
 	this.mapLeaflet = "";
 	this.sidebar = "";
+	var oldselectedPoint;
 
 
 	// Initialization
@@ -184,7 +185,12 @@ var map = new function() {
 		});
 
 		mapLeaflet.addControl(sidebar);
-		
+		L.control.mousePosition({
+			separator: ' , ',
+			position: 'bottomright',
+			prefix: 'Mauszeigerkoordinaten: '
+			}).addTo(mapLeaflet);
+		L.control.locate().addTo(mapLeaflet);
 		map.loadScale();
 		map.loadSpeedMeasurements("json/measurement	s.json")
 		map.loadSpeedMeasurements("json/measurements7.json");	
@@ -205,7 +211,35 @@ var map = new function() {
 	};
 	
 	this.onMapClick = function(e) {
+		
+		//if the sidebar is open it's gonna close now
 		sidebar.hide();
+		//if there is a highlighted Point, it will be unHighlighted
+		if (oldselectedPoint != undefined && oldselectedPoint != null && oldselectedPoint != ""){
+             map.unHighlightPoint(oldselectedPoint);
+        }
+	};
+	
+	// highlight the selected Point
+	this.highlightPoint = function(Point) {
+        Point.setStyle({
+			radius: 5.5,
+            color: "#ff4444",
+            weight: 3,
+            opacity: 0.75,
+            fillOpacity: 1
+        });
+	};
+	
+	// unhighlight the deselected Point
+	this.unHighlightPoint = function(Point) {
+        Point.setStyle({
+			radius: 5,
+			color: "#000",
+            weight: 0.5,
+			opacity: 1,
+			fillOpacity: 1
+        });
 	};
 	
 	// Load test measurements from json
@@ -252,14 +286,24 @@ var map = new function() {
 					layer.on('click', function (e) {
 						
 						//highlighting the clicked point
-						selectedPoint = e.target;
-						selectedPoint.setStyle({
-							radius: 5.5,
-							color: "#ff4444",
-							weight: 3,
-							opacity: 0.75,
-							fillOpacity: 1
-						});
+						if (oldselectedPoint != undefined && oldselectedPoint != null && oldselectedPoint != "")
+                        {
+                            map.unHighlightPoint(oldselectedPoint);
+                        }
+
+                        //highlighting the clicked point
+                        selectedPoint = e.target;
+						map.highlightPoint(selectedPoint);
+                        /*selectedPoint.setStyle({
+                            radius: 5.5,
+                            color: "#ff4444",
+                            weight: 3,
+                            opacity: 0.75,
+                            fillOpacity: 1
+                        });*/
+                        
+                        oldselectedPoint = selectedPoint;
+
 						
 						sidebar.setContent("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value);
 						sidebar.show();
