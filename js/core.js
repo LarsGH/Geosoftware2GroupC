@@ -178,7 +178,21 @@ var map = new function() {
 		var ggl = new L.Google();
 		var ggl2 = new L.Google('TERRAIN');
 		mapLeaflet.addLayer(osm);
-		mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topo':NRWgeoWMS}, {}));
+		var Topos = L.TileLayer.multi({
+	13: {
+		url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+		subdomains:'1234'
+	},
+	17: {
+		url: 'http://www.wms.nrw.de/geobasis/wms_nw_dtk10',
+		layers: 'nw_dtk10_col',
+			format: 'image/png'
+	}
+}, {
+	minZoom: 0,
+	maxZoom: 17,
+});
+		mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topoalt':NRWgeoWMS, 'Topo':Topos}, {}));
 		
 		sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
@@ -198,6 +212,7 @@ var map = new function() {
 		map.loadSpeedMeasurements("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=1&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
 		
 		mapLeaflet.on('click', map.onMapClick);
+		
 		
 	};
 	
@@ -281,7 +296,6 @@ var map = new function() {
 					    fillOpacity: 1
 					};
 				},
-				
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
 						
@@ -294,13 +308,6 @@ var map = new function() {
                         //highlighting the clicked point
                         selectedPoint = e.target;
 						map.highlightPoint(selectedPoint);
-                        /*selectedPoint.setStyle({
-                            radius: 5.5,
-                            color: "#ff4444",
-                            weight: 3,
-                            opacity: 0.75,
-                            fillOpacity: 1
-                        });*/
                         
                         oldselectedPoint = selectedPoint;
 
@@ -308,6 +315,15 @@ var map = new function() {
 						sidebar.setContent("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value);
 						sidebar.show();
 					});
+				
+				layer.on('mouseover', function (e) {
+					map.highlightPoint(e.target);
+				});
+				layer.on('mouseout', function (e) {
+					if (oldselectedPoint != e.target){
+					map.unHighlightPoint(e.target);}
+				});
+					
 				},
 								
 				pointToLayer: function (feature, latlng) {
