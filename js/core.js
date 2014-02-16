@@ -156,6 +156,7 @@ var map = new function() {
 	this.sidebar = "";
 	var oldselectedPoint;
 
+	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 
 	// Initialization
 	this.init = function() {
@@ -312,7 +313,34 @@ var map = new function() {
                         oldselectedPoint = selectedPoint;
 
 						
-						sidebar.setContent("ID:  " + feature.properties.id + "<br>" + "Speed:  " + feature.properties.phenomenons.Speed.value);
+						var sphenomenon = feature.properties.id + "<br>" + feature.properties.time + "<br> <hr> <table>";
+
+						for (var i = 0; i < map.phenomenons.length; i++) {
+							p = map.phenomenons[i];
+						
+							if (feature.properties.phenomenons[p] != undefined)
+							{
+							sphenomenon += 
+								"<tr><td>" +
+								p + 
+								"</td><td>" +
+								((feature.properties.phenomenons[p].value % 1 == 0) ?
+								feature.properties.phenomenons[p].value :
+								(Math.round(feature.properties.phenomenons[p].value* 100)/100).toFixed(2)) + 
+								"</td><td>" +
+								feature.properties.phenomenons[p].unit + 
+								"</td></tr>";
+							}
+							else 
+							{
+								sphenomenon += "<tr><td>" + p + "</td><td>-</td><td>-</td></tr>";
+							}
+						};
+						sphenomenon += "</table>";
+
+
+						sidebar.setContent(sphenomenon);
+
 						sidebar.show();
 					});
 				
