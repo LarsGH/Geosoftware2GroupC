@@ -161,7 +161,6 @@ var map = new function() {
 	// Initialization
 	this.init = function() {
 		mapLeaflet = L.map('map', {
-			zoomsliderControl: true,
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
 		
@@ -205,6 +204,8 @@ var map = new function() {
 			position: 'bottomright',
 			prefix: 'Mauszeigerkoordinaten: '
 			}).addTo(mapLeaflet);
+		L.control.pan().addTo(mapLeaflet);
+		L.control.zoomslider().addTo(mapLeaflet);
 		L.control.locate().addTo(mapLeaflet);
 		map.loadScale();
 		map.loadSpeedMeasurements("json/measurement	s.json")
