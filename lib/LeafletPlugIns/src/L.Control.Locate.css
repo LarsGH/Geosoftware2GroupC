@@ -4,12 +4,13 @@
 	-webkit-border-radius: 7px 7px 7px 7px;
 	        border-radius: 7px 7px 7px 7px;
 }
-
+.leaflet-control-locate {
+	position: relative;
+	left:24px;
+}
 .leaflet-control-locate a {
 	background-image: url(images/locate_alt2.png);
 	background-position: -2px -2px;
-	position: relative;
-	left:24px;
 }
 
 .leaflet-touch .leaflet-control-locate a {

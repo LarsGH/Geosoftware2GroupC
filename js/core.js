@@ -156,6 +156,7 @@ var map = new function() {
 	this.sidebar = "";
 	var oldselectedPoint;
 	var datatrack;
+	var trackid;
 
 	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 
@@ -209,11 +210,19 @@ var map = new function() {
 		L.control.zoomslider().addTo(mapLeaflet);
 		L.control.locate().addTo(mapLeaflet);
 		map.loadScale();
-		map.loadSpeedMeasurements("json/measurements.json")
-		//map.loadSpeedMeasurements("json/measurements7.json");	
-		//map.loadSpeedMeasurements("json/measurements6.json");
-		map.loadSpeedMeasurements("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		//map.loadSpeedMeasurements("json/trackarray.json");
+		
+		$.getJSON("https://envirocar.org/api/stable/tracks?limit=10&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
+			
+			for (i = 0; i <= json.tracks.length; i++){
+			
+			trackid = json.tracks[i].id;
+			map.loadTrack("https://envirocar.org/api/stable/tracks/" +trackid);
+			};});
+		map.loadTracks("json/measurements.json")
+		map.loadTracks("json/measurements7.json");	
+		//map.loadTracks("json/measurements6.json");
+		map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
+		map.loadTracks("json/trackarray.json");
 		
 		mapLeaflet.on('click', map.onMapClick);
 		
@@ -262,14 +271,29 @@ var map = new function() {
 	};
 	
 	// Load test measurements from json
-	this.loadSpeedMeasurements = function(jsonFile) {
+	this.loadTracks = function(jsonFile) {
+	$.getJSON(jsonFile, function(json) {
+		for (i = 0; i <= json.tracks.length; i++){
+
+			map.loadTrackJSON(json.tracks[i]);
+			};
+		});
+	};
+	
+	// Load test measurements from json
+	this.loadTrack = function(jsonFile) {
 	
 		$.getJSON(jsonFile, function(json) {
-			
-			for (i = 0; i <= json.tracks.length; i++){
-			
-			datatrack = json.tracks[i];
-			L.geoJson(datatrack, {
+		
+		map.loadTrackJSON(json);
+		
+		});
+	};
+		
+	// Load test measurements from json
+	this.loadTrackJSON = function(json) {
+	
+			L.geoJson(json, {
 				style: function (feature) {
 					col = "white";
 					if (feature.properties.phenomenons.Speed != null) { //only if there is a Speed Measurement the Color will be another than white
@@ -319,7 +343,7 @@ var map = new function() {
                         oldselectedPoint = selectedPoint;
 
 						
-						var sphenomenon = feature.properties.id + "<br>" + feature.properties.time + "<br> <hr> <table>";
+						var sphenomenon = feature.properties.id + "<br>" + feature.properties.time + "<br>" + feature.geometry.coordinates +"<br> <hr> <table>";
 
 						for (var i = 0; i < map.phenomenons.length; i++) {
 							p = map.phenomenons[i];
@@ -347,7 +371,7 @@ var map = new function() {
 
 						sidebar.setContent(sphenomenon);
 
-						sidebar.show();
+						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 					});
 				
 				layer.on('mouseover', function (e) {
@@ -368,8 +392,6 @@ var map = new function() {
 				// }
 
 			}).addTo(mapLeaflet);
-			};
-		});
 	};
 };
 

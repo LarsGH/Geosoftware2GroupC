@@ -14,7 +14,7 @@ body, html {
   margin:0;
   padding:0px 0;
   z-index: 1001;
-  background:#ff;
+  background:#4C4C4C;
   box-shadow:0px 0px 10px rgba(0, 0, 0, 0.15);
    -webkit-transition: all 0.4s linear;
    -moz-transition: all 0.4s linear;
@@ -67,7 +67,7 @@ body, html {
   font-weight: bold;
   text-transform: uppercase;
   text-decoration: none;
-  color: #444;
+  color: #FFFFFF;
   outline: none;
   list-style: none;
   display: inline;
@@ -100,8 +100,9 @@ body, html {
   left: 0px;
   bottom: 0px;
   position: absolute;
-  background:#fff;
+  background:#808080;
   z-index: 1000;
+  color: #FFFFFF;
   box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
    -webkit-transition: all 0.4s linear;
    -moz-transition: all 0.4s linear;
@@ -188,7 +189,7 @@ input[type="text"] {
 }
 
 .textbox { 
-  background: white; 
+  background: silver; 
   border: 1px solid #DDD; 
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15) inset; 
   color: #666; 
