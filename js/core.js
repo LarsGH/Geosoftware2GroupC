@@ -211,17 +211,17 @@ var map = new function() {
 		L.control.locate().addTo(mapLeaflet);
 		map.loadScale();
 		
-		$.getJSON("https://envirocar.org/api/stable/tracks?limit=10&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
+		// $.getJSON("https://envirocar.org/api/stable/tracks?limit=10&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
 			
-			for (i = 0; i <= json.tracks.length; i++){
+		// 	for (i = 0; i <= json.tracks.length; i++){
 			
-			trackid = json.tracks[i].id;
-			map.loadTrack("https://envirocar.org/api/stable/tracks/" +trackid);
-			};});
+		// 	trackid = json.tracks[i].id;
+		// 	map.loadTrack("https://envirocar.org/api/stable/tracks/" +trackid);
+		// 	};});
 		map.loadTracks("json/measurements.json")
 		map.loadTracks("json/measurements7.json");	
 		//map.loadTracks("json/measurements6.json");
-		map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
+		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
 		map.loadTracks("json/trackarray.json");
 		
 		mapLeaflet.on('click', map.onMapClick);
@@ -343,7 +343,14 @@ var map = new function() {
                         oldselectedPoint = selectedPoint;
 
 						
-						var sphenomenon = feature.properties.id + "<br>" + feature.properties.time + "<br>" + feature.geometry.coordinates +"<br> <hr> <table>";
+						var d = new Date(Date.parse(feature.properties.time));
+						var sphenomenon = "<h3>Attribute</h3>" +
+							"<table width=100%>" +
+							"<tr><td>ID</td><td>" + feature.properties.id + "</td></tr>" + 
+							"<tr><td>Datum</td><td>" + helper.dateToDateString(d) + "</td></tr>" + 
+							"<tr><td>Uhrzeit</td><td>" + helper.dateToTimeString(d) + "</td></tr></table>" + 
+							"<hr> <table width=100%>";
+						
 
 						for (var i = 0; i < map.phenomenons.length; i++) {
 							p = map.phenomenons[i];
@@ -366,7 +373,7 @@ var map = new function() {
 								sphenomenon += "<tr><td>" + p + "</td><td>-</td><td>-</td></tr>";
 							}
 						};
-						sphenomenon += "</table>";
+						sphenomenon += "</table><hr>";
 
 
 						sidebar.setContent(sphenomenon);
@@ -392,6 +399,74 @@ var map = new function() {
 				// }
 
 			}).addTo(mapLeaflet);
+	};
+};
+
+
+
+
+// Filter class
+// Description: Class for filter functions
+// Author: Peter Zimmerhof
+var filter = new function() {
+
+	
+};
+
+
+
+
+// DB class
+// Description: Class for DB functions
+// Author: Peter Zimmerhof
+var db = new function() {
+
+	this.loadTracks = function(from, to) {
+
+		var tracks = "";
+
+		$.post( "php/filter.php", { f: "getTimeintervalURL", starttime: "", endtime: "", limit: 5 })
+			.done(function( data ) {
+				$.post( "php/filter.php", { f: "runTimeFilter", jsonTracks: tracks, starttime: "", endtime: "", limit: 5 })
+					.done(function( data ) {
+						alert( "Data Loaded: " + data );
+
+						map.loadTrackJSON(data.tracks[0]);
+					});
+			});
+	};
+};
+
+
+
+
+// Helper class
+// Description: Class for universal functions
+// Author: Peter Zimmerhof
+var helper = new function() {
+
+	// JS Date to date string
+	this.dateToDateString = function(date) {
+
+		var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+		var month12 = date.getMonth() + 1;
+		var month = (month12 < 10) ? "0" + month12 : month12;
+
+		var sdate = day + "." + month + "." + date.getFullYear();
+
+		return sdate;
+	};
+
+	// JS Date to time string
+	this.dateToTimeString = function(date) {
+
+		var hours = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+		var minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+		var seconds = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+		var stime = hours + ":" + minutes + ":" + seconds;
+
+		return stime;
 	};
 };
 
