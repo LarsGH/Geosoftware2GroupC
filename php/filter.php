@@ -7,9 +7,9 @@
 This file is used to query all the needed filter-functions from the classes spatialFilter, timeFilter and filteroptions.
 */
 
-require("filter/filteroptions.php"); 
-require("filter/spatialFilter.php"); 
-require("filter/timeFilter.php"); 
+require_once("filter/filteroptions.php"); 
+require_once("filter/spatialFilter.php"); 
+require_once("filter/timeFilter.php"); 
 
 // create the objects we need for the functions
 $filteroptions = new filteroptions();
@@ -56,6 +56,19 @@ if ($_POST["f"] == "getSelectedTrack"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$poiID = $_POST["poiID"];
     echo $filteroptions -> getSelectedTrack($jsonTracks, $poiID);
+}
+
+// getInitialTimeTrack
+if ($_POST["f"] == "getInitialTimeTrack"){
+	$starttime = $_POST["starttime"];
+	$endtime = $_POST["endtime"];
+    echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit);
+	if(isset($_POST["limit"])){
+		$limit = $_POST["limit"];
+		echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit);
+	} else {
+		echo $filteroptions -> getInitialTimeTrack($starttime, $endtime);
+	}
 }
 
 /*
