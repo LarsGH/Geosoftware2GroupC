@@ -3,8 +3,8 @@
 @author Lars Syfuß
 */
 
-require("filteroptions.php"); // for testing
-require("timeFilter.php"); // for testing
+require_once("filteroptions.php"); // for testing
+require_once("timeFilter.php"); // for testing
 $filteroptions = new filteroptions(); // for testing
 $timeFilter = new timeFilter();
 
@@ -16,7 +16,7 @@ echo "</br></br>";
 
 // Create an URL with the function getTimeintervalURL()
 echo "<b>Test  getTimeintervalURL() (class timeFilter)</b> </br>";
-$exampleRequest = $timeFilter -> getTimeintervalURL("2014-01-10 16:19:02", "2014-01-10 18:44:40", true);
+$exampleRequest = $timeFilter -> getTimeintervalURL("2014-01-10 16:19:02", "2014-01-10 18:44:40", 10, true);
 echo "</br></br>";
 
 // Test createFilterTracks()
@@ -42,6 +42,14 @@ echo "<b>Test  getFullTrack() </b> </br>";
 $fullTrack = $filteroptions ->getFullTrack ($jsonTracks, $poiID, true);
 echo "<b>The wanted track is: </b> </br>";
 print_r($fullTrack);
+echo "</br></br>";
+
+
+// Test getInitialTimeTrack()
+echo "<b>Test  getInitialTimeTrack() </b> </br>";
+$initialTimeTrack = $filteroptions ->getInitialTimeTrack("2014-01-10 16:19:02", "2014-01-10 18:44:40", 10, null, true);
+echo "<b>The initial track is: </b> </br>";
+print_r($initialTimeTrack);
 echo "</br></br>";
 
 ?>
