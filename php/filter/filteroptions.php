@@ -134,6 +134,24 @@ class filteroptions{
 		return $encodedResult;
 	}
 
+	function getInitialTimeTrack($starttime, $endtime, $limit = 15, $weekday = null, $info = false){
+		if($info == true){
+			echo "<u> function getInitialTimeTrack() </u> </br>"; // Infoprint for testing
+		}
+		// create timeFilter object
+		require_once("timeFilter.php");
+		$timeFilter = new timeFilter();
+		// get the URL
+		$timeURL = $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit, $info);
+		// create track from the URL
+		$track = $this -> createFilterTracks ($timeURL, $info);
+		// filter the given time interval
+		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
+		if($info == true){
+			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
+		}
+		return $filteredTrack;
+	}
 	
 } // end of class
 ?>
