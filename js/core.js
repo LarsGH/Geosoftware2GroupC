@@ -93,6 +93,11 @@ var page = new function(){
 				});
 				$( "#from_dt" ).datepicker();
 				$( "#to_dt" ).datepicker();
+
+
+				$("#btn_bb").click(filter.btnBBClick);
+				$("#btn_polygon").click(filter.btnPolygonClick);
+
 				map.init();
 				break;
 
@@ -410,6 +415,17 @@ var map = new function() {
 // Author: Peter Zimmerhof
 var filter = new function() {
 
+	this.init = function() {
+
+	};
+
+	this.btnBBClick = function() {
+		alert("bbox");
+	};
+
+	this.btnPolygonClick = function() {
+		alert("polygon");
+	};
 	
 };
 
