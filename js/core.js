@@ -97,7 +97,8 @@ var page = new function(){
 
 				$("#btn_bb").click(filter.btnBBClick);
 				$("#btn_polygon").click(filter.btnPolygonClick);
-
+				
+				
 				map.init();
 				break;
 
@@ -162,9 +163,11 @@ var map = new function() {
 	var oldselectedPoint;
 	var datatrack;
 	var trackid;
+	var Index;
+	var polygon = new Array();
 
 	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
-
+	
 	// Initialization
 	this.init = function() {
 		mapLeaflet = L.map('map', {
@@ -216,15 +219,76 @@ var map = new function() {
 		L.control.locate().addTo(mapLeaflet);
 		map.loadScale();
 		
-		// $.getJSON("https://envirocar.org/api/stable/tracks?limit=10&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
+		
+		
+		// Initialise the FeatureGroup to store editable layers
+		var drawnItems = new L.FeatureGroup();
+		mapLeaflet.addLayer(drawnItems);
+
+		// Initialise the draw control and pass it the FeatureGroup of editable layers
+		var drawControl = new L.Control.Draw({
+			position: 'topleft',
+			draw: {
+				circle: false,
+				marker: false,
+				polyline: false
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+		mapLeaflet.addControl(drawControl);
+		mapLeaflet.on('draw:created', function (e) {
+			polygon = [];
+			var type = e.layerType,
+			layer = e.layer;
+			
+			//if (type === 'marker') {
+			//	layer.bindPopup('A popup!');
+			//}
+			var latLngs = layer.getLatLngs();
+			for(var i=0; i < latLngs.length; i++){
+				var latLngString = latLngs[i].toString();
+				var openBracket = latLngString.indexOf("(");
+				var comma = latLngString.indexOf(",");
+				var bracketClose = latLngString.indexOf(")");
+				var lat = latLngString.slice(openBracket+1, comma);
+				var lng = latLngString.slice(comma+2, bracketClose);
+				
+				polygon[i] = new Object();
+				polygon[i]["lat"]=lat;
+				polygon[i]["lng"]=lng
+			};
+			polygon[latLngs.length] = polygon[0];
+			var bla = [];
+			for(var i=0; i < polygon.length; i++){
+				for (var prop in polygon[i]){
+					bla.push(polygon[i][prop]);
+				};
+			};
+			alert(bla.toString());
+
+			drawnItems.addLayer(layer);
+		});
+
+		mapLeaflet.on('draw:edited', function (e) {
+			var layers = e.layers;
+			var countOfEditedLayers = 0;
+			layers.eachLayer(function(layer) {
+			countOfEditedLayers++;
+			});
+			console.log("Edited " + countOfEditedLayers + " layers");
+		});
+		
+		// $.getJSON("https://envirocar.org/api/stable/tracks?limit=3&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
 			
 		// 	for (i = 0; i <= json.tracks.length; i++){
 			
 		// 	trackid = json.tracks[i].id;
 		// 	map.loadTrack("https://envirocar.org/api/stable/tracks/" +trackid);
 		// 	};});
-		map.loadTracks("json/measurements.json")
-		map.loadTracks("json/measurements7.json");	
+		//map.loadTracks("json/measurements.json")
+		//map.loadTracks("json/measurements7.json");	
 		//map.loadTracks("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
 		map.loadTracks("json/trackarray.json");
@@ -274,6 +338,7 @@ var map = new function() {
 			fillOpacity: 1
         });
 	};
+
 	
 	// Load test measurements from json
 	this.loadTracks = function(jsonFile) {
@@ -294,7 +359,26 @@ var map = new function() {
 		
 		});
 	};
+	
+	
+	this.getIndex = function(jsonFile, PointID){
+		$.getJSON( jsonFile, function( data ) {
 		
+			var jsonLength = data.features.length;
+			for ( i=1; i <= jsonLength; i++ ){
+				var chx = data.features[i].properties.id.toString;
+				//alert(data.features[i].properties.id.toString());
+				if(chx === PointID){
+					Index = i;
+				}
+			}
+		});
+		return Index;
+	};	
+	
+	
+	
+	
 	// Load test measurements from json
 	this.loadTrackJSON = function(json) {
 	
@@ -332,6 +416,7 @@ var map = new function() {
 					    fillOpacity: 1
 					};
 				},
+				
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
 						
@@ -340,13 +425,13 @@ var map = new function() {
                         {
                             map.unHighlightPoint(oldselectedPoint);
                         }
-
+						//var index = feature.properties.indexOf("id");
                         //highlighting the clicked point
                         selectedPoint = e.target;
 						map.highlightPoint(selectedPoint);
                         
                         oldselectedPoint = selectedPoint;
-
+						
 						
 						var d = new Date(Date.parse(feature.properties.time));
 						var sphenomenon = "<h3>Attribute</h3>" +
@@ -378,12 +463,21 @@ var map = new function() {
 								sphenomenon += "<tr><td>" + p + "</td><td>-</td><td>-</td></tr>";
 							}
 						};
-						sphenomenon += "</table><hr>";
-
+						
+						sphenomenon += "</table><hr>" + //index + 
+						"<button id=next_button>N\u00e4chster</button>";
+						
 
 						sidebar.setContent(sphenomenon);
-
+						$("#next_button").click(function() {
+							//mapLeaflet.panTo([51.963491, 7.625840], {duration: 0.5});
+							//alert(feature.properties.id.toString() +", "+ feature.properties.phenomenons.trackID.toString());
+							url = "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID;
+							map.getIndex(feature.properties.id, "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID);
+							alert(Index+", "+ url+", "+ feature.properties.id+ " na hats funktioniert?");
+						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
+						
 					});
 				
 				layer.on('mouseover', function (e) {
@@ -405,7 +499,9 @@ var map = new function() {
 
 			}).addTo(mapLeaflet);
 	};
+
 };
+
 
 
 
