@@ -134,6 +134,9 @@ class filteroptions{
 		return $encodedResult;
 	}
 
+	/*
+	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial filtering.
+	*/
 	function getInitialTimeTrack($starttime, $endtime, $limit = 15, $weekday = null, $info = false){
 		if($info == true){
 			echo "<u> function getInitialTimeTrack() </u> </br>"; // Infoprint for testing
