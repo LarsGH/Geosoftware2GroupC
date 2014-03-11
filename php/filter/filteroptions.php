@@ -30,7 +30,7 @@ class filteroptions{
 	}
 	
 	/*
-	Get json from track-url. If $encoded = true the track will be encoded.
+	Get json from track-URL using the track-ID. If $encoded = true the track will be encoded.
 	The trackID is added to the properties of each feature!
 	*/
 	function createTrackFromID ($trackID, $encoded = false, $info = false){
@@ -68,15 +68,15 @@ class filteroptions{
 		if($info == true){
 			echo "<u> function getFilterTracks() </u> </br>"; // Infoprint for testing
 		}
-		$decodedTracks = json_decode(file_get_contents($filterURL), true); // decode tracks
+		$decodedTracks = json_decode(file_get_contents($filterURL), true); // decode track-json
 		$trackArray = array(); // array to store the tracks
 		$resultCount = 0;
 		foreach ($decodedTracks["tracks"] as $track){
-			$trackWithData = $this->createTrackFromID ($track["id"]); // get json from track-url
-			array_push($trackArray, $trackWithData); // push it to the trackArray
+			$trackWithData = $this->createTrackFromID ($track["id"]); // get decoded track from track-ID
+			array_push($trackArray, $trackWithData); // push the track to the trackArray
 			$resultCount++; // count the tracks
 		}
-		$resultArray = array("tracks"=>$trackArray); // get the structure from the filterURl again
+		$resultArray = array("tracks"=>$trackArray); // get the structure from the filterURL again
 		$encodedResult = json_encode($resultArray); // encode the array
 		if($info == true){
 			echo "Json (encoded) has been created with " . $resultCount . " tracks! </br>"; // Infoprint for testing
@@ -96,10 +96,10 @@ class filteroptions{
 		}
 		$trackID = $this->getTrackID ($jsonTracks, $poiID);
 		$track = $this->createTrackFromID ($trackID, false); //decoded
-		$result = array("tracks"=>$track); // get the structure from the filterURl again
+		$result = array("tracks"=>$track); // get the structure from the filterURL again
 		$encodedResult = json_encode($result); // encode the array
 		if($info == true){
-			echo "A new json with track ($trackID) only has been created! </br>"; // Infoprint for testing
+			echo "A new json containing one track ($trackID) only - has been created! </br>"; // Infoprint for testing
 		}
 		return $encodedResult;
 	}
