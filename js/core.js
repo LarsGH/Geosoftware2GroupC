@@ -717,7 +717,14 @@ var db = new function() {
 
 		var tracks = "";
 
-		$.post( "http://giv-geosoft2c.uni-muenster.de/php/filter.php", { f: "getInitialTimeTrack", starttime: helper.dateToDateTimeString(from), endtime: helper.dateToDateTimeString(to), limit: "5" })
+		$.post( "php/filter.php", 
+				{ 
+					f: "getInitialTimeTrack",
+					starttime: helper.dateToRequestDateTimeString(from),
+					endtime: helper.dateToRequestDateTimeString(to),
+					limit: "5" 
+				}
+			)
 		 	.done(function( data ) {
 		 		map.loadTrackJSON();
 		 	});
@@ -732,8 +739,17 @@ var db = new function() {
 // Author: Peter Zimmerhof
 var helper = new function() {
 
-	this.dateToDateTimeString = function(date) {
-		return helper.dateToDateString(date) + ' ' + helper.dateToTimeString(date);
+	this.dateToRequestDateTimeString = function(date) {
+
+		var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+		var month12 = date.getMonth() + 1;
+		var month = (month12 < 10) ? "0" + month12 : month12;
+		var hours = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+		var minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+		var seconds = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+		// 2014-01-10T18:44:40Z
+		return date.getFullYear() + '-' + month + '-' + day + '%20' + hours + ':' + minutes + ':' + seconds + '';
 	};
 
 	// JS Date to date string
