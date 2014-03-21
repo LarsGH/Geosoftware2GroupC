@@ -60,8 +60,8 @@ else if  ($_POST["f"] == "getSelectedTrack"){
 
 // getInitialTimeTrack
 else if  ($_POST["f"] == "getInitialTimeTrack"){
-	$starttime = $_POST["starttime"];
-	$endtime = $_POST["endtime"];
+	$starttime = urldecode($_POST["starttime"]);
+	$endtime = urldecode($_POST["endtime"]);
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
 		echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit);

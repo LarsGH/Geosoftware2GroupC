@@ -47,7 +47,7 @@ echo "</br></br>";
 
 // Test getInitialTimeTrack()
 echo "<b>Test  getInitialTimeTrack() </b> </br>";
-$initialTimeTrack = $filteroptions ->getInitialTimeTrack("2014-01-10 16:19:02", "2014-01-10 18:44:40", 10, null, true);
+$initialTimeTrack = $filteroptions ->getInitialTimeTrack("2014-01-10T16:19:02Z", "2014-01-10T18:44:40Z", 10, null, true);
 echo "<b>The initial track is: </b> </br>";
 print_r($initialTimeTrack);
 echo "</br></br>";

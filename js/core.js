@@ -404,13 +404,15 @@ $( "#select_phenomenon" ).change(function() {
 		// 	};});
 		//map.loadTracks("json/measurements.json")
 		//map.loadTracks("json/measurements7.json");	
-		map.loadTrack("json/measurements6.json");
+		//map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		map.loadTracks("json/trackarray.json");
+		//map.loadTracks("json/trackarray.json");
 		
 		mapLeaflet.on('click', map.onMapClick);
 		//db.loadTracks();
 		
+		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
+		$(".leaflet-draw-draw-polygon").html("Hello");
 	};
 	
 	// Load the Scale
