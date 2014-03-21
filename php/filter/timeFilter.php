@@ -6,7 +6,7 @@ class timeFilter {
  
 	/* 
 	Check if starttime is before endtime.
-	Returns true if starttime is before endtime.
+	Returns true if starttime is before endtime and false otherwise.
 	*/
 	function checkTimeLogic($starttime, $endtime, $info = false){
 		if($info == true){
@@ -56,7 +56,7 @@ class timeFilter {
 	}
 
 	/*
-	Get weekday from timestring (first 2 letters)
+	Get weekday from timestring (from the first 2 letters).
 	The format of the possible results is: MO, TU, WE, TH, FR, SA, SU
 	*/
 	function getWeekday ($timeString, $info = false){
@@ -81,9 +81,9 @@ class timeFilter {
 
 
 	/*
-	Check if the $timeString is matches a specific $weekday.
-	The $weekday format must be one of the following: MO, TU, WE, TH, FR, SA, SU
-	Returns true if the $timeString matches the $weekday.
+	Check if the $timeString matches a specific $weekday.
+	The $weekday format must be one of the following: MO, TU,  WE, TH, FR, SA, SU
+	Returns true if the $timeString matches the $weekday and false otherwise.
 	*/
 	function checkDay ($timeString, $weekday, $info = false){
 		if($info == true){
@@ -109,7 +109,7 @@ class timeFilter {
 	Check if point is in the time interval.
 	A point is a feature from the envirocar request result.
 	$starttime and $endtime are strings like they are needed for createTimestamp().
-	Returns true if the points timestamp is >= $starttime and <= $endtime.
+	Returns true if the timestamp of a point is >= $starttime and <= $endtime.
 	*/
 	function pointInTimeinterval($point, $starttime, $endtime, $info = false) {
 		try{
@@ -151,7 +151,7 @@ class timeFilter {
 	/*
 	Gets the points from the jsonTrack ( with the envirocar-query format: {tracks:[{},{},...]} )
 	Checks if the points are in the given time interval using the pointInTimeinterval() function.
-	Can also check specific weekdays with the 
+	Can also check specific weekdays with the $weekday parameter.
 	Returns just the points that are in the time interval ( in the envirocar-query format: {tracks:[{},{},...]} )
 	*/
 	function runTimeFilter ($jsonTracks, $starttime, $endtime, $weekday = null, $info = false) {
