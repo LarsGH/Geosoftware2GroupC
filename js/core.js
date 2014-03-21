@@ -353,7 +353,11 @@ $( "#select_phenomenon" ).change(function() {
 			}
 		});
 		mapLeaflet.addControl(drawControl);
+		mapLeaflet.on('draw:deletestart', function (e) {
+			drawnItems.clearLayers();
+		});
 		mapLeaflet.on('draw:created', function (e) {
+			drawnItems.clearLayers();
 			polygon = [];
 			var type = e.layerType,
 			layer = e.layer;
@@ -374,18 +378,17 @@ $( "#select_phenomenon" ).change(function() {
 				polygon[i]["lat"]=lat;
 				polygon[i]["lng"]=lng
 			};
+			filter.filterPolygon = [];
 			polygon[latLngs.length] = polygon[0];
-			var bla = [];
 			for(var i=0; i < polygon.length; i++){
 				for (var prop in polygon[i]){
-					bla.push(polygon[i][prop]);
+					filter.filterPolygon.push(polygon[i][prop]);
 				};
 			};
-			alert(bla.toString());
+			alert(filter.filterPolygon.toString());
 
 			drawnItems.addLayer(layer);
 		});
-
 		mapLeaflet.on('draw:edited', function (e) {
 			var layers = e.layers;
 			var countOfEditedLayers = 0;
@@ -394,6 +397,15 @@ $( "#select_phenomenon" ).change(function() {
 			});
 			console.log("Edited " + countOfEditedLayers + " layers");
 		});
+		drawControl.setDrawingOptions({
+			rectangle: {
+				shapeOptions: {
+					color: '#8BBB40',
+					fillColor: '#1680C2',
+					opacity: 0.9,
+				}
+			}
+		});	
 		
 		// $.getJSON("https://envirocar.org/api/stable/tracks?limit=3&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
 			
@@ -662,7 +674,7 @@ $( "#select_phenomenon" ).change(function() {
 // Author: Peter Zimmerhof
 var filter = new function() {
 
-
+this.filterPolygon = new Array();
 
 	this.init = function() {
 
