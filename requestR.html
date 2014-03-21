@@ -1,0 +1,46 @@
+<html>
+<head>
+<script src="lib/jQuery-2.0.3/jquery-2.0.3.min.js"></script>
+<title>request FastRWeb</title>
+
+</head>
+<body>
+<script type="text/javascript">
+
+// json with parameters: phenomenon (String), aggr_function (String), x_cell (int), y_cell (int), modus (bool), points(bool), json_track (json)
+  var data_json = { "user" : "me!" };
+	
+	// Funktion um Request an R-script zu schicken
+    function getData() {
+		return $.ajax({
+			type: "POST", 
+			url: "cgi-bin/Rcgi/test",
+			processData: false,
+			contentType: "application/json",
+			data: JSON.stringify(data_json)
+		})
+	 }
+	  
+	  // Funktion, die ausgeführt werden soll wenn Request erfolgreich war
+	  function successData(data) {
+	  //do some stuff
+		document.write("Hat funktioniert!");
+		document.write("</br>");
+		alert(data);
+	}
+	
+	// Funktion zum Anzeigen von einem Bild
+	function showResult(img){
+		document.write("Hat funktioniert!");
+		document.write("</br>");
+		document.write("img src="+img+">");
+		//document.body.appendChild(img);
+	}
+	
+	// Schicke Request und führe Success-Funktion aus wenn erfolgreich
+	getData().done(showResult);
+
+  </script>
+</body>
+</html>
+
