@@ -404,6 +404,14 @@ $( "#select_phenomenon" ).change(function() {
 					fillColor: '#1680C2',
 					opacity: 0.9,
 				}
+			},
+			polygon: {
+				shapeOptions: {
+					color: '#8BBB40',
+					fillColor: '#1680C2',
+					opacity: 0.9,
+				},
+				allowIntersection: false,
 			}
 		});	
 		
@@ -424,7 +432,17 @@ $( "#select_phenomenon" ).change(function() {
 		//db.loadTracks();
 		
 		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
-		$(".leaflet-draw-draw-polygon").html("Hello");
+		//$(".leaflet-draw-draw-polygon").html("Polygon");
+		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
+		$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
+		$("#draw_buttons").append($(".leaflet-draw-edit-remove"));
+		//$("#draw_buttons").append($(".leaflet-draw-actions"));
+		//$(".leaflet-draw-actions").html("Polygon");
+		
+		$(".leaflet-draw-edit-edit").click(function(){
+			$(".leaflet-draw-edit-remove").animate({marginLeft:'56px'});
+		});
+
 	};
 	
 	// Load the Scale

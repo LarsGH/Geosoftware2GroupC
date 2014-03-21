@@ -255,3 +255,45 @@ input[type="text"] {
 .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
 .ui-timepicker-rtl dl dt{ float: right; clear: right; }
 .ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
+#draw_buttons{
+	background: white;
+    background: rgba(255,255,255,1.0);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	height: 28px;
+}
+
+#draw_buttons a {
+	background-image: url('../img/spritesheet.png');
+	background-repeat: no-repeat;
+	width: 28px;
+	height: 28px;
+	white-space: nowrap;
+	display: inline-block;
+	line-height: 27px;
+}
+#draw_buttons .leaflet-draw-draw-polygon {
+	background-position: -31px -2px;
+}
+#draw_buttons .leaflet-draw-draw-rectangle {
+	background-position: -62px -2px;
+}
+
+#draw_buttons a:hover {
+	background-color: #E5E5E5;
+}
+
+#draw_buttons .leaflet-draw-edit-remove.leaflet-disabled {
+	background-position: -242px -2px;
+}
+
+#draw_buttons .leaflet-draw-edit-edit.leaflet-disabled {
+	background-position: -212px -2px;
+}
+
+#draw_buttons .leaflet-draw-edit-remove {
+	background-position: -182px -2px;
+}
+
+#draw_buttons .leaflet-draw-edit-edit {
+	background-position: -152px -2px;
+}
