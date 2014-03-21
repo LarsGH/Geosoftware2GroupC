@@ -32,34 +32,34 @@ if ($_POST["f"] == "getTrackID"){
 }
 
 // createTrackFromID
-if ($_POST["f"] == "createTrackFromID"){
+else if ($_POST["f"] == "createTrackFromID"){
 	$trackID = $_POST["trackID"];
 	$encoded = $_POST["encoded"];
     echo $filteroptions -> createTrackFromID($trackID, $encoded);
 }
 
 // createFilterTracks
-if ($_POST["f"] == "createFilterTracks"){
+else if  ($_POST["f"] == "createFilterTracks"){
     $filterURL = $_POST["filterurl"];
     echo $filteroptions -> createFilterTracks($filterURL);
 }
 
 // getFullTrack
-if ($_POST["f"] == "getFullTrack"){
+else if  ($_POST["f"] == "getFullTrack"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$poiID = $_POST["poiID"];
     echo $filteroptions -> getFullTrack($jsonTracks, $poiID);
 }
 
 // getSelectedTrack
-if ($_POST["f"] == "getSelectedTrack"){
+else if  ($_POST["f"] == "getSelectedTrack"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$poiID = $_POST["poiID"];
     echo $filteroptions -> getSelectedTrack($jsonTracks, $poiID);
 }
 
 // getInitialTimeTrack
-if ($_POST["f"] == "getInitialTimeTrack"){
+else if  ($_POST["f"] == "getInitialTimeTrack"){
 	$starttime = $_POST["starttime"];
 	$endtime = $_POST["endtime"];
     echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit);
@@ -79,20 +79,20 @@ Have a look at spatialFilter.php for function details!
 */
 
 // runSpatialFilter
-if ($_POST["f"] == "runSpatialFilter"){
+else if  ($_POST["f"] == "runSpatialFilter"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$polygon = $_POST["polygon"];
     echo $spatialFilter -> runSpatialFilter($jsonTracks, $polygon);
 }
 
 // getBBox
-if ($_POST["f"] == "getBBox"){
+else if  ($_POST["f"] == "getBBox"){
 	$polygon = $_POST["polygon"];
     echo $spatialFilter -> getBBox($polygon);
 }
 
 // createBBoxURLfromPolygon
-if ($_POST["f"] == "createBBoxURLfromPolygon"){
+else if  ($_POST["f"] == "createBBoxURLfromPolygon"){
 	$polygon = $_POST["polygon"];
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
@@ -110,26 +110,26 @@ Have a look at timeFilter.php for function details!
 */
 
 // createTimestamp
-if ($_POST["f"] == "createTimestamp"){
+else if  ($_POST["f"] == "createTimestamp"){
 	$timeString = $_POST["timeString"];
     echo $timeFilter -> createTimestamp($timeString);
 }
 
 // getWeekday
-if ($_POST["f"] == "getWeekday"){
+else if  ($_POST["f"] == "getWeekday"){
 	$timeString = $_POST["timeString"];
     echo $timeFilter -> getWeekday($timeString);
 }
 
 // checkDay
-if ($_POST["f"] == "checkDay"){
+else if  ($_POST["f"] == "checkDay"){
 	$timeString = $_POST["timeString"];
 	$weekday = $_POST["weekday"];
     echo $timeFilter -> checkDay($timeString, $weekday);
 }
 
 // runTimeFilter
-if ($_POST["f"] == "runTimeFilter"){
+else if  ($_POST["f"] == "runTimeFilter"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$starttime = $_POST["starttime"];
 	$endtime = $_POST["endtime"];
@@ -142,7 +142,7 @@ if ($_POST["f"] == "runTimeFilter"){
 }
 
 // getTimeintervalURL
-if ($_POST["f"] == "getTimeintervalURL"){
+else if  ($_POST["f"] == "getTimeintervalURL"){
 	$starttime = $_POST["starttime"];
 	$endtime = $_POST["endtime"];
 	if(isset($_POST["limit"])){
