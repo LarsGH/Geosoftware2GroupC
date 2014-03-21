@@ -6,9 +6,9 @@
 class spatialFilter {
  
 	/*
-	Checks if a point is inside the given polygon
-	The point is a single point
-	The polygon needs to be an array with lon and lat-coordinates like this:
+	Checks if a point is inside the given polygon.
+	The point is a single point.
+	The polygon ($vertices) needs to be an associative array with lon and lat-coordinates like this:
 		array("lon"=>lonCoord, "lat"=>latCoord)
 	Infoprints can be enabled with the info parameter (default = false)
 	*/
@@ -209,6 +209,7 @@ class spatialFilter {
 	/*
 	Create the boundingbox-URL from a given polygon.
 	Combines the functions getBBox() and getBBoxURL().
+	The $limit parameter can set the result-limit. To have a better performance this value is set to 15 by default.
 	*/
 	function createBBoxURLfromPolygon($polygon, $limit = 15, $info = false){
 		if($info == true){
