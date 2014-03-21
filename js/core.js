@@ -404,7 +404,7 @@ $( "#select_phenomenon" ).change(function() {
 		// 	};});
 		//map.loadTracks("json/measurements.json")
 		//map.loadTracks("json/measurements7.json");	
-		//map.loadTracks("json/measurements6.json");
+		map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
 		map.loadTracks("json/trackarray.json");
 		
@@ -692,6 +692,7 @@ var filter = new function() {
 	};
 
 	this.filter = function() {
+
 		db.loadTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
@@ -723,11 +724,15 @@ var db = new function() {
 					starttime: helper.dateToRequestDateTimeString(from),
 					endtime: helper.dateToRequestDateTimeString(to),
 					limit: "5" 
-				}
-			)
-		 	.done(function( data ) {
-		 		map.loadTrackJSON();
-		 	});
+				},
+				function( data ) {
+		 			for (i = 0; i <= data.tracks.length; i++){
+
+						map.loadTrackJSON(data.tracks[i]);
+					};
+		 		},
+		 		"json"
+			);
 		};
 };
 
