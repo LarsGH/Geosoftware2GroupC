@@ -88,17 +88,8 @@ var page = new function(){
 		switch (name) {
 
 			case "home":
-				$("#filter_btn").click(function() {
-					page.load("analyse");
-				});
-				$( "#from_dt" ).datepicker();
-				$( "#to_dt" ).datepicker();
 
-
-				$("#btn_bb").click(filter.btnBBClick);
-				$("#btn_polygon").click(filter.btnPolygonClick);
-				
-				
+				filter.init();
 				map.init();
 				break;
 
@@ -106,6 +97,14 @@ var page = new function(){
 				$("#analyse_btn").click(function() {
 					page.load("result");
 				});
+				break;
+
+			case "help":
+				$('.scroll').on('click', function(e) {
+					var href = $(this).attr('id');
+					var el = document.getElementById(href + '_target');
+    				el.scrollIntoView(true);
+				}); 
 				break;
 		}
 	};
@@ -159,6 +158,7 @@ var map = new function() {
 
 	// Map variables
 	this.mapLeaflet = "";
+	this.LayerGroup = "";
 	this.sidebar = "";
 	var oldselectedPoint;
 	var datatrack;
@@ -167,13 +167,30 @@ var map = new function() {
 	var polygon = new Array();
 
 	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
-	
+	this.phenomenonUnits = ['km/h', 'u/min', 'l/s', 'g/s', '%', 'kPa', '°C'];
+
+	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
+	this.RpmValues = 	[0, 	750, 	1500, 	2250, 	3000];
+	this.MafValues = 	[0, 	5, 		10, 	15, 	20];
+	this.CalMafValues = [0, 	5, 		10, 	15, 	20];
+	this.EngineValues = [0, 	20, 	40, 	60, 	80];
+	this.PressValues = 	[0, 	25, 	50, 	75, 	100];
+	this.TempValues = 	[0, 	10, 	20, 	30, 	40];
+
+	this.selectedPhenomenon = "Speed";
+	this.selectedPhenomenonUnit = "km/h";
+
+	this.selectedPhenomenonValues = this.SpeedValues;
+
 	// Initialization
 	this.init = function() {
 		mapLeaflet = L.map('map', {
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
 		
+		this.LayerGroup = new L.LayerGroup();
+		this.LayerGroup.addTo(mapLeaflet);
+
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -220,7 +237,105 @@ var map = new function() {
 		map.loadScale();
 		
 		
-		
+		var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (Lmap) {
+
+    var div = L.DomUtil.create('div', 'info legend');
+        div.id = "legend";
+        div.innerHTML += '<select id="select_phenomenon">' +
+	'<option value="Speed">Speed</option>' +
+	'<option value="Rpm">Rpm</option>' +
+	'<option value="MAF">MAF</option>' +
+	'<option value="Calculated MAF">Calculated MAF</option>' +
+	'<option value="Engine Load">Engine Load</option>' +
+	'<option value="Intake Pressure">Intake Pressure</option>' +
+	'<option value="Intake Temperature">Intake Temperature</option>' +
+	'</select><br>' + 
+	'<div id="legend_inner"></div>';
+
+    return div;
+};
+
+legend.addTo(mapLeaflet);
+map.setLegend();
+
+
+//Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
+document.getElementById("legend").onmouseover = function(e) {
+    mapLeaflet.dragging.disable();
+	mapLeaflet.touchZoom.disable();
+	mapLeaflet.doubleClickZoom.disable();
+	mapLeaflet.scrollWheelZoom.disable();
+	mapLeaflet.boxZoom.disable();
+	mapLeaflet.keyboard.disable();
+};
+document.getElementById("legend").onmouseout = function() {
+    mapLeaflet.dragging.enable();
+	mapLeaflet.touchZoom.enable();
+	mapLeaflet.doubleClickZoom.enable();
+	mapLeaflet.scrollWheelZoom.enable();
+	mapLeaflet.boxZoom.enable();
+	mapLeaflet.keyboard.enable();
+};
+
+$( "#select_phenomenon" ).change(function() {
+
+	map.selectedPhenomenon = $("#select_phenomenon").val();
+
+	if (map.selectedPhenomenon == "Speed") {
+		map.selectedPhenomenonValues = map.SpeedValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[0];
+	}
+	else if (map.selectedPhenomenon == "Rpm") {
+		map.selectedPhenomenonValues = map.RpmValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
+	}
+	else if (map.selectedPhenomenon == "MAF") {
+		map.selectedPhenomenonValues = map.MafValues; 
+		map.selectedPhenomenonUnit = map.phenomenonUnits[2];
+	}
+	else if (map.selectedPhenomenon == "Calculated MAF") {
+		map.selectedPhenomenonValues = map.CalMafValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[3];
+	}
+	else if (map.selectedPhenomenon == "Engine Load") {
+		map.selectedPhenomenonValues = map.EngineValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[4];
+	}
+	else if (map.selectedPhenomenon == "Intake Pressure") {
+		map.selectedPhenomenonValues = map.PressValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[5];
+	}
+	else if (map.selectedPhenomenon == "Intake Temperature") {
+		map.selectedPhenomenonValues = map.TempValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[6];
+	}
+
+	map.setLegend();
+
+	for (var i = 0; i < map.LayerGroup.getLayers().length; i++) {
+		map.LayerGroup.getLayers()[i].setStyle(function (feature) {
+
+					col = "#fff";
+					phenomenon = feature.properties.phenomenons[map.selectedPhenomenon];
+
+					if (phenomenon != null && phenomenon != undefined)
+						col = map.getPhenomenonColor(phenomenon.value);
+
+					return {
+						radius: 5,
+						color: "#000",
+						fillColor: col,
+					    weight: 0.5,
+					    opacity: 1,
+					    fillOpacity: 1
+					};
+				});
+	};
+
+});
+
 		// Initialise the FeatureGroup to store editable layers
 		var drawnItems = new L.FeatureGroup();
 		mapLeaflet.addLayer(drawnItems);
@@ -294,7 +409,7 @@ var map = new function() {
 		map.loadTracks("json/trackarray.json");
 		
 		mapLeaflet.on('click', map.onMapClick);
-		
+		//db.loadTracks();
 		
 	};
 	
@@ -382,30 +497,15 @@ var map = new function() {
 	// Load test measurements from json
 	this.loadTrackJSON = function(json) {
 	
-			L.geoJson(json, {
+			this.LayerGroup.addLayer(
+				L.geoJson(json, {
 				style: function (feature) {
-					col = "white";
-					if (feature.properties.phenomenons.Speed != null) { //only if there is a Speed Measurement the Color will be another than white
-						if (feature.properties.phenomenons.Speed.value < 10)
-							col = "#0f0";
-						else if (feature.properties.phenomenons.Speed.value < 20)
-							col = "#4f0";
-						else if (feature.properties.phenomenons.Speed.value < 30)
-							col = "#8f0";
-						else if (feature.properties.phenomenons.Speed.value < 40)
-							col = "#cf0";
-						else if (feature.properties.phenomenons.Speed.value < 50)
-							col = "#ff0";
-						else if (feature.properties.phenomenons.Speed.value < 60)
-							col = "#fc0";
-						else if (feature.properties.phenomenons.Speed.value < 70)
-							col = "#f80";
-						else if (feature.properties.phenomenons.Speed.value < 80)
-							col = "#f40";
-						else
-							col = "#f00";
-					}
-					else col = "#fff";
+
+					col = "#fff";
+					phenomenon = feature.properties.phenomenons[map.selectedPhenomenon];
+
+					if (phenomenon != null && phenomenon != undefined)
+						col = map.getPhenomenonColor(phenomenon.value);
 
 					return {
 						radius: 5,
@@ -497,9 +597,58 @@ var map = new function() {
 				// 	return (feature.properties.phenomenons.Speed.value > 60);
 				// }
 
-			}).addTo(mapLeaflet);
+			})
+			);
 	};
 
+	this.setLegend = function () {
+		legend_inner = '';
+
+		// loop through intervals and generate a label with a colored square for each interval
+	    for (var i = 0; i < map.selectedPhenomenonValues.length; i++) {
+	        legend_inner += 
+	            '<i style="background:' + map.getPhenomenonColor(map.selectedPhenomenonValues[i] + 1) + '"></i> ' +
+	            map.selectedPhenomenonValues[i] + ' ' +
+	            (map.selectedPhenomenonValues[i + 1] ? '&ndash; ' + map.selectedPhenomenonValues[i + 1] + '<br>' : '+<b id="legend_unit">' + map.selectedPhenomenonUnit + '</b>');
+	    }
+
+		$( "#legend_inner" ).html(legend_inner);
+	};
+
+	this.getPhenomenonColor = function (value) {
+
+		col = "#fff";
+
+		if (value != null && value != undefined) {
+			for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
+				if (value < this.selectedPhenomenonValues[i]) {
+
+					col = map.getGreenToRed((i-1) / (this.selectedPhenomenonValues.length - 1) * 100);
+					break;
+				}
+				else if (i == (this.selectedPhenomenonValues.length - 1) && value > this.selectedPhenomenonValues[i]) {
+
+					col = map.getGreenToRed(100);
+					break;
+				}
+			};
+		}
+
+		return col;
+	};
+
+	this.getGreenToRed = function (percent){
+            r = percent>50 ? 255 : Math.floor((percent*2)*255/100);
+            g = percent<50 ? 255 : Math.floor(255-(percent*2-100)*255/100);
+
+            r = r.toString(16);
+            g = g.toString(16);
+
+            if (r < 10) r = '0' + r;
+            if (g < 10) g = '0' + g;
+
+            return '#'+r+''+g+'00';
+    }
 };
 
 
@@ -511,8 +660,39 @@ var map = new function() {
 // Author: Peter Zimmerhof
 var filter = new function() {
 
+
+
 	this.init = function() {
 
+		$("#filter_btn").click(function() {
+			filter.filter();
+		});
+
+		$( "#from_dt" ).datetimepicker();
+		$( "#to_dt" ).datetimepicker();
+
+
+		startdate =  new Date();
+		enddate =  new Date();
+
+		startdate.setTime(startdate.getTime() - (7 * (1000 * 60 * 60 * 24)));
+		startdate.setHours(0);
+		startdate.setMinutes(0);
+		startdate.setSeconds(0);
+
+		enddate.setHours(23);
+		enddate.setMinutes(59);
+		enddate.setSeconds(59);
+
+		$( "#from_dt" ).datetimepicker('setDate', startdate);
+		$( "#to_dt" ).datetimepicker('setDate', enddate);
+
+		$("#btn_bb").click(filter.btnBBClick);
+		$("#btn_polygon").click(filter.btnPolygonClick);
+	};
+
+	this.filter = function() {
+		db.loadTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
 	this.btnBBClick = function() {
@@ -537,16 +717,11 @@ var db = new function() {
 
 		var tracks = "";
 
-		$.post( "php/filter.php", { f: "getTimeintervalURL", starttime: "", endtime: "", limit: 5 })
-			.done(function( data ) {
-				$.post( "php/filter.php", { f: "runTimeFilter", jsonTracks: tracks, starttime: "", endtime: "", limit: 5 })
-					.done(function( data ) {
-						alert( "Data Loaded: " + data );
-
-						map.loadTrackJSON(data.tracks[0]);
-					});
-			});
-	};
+		$.post( "http://giv-geosoft2c.uni-muenster.de/php/filter.php", { f: "getInitialTimeTrack", starttime: helper.dateToDateTimeString(from), endtime: helper.dateToDateTimeString(to), limit: "5" })
+		 	.done(function( data ) {
+		 		map.loadTrackJSON();
+		 	});
+		};
 };
 
 
@@ -556,6 +731,10 @@ var db = new function() {
 // Description: Class for universal functions
 // Author: Peter Zimmerhof
 var helper = new function() {
+
+	this.dateToDateTimeString = function(date) {
+		return helper.dateToDateString(date) + ' ' + helper.dateToTimeString(date);
+	};
 
 	// JS Date to date string
 	this.dateToDateString = function(date) {
