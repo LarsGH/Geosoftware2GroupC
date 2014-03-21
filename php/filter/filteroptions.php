@@ -30,7 +30,8 @@ class filteroptions{
 	}
 	
 	/*
-	Get json from track-URL using the track-ID. If $encoded = true the track will be encoded.
+	Get a json from track-URL using the track-ID. 
+	If $encoded = true the track will be encoded.
 	The trackID is added to the properties of each feature!
 	*/
 	function createTrackFromID ($trackID, $encoded = false, $info = false){
@@ -109,7 +110,8 @@ class filteroptions{
 	(Deleted POIs of that track remain deleted!)
 	The POI-ID must be in the current $jsonTracks.
 	This function deletes all other tracks from the selection ($jsonTracks).
-	The format is the same as the api request result but with all the data.
+	The format is the same as the api request result but with all the data:
+	{"tracks":[{},{}, ... ]}
 	*/
 	function getSelectedTrack ($jsonTracks, $poiID, $info = false) {
 		if($info == true){
@@ -136,6 +138,8 @@ class filteroptions{
 
 	/*
 	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial filtering.
+	The format is the same as the api request result but with all the data:
+	{"tracks":[{},{}, ... ]}
 	*/
 	function getInitialTimeTrack($starttime, $endtime, $limit = 15, $weekday = null, $info = false){
 		if($info == true){
