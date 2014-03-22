@@ -259,14 +259,14 @@ input[type="text"] {
 	background: white;
     background: rgba(255,255,255,1.0);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	height: 28px;
+	height: 27px;
 }
 
 #draw_buttons a {
 	background-image: url('../img/spritesheet.png');
 	background-repeat: no-repeat;
-	width: 28px;
-	height: 28px;
+	width: 27px;
+	height: 27px;
 	white-space: nowrap;
 	display: inline-block;
 	line-height: 27px;
@@ -296,4 +296,28 @@ input[type="text"] {
 
 #draw_buttons .leaflet-draw-edit-edit {
 	background-position: -152px -2px;
+}
+
+#draw_buttons .leaflet-draw-actions a {
+	background-image: none;
+	background-color: #919187;
+	border-left: 1px solid #AAA;
+	color: #FFF;
+	font: 11px/19px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	line-height: 28px;
+	text-decoration: none;
+	padding-left: 2px;
+	padding-right: 2px;
+	height: 27px;
+	-webkit-border-radius: 0 0 0 0;
+	        border-radius: 0 0 0 0;
+	width: auto;
+}
+#draw_buttons .leaflet-draw-actions-bottom {
+	margin-top: 1px;
+}
+#draw_buttons.leaflet-touch .leaflet-draw-actions a {
+	font-size: 12px;
+	line-height: 30px;
+	height: 30px;
 }

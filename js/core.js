@@ -352,6 +352,28 @@ $( "#select_phenomenon" ).change(function() {
 				featureGroup: drawnItems
 			}
 		});
+		//this.changeLanguageOfDrawTool();
+		L.drawLocal.draw.toolbar.buttons.polygon = 'Polygon zeichnen';
+		L.drawLocal.draw.toolbar.buttons.rectangle = 'Rechteck zeichnen';
+		L.drawLocal.draw.toolbar.actions.text = 'Abbrechen';
+		L.drawLocal.draw.toolbar.actions.title = 'Zeichnen Abbrechen';
+		L.drawLocal.draw.toolbar.undo.title = 'Letzten Punkt löschen';
+		L.drawLocal.draw.toolbar.undo.text = 'Zurück';
+		L.drawLocal.draw.handlers.polygon.tooltip.start = 'Klicken Sie auf die Karte um mit dem Zeichnen zu starten';
+		L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Klicken Sie wieder auf die Karte um einen weiteren Punkt zu zeichnen';
+		L.drawLocal.draw.handlers.polygon.tooltip.end = 'Klicken Sie auf den ersten Punkt um das Polygon zu schließen';
+		L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Klicken Sie auf die Karte und ziehen Sie die Maus um ein Rechteck zu ziehen';
+		L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Lassen sie die Maustaste los um das Rechteck zu zeichnen';
+		L.drawLocal.edit.toolbar.actions.save.title = 'Änderungen speichern';
+		L.drawLocal.edit.toolbar.actions.save.text = 'Speichern';
+		L.drawLocal.edit.toolbar.actions.cancel.title = 'Änderungen abbrechen und alle Änderungen verwerfen';
+		L.drawLocal.edit.toolbar.actions.cancel.text = 'Abbrechen';
+		L.drawLocal.edit.toolbar.buttons.edit = 'Bearbeiten';
+		L.drawLocal.edit.toolbar.buttons.editDisabled = 'Keine Zeichnung zum bearbeiten vorhanden';
+		L.drawLocal.edit.toolbar.buttons.remove = 'Löschen';
+		L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Keine Zeichnung zum löschen vorhanden';
+		L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
+		L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
 		mapLeaflet.addControl(drawControl);
 		mapLeaflet.on('draw:deletestart', function (e) {
 			drawnItems.clearLayers();
@@ -385,9 +407,10 @@ $( "#select_phenomenon" ).change(function() {
 					filter.filterPolygon.push(polygon[i][prop]);
 				};
 			};
-			alert(filter.filterPolygon.toString());
-
+			//alert(filter.filterPolygon.toString())
 			drawnItems.addLayer(layer);
+			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
+			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
 		mapLeaflet.on('draw:edited', function (e) {
 			var layers = e.layers;
@@ -396,6 +419,7 @@ $( "#select_phenomenon" ).change(function() {
 			countOfEditedLayers++;
 			});
 			console.log("Edited " + countOfEditedLayers + " layers");
+			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
 		});
 		drawControl.setDrawingOptions({
 			rectangle: {
@@ -426,7 +450,7 @@ $( "#select_phenomenon" ).change(function() {
 		//map.loadTracks("json/measurements7.json");	
 		//map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		//map.loadTracks("json/trackarray.json");
+		map.loadTracks("json/trackarray.json");
 		
 		mapLeaflet.on('click', map.onMapClick);
 		//db.loadTracks();
@@ -435,12 +459,29 @@ $( "#select_phenomenon" ).change(function() {
 		//$(".leaflet-draw-draw-polygon").html("Polygon");
 		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
 		$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
-		$("#draw_buttons").append($(".leaflet-draw-edit-remove"));
-		//$("#draw_buttons").append($(".leaflet-draw-actions"));
-		//$(".leaflet-draw-actions").html("Polygon");
-		
+		$("#draw_buttons").append($(".leaflet-draw-edit-remove"))
+		$("#draw_buttons").append($(".leaflet-draw-actions"));
+		$("#draw_buttons").append($(".leaflet-draw-actions"));
+
+		$(".leaflet-draw-draw-polygon").click(function(){
+			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'98px'});
+			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
+			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
+			$(".leaflet-draw-actions").css('left',"37px");
+		});
+		$(".leaflet-draw-draw-rectangle").click(function(){
+			$(".leaflet-draw-edit-edit").animate({marginLeft:'59px'});
+			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
+			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
+			$(".leaflet-draw-actions").css('left',"64px");
+		});
 		$(".leaflet-draw-edit-edit").click(function(){
-			$(".leaflet-draw-edit-remove").animate({marginLeft:'56px'});
+			if(drawnItems.getLayers().length == 1){
+			$(".leaflet-draw-edit-remove").animate({marginLeft:'113px'},300);
+			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
+			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
+			$(".leaflet-draw-actions").css('left',"91px");
+			};
 		});
 
 	};
@@ -813,7 +854,29 @@ var helper = new function() {
 		return stime;
 	};
 };
-
+// var changeLanguageOfDrawTool = new function(){
+	// L.drawLocal.draw.toolbar.buttons.polygon = 'Polygon zeichnen';
+	// L.drawLocal.draw.toolbar.buttons.rectangle = 'Rechteck zeichnen';
+	// L.drawLocal.draw.toolbar.actions.text = 'Abbrechen';
+	// L.drawLocal.draw.toolbar.actions.title = 'Zeichnen Abbrechen';
+	// L.drawLocal.draw.toolbar.undo.title = 'Letzten Punkt löschen';
+	// L.drawLocal.draw.toolbar.undo.text = 'Zurück';
+	// L.drawLocal.draw.handlers.polygon.tooltip.start = 'Klicken Sie auf die Karte um mit dem Zeichnen zu starten';
+	// L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Klicken Sie wieder auf die Karte um einen weiteren Punkt zu zeichnen';
+	// L.drawLocal.draw.handlers.polygon.tooltip.end = 'Klicken Sie auf den ersten Punkt um das Polygon zu schließen';
+	// L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Klicken Sie auf die Karte und ziehen Sie die Maus um ein Rechteck zu ziehen';
+	// L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Lassen sie die Maustaste los um das Rechteck zu zeichnen';
+	// L.drawLocal.edit.toolbar.actions.save.title = 'Änderungen speichern';
+	// L.drawLocal.edit.toolbar.actions.save.text = 'Speichern';
+	// L.drawLocal.edit.toolbar.actions.cancel.title = 'Änderungen abbrechen und alle Änderungen verwerfen';
+	// L.drawLocal.edit.toolbar.actions.cancel.text = 'Abbrechen';
+	// L.drawLocal.edit.toolbar.buttons.edit = 'Bearbeiten';
+	// L.drawLocal.edit.toolbar.buttons.editDisabled = 'Keine Zeichnung zum bearbeiten vorhanden';
+	// L.drawLocal.edit.toolbar.buttons.remove = 'Löschen';
+	// L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Keine Zeichnung zum löschen vorhanden';
+	// L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
+	// L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
+// }
 
 
 
