@@ -674,6 +674,14 @@ $( "#select_phenomenon" ).change(function() {
 			);
 	};
 
+	this.clearTrackLayers = function() {
+		var layers = this.LayerGroup.getLayers();
+
+		for (var i = 0; i < layers.length; i++) {
+			this.LayerGroup.removeLayer(layers[i]);
+		};
+	};
+
 	this.setLegend = function () {
 		legend_inner = '';
 
@@ -788,6 +796,7 @@ this.filterPolygon = new Array();
 var db = new function() {
 
 	this.loadTracks = function(from, to) {
+		map.clearTrackLayers();
 
 		var tracks = "";
 
@@ -796,7 +805,7 @@ var db = new function() {
 					f: "getInitialTimeTrack",
 					starttime: helper.dateToRequestDateTimeString(from),
 					endtime: helper.dateToRequestDateTimeString(to),
-					limit: "5" 
+					limit: "15" 
 				},
 				function( data ) {
 		 			for (i = 0; i <= data.tracks.length; i++){
