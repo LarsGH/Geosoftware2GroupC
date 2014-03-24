@@ -9,8 +9,7 @@
 
 // Global variables
 
-
-
+var ieh = 1;
 
 // Page class
 // Description: Class for handling all page related functions / events
@@ -100,6 +99,20 @@ var page = new function(){
 				break;
 
 			case "help":
+
+				var url = 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/test2?' + ieh;
+					$.ajax({ 
+					    url : url, 
+					    cache: true,
+					    data : {"":""},
+					    processData : false,
+					}).always(function(){
+						$("#some_target").attr("src", "");
+					    $("#some_target").attr("src", url);
+					    ieh++;
+					});   
+			case "about":
+				
 				$('.scroll').on('click', function(e) {
 					var href = $(this).attr('id');
 					var el = document.getElementById(href + '_target');
@@ -184,12 +197,12 @@ var map = new function() {
 
 	// Initialization
 	this.init = function() {
-		mapLeaflet = L.map('map', {
+		map.mapLeaflet = L.map('map', {
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
 		
 		this.LayerGroup = new L.LayerGroup();
-		this.LayerGroup.addTo(mapLeaflet);
+		this.LayerGroup.addTo(map.mapLeaflet);
 
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
@@ -204,7 +217,7 @@ var map = new function() {
 		
 		var ggl = new L.Google();
 		var ggl2 = new L.Google('TERRAIN');
-		mapLeaflet.addLayer(osm);
+		map.mapLeaflet.addLayer(osm);
 		var Topos = L.TileLayer.multi({
 	13: {
 		url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
@@ -219,21 +232,21 @@ var map = new function() {
 	minZoom: 0,
 	maxZoom: 17,
 });
-		mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topoalt':NRWgeoWMS, 'Topo':Topos}, {}));
+		map.mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topoalt':NRWgeoWMS, 'Topo':Topos}, {}));
 		
 		sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
 
-		mapLeaflet.addControl(sidebar);
+		map.mapLeaflet.addControl(sidebar);
 		L.control.mousePosition({
 			separator: ' , ',
 			position: 'bottomright',
 			prefix: 'Mauszeigerkoordinaten: '
-			}).addTo(mapLeaflet);
-		L.control.pan().addTo(mapLeaflet);
-		L.control.zoomslider().addTo(mapLeaflet);
-		L.control.locate().addTo(mapLeaflet);
+			}).addTo(map.mapLeaflet);
+		L.control.pan().addTo(map.mapLeaflet);
+		L.control.zoomslider().addTo(map.mapLeaflet);
+		L.control.locate().addTo(map.mapLeaflet);
 		map.loadScale();
 		
 		
@@ -257,26 +270,26 @@ legend.onAdd = function (Lmap) {
     return div;
 };
 
-legend.addTo(mapLeaflet);
+legend.addTo(map.mapLeaflet);
 map.setLegend();
 
 
 //Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
 document.getElementById("legend").onmouseover = function(e) {
-    mapLeaflet.dragging.disable();
-	mapLeaflet.touchZoom.disable();
-	mapLeaflet.doubleClickZoom.disable();
-	mapLeaflet.scrollWheelZoom.disable();
-	mapLeaflet.boxZoom.disable();
-	mapLeaflet.keyboard.disable();
+    map.mapLeaflet.dragging.disable();
+	map.mapLeaflet.touchZoom.disable();
+	map.mapLeaflet.doubleClickZoom.disable();
+	map.mapLeaflet.scrollWheelZoom.disable();
+	map.mapLeaflet.boxZoom.disable();
+	map.mapLeaflet.keyboard.disable();
 };
 document.getElementById("legend").onmouseout = function() {
-    mapLeaflet.dragging.enable();
-	mapLeaflet.touchZoom.enable();
-	mapLeaflet.doubleClickZoom.enable();
-	mapLeaflet.scrollWheelZoom.enable();
-	mapLeaflet.boxZoom.enable();
-	mapLeaflet.keyboard.enable();
+    map.mapLeaflet.dragging.enable();
+	map.mapLeaflet.touchZoom.enable();
+	map.mapLeaflet.doubleClickZoom.enable();
+	map.mapLeaflet.scrollWheelZoom.enable();
+	map.mapLeaflet.boxZoom.enable();
+	map.mapLeaflet.keyboard.enable();
 };
 
 $( "#select_phenomenon" ).change(function() {
@@ -338,7 +351,7 @@ $( "#select_phenomenon" ).change(function() {
 
 		// Initialise the FeatureGroup to store editable layers
 		var drawnItems = new L.FeatureGroup();
-		mapLeaflet.addLayer(drawnItems);
+		map.mapLeaflet.addLayer(drawnItems);
 
 		// Initialise the draw control and pass it the FeatureGroup of editable layers
 		var drawControl = new L.Control.Draw({
@@ -374,11 +387,11 @@ $( "#select_phenomenon" ).change(function() {
 		L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Keine Zeichnung zum löschen vorhanden';
 		L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
 		L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
-		mapLeaflet.addControl(drawControl);
-		mapLeaflet.on('draw:deletestart', function (e) {
+		map.mapLeaflet.addControl(drawControl);
+		map.mapLeaflet.on('draw:deletestart', function (e) {
 			drawnItems.clearLayers();
 		});
-		mapLeaflet.on('draw:created', function (e) {
+		map.mapLeaflet.on('draw:created', function (e) {
 			drawnItems.clearLayers();
 			polygon = [];
 			var type = e.layerType,
@@ -412,7 +425,7 @@ $( "#select_phenomenon" ).change(function() {
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
-		mapLeaflet.on('draw:edited', function (e) {
+		map.mapLeaflet.on('draw:edited', function (e) {
 			var layers = e.layers;
 			var countOfEditedLayers = 0;
 			layers.eachLayer(function(layer) {
@@ -450,11 +463,10 @@ $( "#select_phenomenon" ).change(function() {
 		//map.loadTracks("json/measurements7.json");	
 		//map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		map.loadTracks("json/trackarray.json");
+		//map.loadTracks("json/trackarray.json");
 		
-		mapLeaflet.on('click', map.onMapClick);
-		//db.loadTracks();
-		
+		map.mapLeaflet.on('click', map.onMapClick);
+				
 		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
 		//$(".leaflet-draw-draw-polygon").html("Polygon");
 		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
@@ -484,6 +496,7 @@ $( "#select_phenomenon" ).change(function() {
 			};
 		});
 
+		db.loadInitSpaceTracks();
 	};
 	
 	// Load the Scale
@@ -492,7 +505,7 @@ $( "#select_phenomenon" ).change(function() {
 			position: 'bottomleft',
 			maxWidth: 150,
 			imperial: false
-		}).addTo(mapLeaflet);
+		}).addTo(map.mapLeaflet);
 	};
 	
 	this.onMapClick = function(e) {
@@ -531,7 +544,7 @@ $( "#select_phenomenon" ).change(function() {
 	// Load test measurements from json
 	this.loadTracks = function(jsonFile) {
 	$.getJSON(jsonFile, function(json) {
-		for (i = 0; i <= json.tracks.length; i++){
+		for (i = 0; i < json.tracks.length; i++){
 
 			map.loadTrackJSON(json.tracks[i]);
 			};
@@ -774,7 +787,7 @@ this.filterPolygon = new Array();
 
 	this.filter = function() {
 
-		db.loadTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
+		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
 	this.btnBBClick = function() {
@@ -795,7 +808,7 @@ this.filterPolygon = new Array();
 // Author: Peter Zimmerhof
 var db = new function() {
 
-	this.loadTracks = function(from, to) {
+	this.loadInitTimeTracks = function(from, to) {
 		map.clearTrackLayers();
 
 		var tracks = "";
@@ -808,14 +821,46 @@ var db = new function() {
 					limit: "15" 
 				},
 				function( data ) {
-		 			for (i = 0; i <= data.tracks.length; i++){
+					console.log("Data loaded "+data.tracks.length);
+		 			for (i = 0; i < data.tracks.length; i++){
 
 						map.loadTrackJSON(data.tracks[i]);
 					};
 		 		},
 		 		"json"
 			);
-		};
+	};
+
+		
+	this.loadInitSpaceTracks = function() {
+		map.clearTrackLayers();
+
+		var tracks = "";
+		var bounds = new Array();
+
+			bounds['minX'] = map.mapLeaflet.getBounds().getSouthWest().lng;
+			bounds['minY'] = map.mapLeaflet.getBounds().getSouthWest().lat;
+			bounds['maxX'] = map.mapLeaflet.getBounds().getNorthEast().lng;
+			bounds['maxY'] = map.mapLeaflet.getBounds().getNorthEast().lat;
+
+		$.post( "php/filter.php", 
+				{ 
+					f: "getInitialSpaceTrack",
+					bbox : bounds,
+					limit: "0" 
+				},
+				function( data ) {
+					console.log("Data loaded "+data.tracks.length);
+		 			for (i = 0; i < data.tracks.length; i++){
+
+						map.loadTrackJSON(data.tracks[i]);
+					};
+		 		},
+		 		"json"
+			);
+	};
+
+
 };
 
 
@@ -863,29 +908,7 @@ var helper = new function() {
 		return stime;
 	};
 };
-// var changeLanguageOfDrawTool = new function(){
-	// L.drawLocal.draw.toolbar.buttons.polygon = 'Polygon zeichnen';
-	// L.drawLocal.draw.toolbar.buttons.rectangle = 'Rechteck zeichnen';
-	// L.drawLocal.draw.toolbar.actions.text = 'Abbrechen';
-	// L.drawLocal.draw.toolbar.actions.title = 'Zeichnen Abbrechen';
-	// L.drawLocal.draw.toolbar.undo.title = 'Letzten Punkt löschen';
-	// L.drawLocal.draw.toolbar.undo.text = 'Zurück';
-	// L.drawLocal.draw.handlers.polygon.tooltip.start = 'Klicken Sie auf die Karte um mit dem Zeichnen zu starten';
-	// L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Klicken Sie wieder auf die Karte um einen weiteren Punkt zu zeichnen';
-	// L.drawLocal.draw.handlers.polygon.tooltip.end = 'Klicken Sie auf den ersten Punkt um das Polygon zu schließen';
-	// L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Klicken Sie auf die Karte und ziehen Sie die Maus um ein Rechteck zu ziehen';
-	// L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Lassen sie die Maustaste los um das Rechteck zu zeichnen';
-	// L.drawLocal.edit.toolbar.actions.save.title = 'Änderungen speichern';
-	// L.drawLocal.edit.toolbar.actions.save.text = 'Speichern';
-	// L.drawLocal.edit.toolbar.actions.cancel.title = 'Änderungen abbrechen und alle Änderungen verwerfen';
-	// L.drawLocal.edit.toolbar.actions.cancel.text = 'Abbrechen';
-	// L.drawLocal.edit.toolbar.buttons.edit = 'Bearbeiten';
-	// L.drawLocal.edit.toolbar.buttons.editDisabled = 'Keine Zeichnung zum bearbeiten vorhanden';
-	// L.drawLocal.edit.toolbar.buttons.remove = 'Löschen';
-	// L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Keine Zeichnung zum löschen vorhanden';
-	// L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
-	// L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
-// }
+
 
 
 
