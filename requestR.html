@@ -7,8 +7,10 @@
 <body>
 <script type="text/javascript">
 
+var track = null;
+
 // json with parameters: phenomenon (String), aggr_function (String), x_cell (int), y_cell (int), modus (bool), points(bool), json_track (json)
-  var data_json = { "user" : "me!" };
+  var data_json = { "phenomenon" : "Speed", "statistic": "", "x_cell": 100, "y_cell":100, "mode":true, "points": true, "json_track":track};
 	
 	// Funktion um Request an R-script zu schicken
     function getData() {
@@ -20,25 +22,6 @@
 			data: JSON.stringify(data_json)
 		})
 	 }
-	  
-	  // Funktion, die ausgeführt werden soll wenn Request erfolgreich war
-	  function successData(data) {
-	  //do some stuff
-		document.write("Hat funktioniert!");
-		document.write("</br>");
-		alert(data);
-	}
-	
-	// Funktion zum Anzeigen von einem Bild
-	function showResult(img){
-		document.write("Hat funktioniert!");
-		document.write("</br>");
-		document.write("img src="+img+">");
-		//document.body.appendChild(img);
-	}
-	
-	// Schicke Request und führe Success-Funktion aus wenn erfolgreich
-	getData().done(showResult);
 
   </script>
 </body>
