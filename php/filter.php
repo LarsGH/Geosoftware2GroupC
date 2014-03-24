@@ -70,6 +70,17 @@ else if  ($_POST["f"] == "getInitialTimeTrack"){
 	}
 }
 
+// getInitialSpatialTrack
+else if  ($_POST["f"] == "getInitialSpatialTrack"){
+	$bbox = $_POST["bbox"];
+	if(isset($_POST["limit"])){
+		$limit = $_POST["limit"];
+		echo $filteroptions -> getInitialSpatialTrack($bbox, $limit);
+	} else {
+		echo $filteroptions -> getInitialSpatialTrack($bbox);
+	}
+}
+
 /*
 ###############################
 ### SPATIALFILTER functions ###
@@ -130,8 +141,8 @@ else if  ($_POST["f"] == "checkDay"){
 // runTimeFilter
 else if  ($_POST["f"] == "runTimeFilter"){
 	$jsonTracks = $_POST["jsonTracks"];
-	$starttime = $_POST["starttime"];
-	$endtime = $_POST["endtime"];
+	$starttime = urldecode($_POST["starttime"]);
+	$endtime = urldecode($_POST["endtime"]);
 	if(isset($_POST["weekday"])){
 		$weekday = $_POST["weekday"];
 		echo $timeFilter -> runTimeFilter($jsonTracks, $starttime, $endtime, $weekday);
@@ -142,8 +153,8 @@ else if  ($_POST["f"] == "runTimeFilter"){
 
 // getTimeintervalURL
 else if  ($_POST["f"] == "getTimeintervalURL"){
-	$starttime = $_POST["starttime"];
-	$endtime = $_POST["endtime"];
+	$starttime = urldecode($_POST["starttime"]);
+	$endtime = urldecode($_POST["endtime"]);
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
 		echo $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit);
