@@ -44,12 +44,24 @@ echo "<b>The wanted track is: </b> </br>";
 print_r($fullTrack);
 echo "</br></br>";
 
-
+/*
 // Test getInitialTimeTrack()
 echo "<b>Test  getInitialTimeTrack() </b> </br>";
 $initialTimeTrack = $filteroptions ->getInitialTimeTrack("2014-01-10T16:19:02Z", "2014-01-10T18:44:40Z", 10, null, true);
-echo "<b>The initial track is: </b> </br>";
+echo "<b>The initial (time) track is: </b> </br>";
 print_r($initialTimeTrack);
+echo "</br></br>";
+*/
+
+
+// Test getInitialSpatialTrack()
+// create bbox from Muenster for testing
+$bbox = array("minX" =>7.581, "minY" => 51.938, "maxX" => 7.662, "maxY" => 51.971);
+
+echo "<b>Test  getInitialSpatialTrack() </b> </br>";
+$initialSpatialTrack = $filteroptions ->getInitialSpatialTrack($bbox, 10, true);
+echo "<b>The initial (spatial) track  is: </b> </br>";
+print_r($initialSpatialTrack);
 echo "</br></br>";
 
 ?>

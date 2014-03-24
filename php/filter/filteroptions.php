@@ -137,7 +137,7 @@ class filteroptions{
 	}
 
 	/*
-	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial filtering.
+	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial time filtering.
 	The format is the same as the api request result but with all the data:
 	{"tracks":[{},{}, ... ]}
 	*/
@@ -158,6 +158,30 @@ class filteroptions{
 			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
 		}
 		return $filteredTrack;
+	}
+	
+	/*
+	Combines the functions getBBoxURL() and createFilterTracks() to perform the initial spatial filtering.
+	The format is the same as the api request result but with all the data:
+	{"tracks":[{},{}, ... ]}
+	*/
+	function getInitialSpatialTrack($bbox, $limit = 15, $info = false){
+		if($info == true){
+			echo "<u> function getInitialSpatialTrack() </u> </br>"; // Infoprint for testing
+		}
+		// create timeFilter object
+		require_once("spatialFilter.php");
+		$spatialFilter = new spatialFilter();
+		// get the URL
+		$spatialURL = $spatialFilter -> getBBoxURL($bbox, $limit, $info);
+		// create track from the URL
+		$track = $this -> createFilterTracks ($spatialURL, $info);
+		if($info == true){
+			echo "<u> The initial Track has been created from the given boundingbox: </u> </br>"; // Infoprint for testing
+			print_r($bbox);
+			echo "</br>";
+		}
+		return $track;
 	}
 	
 } // end of class
