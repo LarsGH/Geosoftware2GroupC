@@ -91,19 +91,19 @@ Have a look at spatialFilter.php for function details!
 // runSpatialFilter
 else if  ($_POST["f"] == "runSpatialFilter"){
 	$jsonTracks = $_POST["jsonTracks"];
-	$polygon = $_POST["polygon"];
+	$polygon = json_decode($_POST["polygon"]);
     echo $spatialFilter -> runSpatialFilter($jsonTracks, $polygon);
 }
 
 // getBBox
 else if  ($_POST["f"] == "getBBox"){
-	$polygon = $_POST["polygon"];
+	$polygon = json_decode($_POST["polygon"]);
     echo $spatialFilter -> getBBox($polygon);
 }
 
 // createBBoxURLfromPolygon
 else if  ($_POST["f"] == "createBBoxURLfromPolygon"){
-	$polygon = $_POST["polygon"];
+	$polygon = json_decode($_POST["polygon"]);
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
 		echo $spatialFilter -> createBBoxURLfromPolygon($polygon, $limit);
