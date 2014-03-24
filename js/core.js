@@ -100,7 +100,8 @@ var page = new function(){
 
 			case "help":
 
-				var url = 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/test2?' + ieh;
+				// help Seite wurde geladen !!! TEST !!!
+				var url = 'cgi-bin/Rcgi/test2?' + ieh;
 					$.ajax({ 
 					    url : url, 
 					    cache: true,
