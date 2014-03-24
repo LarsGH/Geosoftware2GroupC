@@ -72,7 +72,7 @@ else if  ($_POST["f"] == "getInitialTimeTrack"){
 
 // getInitialSpatialTrack
 else if  ($_POST["f"] == "getInitialSpatialTrack"){
-	$bbox = $_POST["bbox"];
+	$bbox = json_decode($_POST["bbox"]);
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
 		echo $filteroptions -> getInitialSpatialTrack($bbox, $limit);
