@@ -121,12 +121,16 @@ body, html {
 }
 
 .panel_left h2{
-  padding-left: 10px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  margin: 0px;
 }
 
 .panel_left h3{
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  margin: 0px;
+
 }
 
 #page_inner {
@@ -137,7 +141,6 @@ body, html {
   background:#fff;
   display: block;
   position: absolute;
-  overflow: scroll;
 }
 
 #page_container {
@@ -146,18 +149,24 @@ body, html {
 }
 
 .page {
+    overflow: scroll;
   height: 100%;
   width: 100%;
 }
 
 .page h2{
-  padding-left: 10px;
+  padding: 10px;
+  margin: 0px;
 }
 
 .page h3{
-  padding-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 10px;
+  margin: 0px;
+}
+
+.page p{
+  padding: 10px;
+  margin: 0px;
 }
 
 #map { 
