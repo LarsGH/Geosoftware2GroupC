@@ -836,12 +836,12 @@ var db = new function() {
 		map.clearTrackLayers();
 
 		var tracks = "";
-		var bounds = new Array();
-
-			bounds['minX'] = map.mapLeaflet.getBounds().getSouthWest().lng;
-			bounds['minY'] = map.mapLeaflet.getBounds().getSouthWest().lat;
-			bounds['maxX'] = map.mapLeaflet.getBounds().getNorthEast().lng;
-			bounds['maxY'] = map.mapLeaflet.getBounds().getNorthEast().lat;
+		var bounds = {
+			minX : map.mapLeaflet.getBounds().getSouthWest().lng,
+			minY : map.mapLeaflet.getBounds().getSouthWest().lat,
+			maxX : map.mapLeaflet.getBounds().getNorthEast().lng,
+			maxY : map.mapLeaflet.getBounds().getNorthEast().lat
+		};
 
 			console.log( JSON.stringify(bounds));
 
@@ -849,7 +849,7 @@ var db = new function() {
 				{ 
 					f: "getInitialSpatialTrack",
 					bbox : JSON.stringify(bounds),
-					limit: "0" 
+					limit: "5" 
 				},
 				function( data ) {
 					console.log("Data loaded "+data.tracks.length);
