@@ -843,10 +843,12 @@ var db = new function() {
 			bounds['maxX'] = map.mapLeaflet.getBounds().getNorthEast().lng;
 			bounds['maxY'] = map.mapLeaflet.getBounds().getNorthEast().lat;
 
+			console.log( JSON.stringify(bounds));
+
 		$.post( "php/filter.php", 
 				{ 
-					f: "getInitialSpaceTrack",
-					bbox : bounds,
+					f: "getInitialSpatialTrack",
+					bbox : JSON.stringify(bounds),
 					limit: "0" 
 				},
 				function( data ) {
