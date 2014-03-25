@@ -185,7 +185,7 @@ var map = new function() {
 	var Index;
 	var polygon = new Array();
 
-	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
+	this.phenomenons = ["Geschwindigkeit", "Upm", "MAF", "Berechneter MAF", "Last", "Einlassdruck", "Einlasstemperatur"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
 	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
@@ -196,7 +196,7 @@ var map = new function() {
 	this.PressValues = 	[0, 	25, 	50, 	75, 	100];
 	this.TempValues = 	[0, 	10, 	20, 	30, 	40];
 
-	this.selectedPhenomenon = "Speed";
+	this.selectedPhenomenon = "Geschwindigkeit";
 	this.selectedPhenomenonUnit = "km/h";
 
 	this.selectedPhenomenonValues = this.SpeedValues;
@@ -238,7 +238,7 @@ var map = new function() {
 	minZoom: 0,
 	maxZoom: 17,
 });
-		map.mapLeaflet.addControl(new L.Control.Layers( {'OSM':osm, 'Google':ggl, 'Google Terrain':ggl2, 'Topoalt':NRWgeoWMS, 'Topo':Topos}, {}));
+		map.mapLeaflet.addControl(new L.Control.Layers( {'OpenStreetMap':osm, 'Google Satellit':ggl, 'Google Geländekarte':ggl2, 'Topografische Karte':NRWgeoWMS}, {}));
 		
 		sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
@@ -263,13 +263,13 @@ legend.onAdd = function (Lmap) {
     var div = L.DomUtil.create('div', 'info legend');
         div.id = "legend";
         div.innerHTML += '<select id="select_phenomenon">' +
-	'<option value="Speed">Speed</option>' +
-	'<option value="Rpm">Rpm</option>' +
+	'<option value="Speed">Geschwindigkeit</option>' +
+	'<option value="Rpm">Upm</option>' +
 	'<option value="MAF">MAF</option>' +
-	'<option value="Calculated MAF">Calculated MAF</option>' +
-	'<option value="Engine Load">Engine Load</option>' +
-	'<option value="Intake Pressure">Intake Pressure</option>' +
-	'<option value="Intake Temperature">Intake Temperature</option>' +
+	'<option value="Calculated MAF">Berechneter MAF</option>' +
+	'<option value="Engine Load">Last</option>' +
+	'<option value="Intake Pressure">Einlassdruck</option>' +
+	'<option value="Intake Temperature">Einlasstemperatur</option>' +
 	'</select><br>' + 
 	'<div id="legend_inner"></div>';
 
@@ -302,11 +302,11 @@ $( "#select_phenomenon" ).change(function() {
 
 	map.selectedPhenomenon = $("#select_phenomenon").val();
 
-	if (map.selectedPhenomenon == "Speed") {
+	if (map.selectedPhenomenon == "Geschwindigkeit") {
 		map.selectedPhenomenonValues = map.SpeedValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[0];
 	}
-	else if (map.selectedPhenomenon == "Rpm") {
+	else if (map.selectedPhenomenon == "Upm") {
 		map.selectedPhenomenonValues = map.RpmValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
 	}
@@ -314,19 +314,19 @@ $( "#select_phenomenon" ).change(function() {
 		map.selectedPhenomenonValues = map.MafValues; 
 		map.selectedPhenomenonUnit = map.phenomenonUnits[2];
 	}
-	else if (map.selectedPhenomenon == "Calculated MAF") {
+	else if (map.selectedPhenomenon == "Berechneter MAF") {
 		map.selectedPhenomenonValues = map.CalMafValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[3];
 	}
-	else if (map.selectedPhenomenon == "Engine Load") {
+	else if (map.selectedPhenomenon == "Last") {
 		map.selectedPhenomenonValues = map.EngineValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[4];
 	}
-	else if (map.selectedPhenomenon == "Intake Pressure") {
+	else if (map.selectedPhenomenon == "Einlassdruck") {
 		map.selectedPhenomenonValues = map.PressValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[5];
 	}
-	else if (map.selectedPhenomenon == "Intake Temperature") {
+	else if (map.selectedPhenomenon == "Einlasstemperatur") {
 		map.selectedPhenomenonValues = map.TempValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[6];
 	}
@@ -469,7 +469,7 @@ $( "#select_phenomenon" ).change(function() {
 		//map.loadTracks("json/measurements7.json");	
 		//map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		//map.loadTracks("json/trackarray.json");
+		map.loadTracks("json/trackarray.json");
 		
 		map.mapLeaflet.on('click', map.onMapClick);
 				
@@ -568,19 +568,17 @@ $( "#select_phenomenon" ).change(function() {
 	};
 	
 	
-	this.getIndex = function(jsonFile, PointID){
-		$.getJSON( jsonFile, function( data ) {
-		
-			var jsonLength = data.features.length;
-			for ( i=1; i <= jsonLength; i++ ){
-				var chx = data.features[i].properties.id.toString;
+	this.getIndex = function(json, PointID){
+		//console.log("länge des json: "+json.features.length);
+			var jsonLength = json.features.length;
+			for ( var i=0; i < jsonLength; i++ ){
+				var chx = json.features[i].properties.id;
 				//alert(data.features[i].properties.id.toString());
 				if(chx === PointID){
-					Index = i;
+					var Index = i;
 				}
 			}
-		});
-		return Index;
+			return Index;
 	};	
 	
 	
@@ -657,16 +655,38 @@ $( "#select_phenomenon" ).change(function() {
 						};
 						
 						sphenomenon += "</table><hr>" + //index + 
+					
 						"<button id=next_button>N\u00e4chster</button>";
 						
 
 						sidebar.setContent(sphenomenon);
+						var minX = layer.getBounds().getSouthWest().lng;
+						console.log( JSON.stringify(minX));
 						$("#next_button").click(function() {
 							//mapLeaflet.panTo([51.963491, 7.625840], {duration: 0.5});
 							//alert(feature.properties.id.toString() +", "+ feature.properties.phenomenons.trackID.toString());
-							url = "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID;
-							map.getIndex(feature.properties.id, "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID);
-							alert(Index+", "+ url+", "+ feature.properties.id+ " na hats funktioniert?");
+							//url = "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID;
+							var pointIndex = map.getIndex(json, feature.properties.id);
+							var nextPoint = pointIndex +1;
+							var prevPoint = pointIndex -1;
+							//console.log("Index: "+pointIndex +", pointID: "+ feature.properties.id+ ", nextPoint: " + nextPoint+", prevPoint: "+prevPoint);
+							var nextFeature = json.features[nextPoint];
+							//console.log("typeof nextFeature: "+typeof nextFeature)
+							//map.highlightPoint(nextFeature);
+							//console.log("selectedPoint: "+typeof selectedPoint+ "  feature: "+ typeof json.features[nextPoint]+"  ")
+							var prevFeature = json.features[prevPoint];
+							//console.log("current Coordinates: lat: "+feature.geometry.coordinates[1]+", lng: "+feature.geometry.coordinates[0])
+							//console.log("next Coordinates: lat: "+nextFeature.geometry.coordinates[1]+", lng: "+nextFeature.geometry.coordinates[0])
+							var latClick = nextFeature.geometry.coordinates[1];
+							var lngClick = nextFeature.geometry.coordinates[0];
+							//console.log(typeof latClick, typeof lngClick)
+							//layer.fireEvent('click',{layerPoint:(892,1418)});
+							
+							layer.fireEvent('click',
+								{latlng:{
+								lng:lngClick,lat:latClick}
+								}
+							);
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
@@ -691,6 +711,7 @@ $( "#select_phenomenon" ).change(function() {
 
 			})
 			);
+
 	};
 
 	this.clearTrackLayers = function() {
@@ -750,9 +771,6 @@ $( "#select_phenomenon" ).change(function() {
             return '#'+r+''+g+'00';
     }
 };
-
-
-
 
 
 // Filter class
