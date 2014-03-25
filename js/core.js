@@ -108,7 +108,7 @@ var page = new function(){
 					    data : {"":""},
 					    processData : false,
 					}).always(function(){
-						$("#some_target").attr("src", "");
+						
 					    $("#some_target").attr("src", url);
 					    ieh++;
 					});   
