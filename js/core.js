@@ -94,10 +94,59 @@ var page = new function(){
 				$("#analyse_btn").click(function() {
 					page.load("analyse");
 				});
+				$("#timeFilterCheck").click(function(){
+					if($(this).is(':checked')){
+						$("#timeParameters").fadeIn();
+					}
+					else {
+						$("#timeParameters").fadeOut()
+					}
+				});
+				$("#spacialFilterCheck").click(function(){
+					if($(this).is(':checked')){
+						$("#spacialParameters").fadeIn();
+						
+					}
+					else {
+						$("#spacialParameters").fadeOut()
+					}
+				});
+				
+				
 				break;
-
+			
 			case "analyse":
-
+				$("#expertMod").click(function() {
+				if($("#expertMod").is(":checked")){
+					if($("#selectedAttributes").val()!=""){
+						$("#methodExp").fadeIn();
+						if($("#selectedMethod").val()!=""){
+							$("#rasterSize").fadeIn();
+						}
+					}}
+					else{
+						$("#rasterSize").fadeOut();
+						$("#methodExp").fadeOut();
+					}
+				});
+				
+				$("#selectedAttributes").change(function() {
+					if(($("#expertMod").is(':checked'))&&$("#selectedAttributes").val()!=""){
+						$("#methodExp").fadeIn();
+					}
+					else{
+						$("#methodExp").fadeOut();
+					}
+				});
+				$("#selectedMethod").change(function() {
+					if($("#selectedMethod").val()!=""){
+						$("#rasterSize").fadeIn();
+						$("#results_btn").fadeIn();
+					}
+					else{
+						$("#rasterSize").fadeOut();
+					}
+				});				
 				$("#results_btn").click(function() {
 					page.load("result");
 				});
@@ -771,6 +820,8 @@ $( "#select_phenomenon" ).change(function() {
             return '#'+r+''+g+'00';
     }
 };
+
+
 
 
 // Filter class
