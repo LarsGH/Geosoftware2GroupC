@@ -199,7 +199,8 @@ body, html {
   padding: 10px;
 }
 
-#filter_btn, #analyse_btn {
+#filter_btn, #analyse_btn, #results_btn {
+  margin-top: 10px;
   height: 40px;
   width: 230px;
   background: silver;

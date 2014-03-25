@@ -67,11 +67,11 @@ var page = new function(){
 
 			case "home":
 				$('#filter_btn').off('click');
-				page.hideInfo();
+				$('#analyse_btn').off('click');
 				break;
 
 			case "analyse":
-				$("#analyse_btn").off('click');
+				$("#results_btn").off('click');
 				break;
 		}
 	};
@@ -90,10 +90,15 @@ var page = new function(){
 
 				filter.init();
 				map.init();
+
+				$("#analyse_btn").click(function() {
+					page.load("analyse");
+				});
 				break;
 
 			case "analyse":
-				$("#analyse_btn").click(function() {
+
+				$("#results_btn").click(function() {
 					page.load("result");
 				});
 				break;
