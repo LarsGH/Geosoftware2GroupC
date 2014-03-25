@@ -1,24 +1,27 @@
 <div id="home_panel" class="panel_left">
-
-	Von:<br>
-	<input class="textbox"type="text"id="from_dt">
-	Bis:<br>
-	<input class="textbox"type="text"id="to_dt">
-	
-	<br><br>
-	Wochentag:<br>
-	<input type="checkbox" id="cb_mo">Mo.
-	<input type="checkbox" id="cb_di">Di.
-	<input type="checkbox" id="cb_mi">Mi.
-	<input type="checkbox" id="cb_do">Do.
-	<input type="checkbox" id="cb_fr">Fr.
-	<input type="checkbox" id="cb_sa">Sa.
-	<input type="checkbox" id="cb_so">So.
-
-	<br><br>
-	Raum:<br>
-	<div id ="draw_buttons"></div>
-
+	<input type="checkbox" id="timeFilterCheck">Zeitlichen Filter anwenden<br>
+	<div id="timeParameters" hidden="hidden">
+		Von:<br>
+		<input class="textbox"type="text"id="from_dt">
+		Bis:<br>
+		<input class="textbox"type="text"id="to_dt">
+		
+		<br><br>
+		Wochentag:<br>
+		<input type="checkbox" id="cb_mo">Mo.
+		<input type="checkbox" id="cb_di">Di.
+		<input type="checkbox" id="cb_mi">Mi.
+		<input type="checkbox" id="cb_do">Do.
+		<input type="checkbox" id="cb_fr">Fr.
+		<input type="checkbox" id="cb_sa">Sa.
+		<input type="checkbox" id="cb_so">So.
+	</div>
+	<br>
+	<input type="checkbox" id="spacialFilterCheck">Räumlichen Filter anwenden<br>
+	<div id="spacialParameters"hidden="hidden">
+		<br>
+		<div id ="draw_buttons"></div>
+	</div>
 	<br>
 	
 	<button id="filter_btn">Filtern</button>
@@ -35,11 +38,46 @@
 
 
 <div id="analyse_panel" class="panel_left">
-	Parameter #1:<br>
-	<input class="textbox"type="text">
-	Parameter #2:<br>
-	<input class="textbox"type="text">
-	<button id="results_btn">Ergebnisse</button>
+	<input type="checkbox" id="expertMod">Expertenmodus<br>
+	Bitte wählen Sie ein Attribut:<br>
+	<select id="selectedAttributes">
+		<option></option>
+		<option>Geschwindigkeit</option>
+		<option>Upm</option>
+		<option>MAF</option>
+		<option>Berechneter MAF</option>
+		<option>Last</option>
+		<option>Einlassdruck</option>
+		<option>Einlasstemperatur</option>
+	</select>
+	<br>
+	<div id="methodExp" hidden="hidden">
+	Bitte wählen Sie die Aggregationsmethode
+	<br>
+		<select id="selectedMethod">
+			<option></option>
+			<option>Maximum</option>
+			<option>Minimum</option>
+			<option>Mittelwert</option>
+			<option>Median</option>
+			<option>Standardabweichung</option>
+		</select>
+		<br>
+	</div>
+	<div id="rasterSize" hidden="hidden">
+		Rasterbreite (in Meter):
+		<br>
+		<input class="textbox"type="text"id="metersX" value="15">
+		<br>
+		Rasterhöhe (in Meter):
+		<br>
+		<input class="textbox"type="text"id="metersY" value="15">
+		<br>
+	</div>
+	<input type="checkbox" id="pointOverlay">Messpunkte im Ergebnis mit darstellen<br>
+	<br>
+
+	<button id="results_btn" hidden="hidden">Aggregation starten</button>
 </div>
 
 <div id="analyse_page" class="page">
