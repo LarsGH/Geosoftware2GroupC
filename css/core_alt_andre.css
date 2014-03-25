@@ -4,6 +4,7 @@ body, html {
 }
 
 #navbar {
+background-image: url('../img/navbar_30.png');
 	min-height: 75px;
 	width: 100%;
 	padding-bottom: 0px;
@@ -14,12 +15,14 @@ body, html {
   margin:0;
   padding:0px 0;
   z-index: 1001;
-  background:#4C4C4C;
   box-shadow:0px 0px 10px rgba(0, 0, 0, 0.15);
    -webkit-transition: all 0.4s linear;
    -moz-transition: all 0.4s linear;
    -o-transition: all 0.4s linear;
   transition: all 0.4s linear;
+-webkit-box-shadow: 0px -6px 20px 12px rgba(50, 50, 50, 0.75);
+-moz-box-shadow:    0px -6px 20px 12px rgba(50, 50, 50, 0.75);
+box-shadow:         0px -6px 20px 12px rgba(50, 50, 50, 0.75);
 }
 
 #logo {
@@ -103,11 +106,6 @@ body, html {
   background:#808080;
   z-index: 1000;
   color: #FFFFFF;
-  box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
-   -webkit-transition: all 0.4s linear;
-   -moz-transition: all 0.4s linear;
-   -o-transition: all 0.4s linear;
-  transition: all 0.4s linear;
 }
 
 .panel_left {
@@ -121,16 +119,12 @@ body, html {
 }
 
 .panel_left h2{
-  padding-top: 0px;
-  padding-bottom: 10px;
-  margin: 0px;
+  padding-left: 10px;
 }
 
 .panel_left h3{
-  padding-top: 0px;
-  padding-bottom: 10px;
-  margin: 0px;
-
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #page_inner {
@@ -141,6 +135,7 @@ body, html {
   background:#fff;
   display: block;
   position: absolute;
+  overflow: scroll;
 }
 
 #page_container {
@@ -149,24 +144,18 @@ body, html {
 }
 
 .page {
-    overflow: scroll;
   height: 100%;
   width: 100%;
 }
 
 .page h2{
-  padding: 10px;
-  margin: 0px;
+  padding-left: 10px;
 }
 
 .page h3{
-  padding: 10px;
-  margin: 0px;
-}
-
-.page p{
-  padding: 10px;
-  margin: 0px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #map { 
