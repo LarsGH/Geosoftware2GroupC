@@ -234,7 +234,7 @@ var map = new function() {
 	var Index;
 	var polygon = new Array();
 
-	this.phenomenons = ["Geschwindigkeit", "Upm", "MAF", "Berechneter MAF", "Last", "Einlassdruck", "Einlasstemperatur"];
+	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
 	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
@@ -245,7 +245,7 @@ var map = new function() {
 	this.PressValues = 	[0, 	25, 	50, 	75, 	100];
 	this.TempValues = 	[0, 	10, 	20, 	30, 	40];
 
-	this.selectedPhenomenon = "Geschwindigkeit";
+	this.selectedPhenomenon = "Speed";
 	this.selectedPhenomenonUnit = "km/h";
 
 	this.selectedPhenomenonValues = this.SpeedValues;
@@ -351,31 +351,31 @@ $( "#select_phenomenon" ).change(function() {
 
 	map.selectedPhenomenon = $("#select_phenomenon").val();
 
-	if (map.selectedPhenomenon == "Geschwindigkeit") {
+	if (map.selectedPhenomenon == map.phenomenons[0]) {
 		map.selectedPhenomenonValues = map.SpeedValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[0];
 	}
-	else if (map.selectedPhenomenon == "Upm") {
+	else if (map.selectedPhenomenon == map.phenomenons[1]) {
 		map.selectedPhenomenonValues = map.RpmValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
 	}
-	else if (map.selectedPhenomenon == "MAF") {
+	else if (map.selectedPhenomenon == map.phenomenons[2]) {
 		map.selectedPhenomenonValues = map.MafValues; 
 		map.selectedPhenomenonUnit = map.phenomenonUnits[2];
 	}
-	else if (map.selectedPhenomenon == "Berechneter MAF") {
+	else if (map.selectedPhenomenon == map.phenomenons[3]) {
 		map.selectedPhenomenonValues = map.CalMafValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[3];
 	}
-	else if (map.selectedPhenomenon == "Last") {
+	else if (map.selectedPhenomenon == map.phenomenons[4]) {
 		map.selectedPhenomenonValues = map.EngineValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[4];
 	}
-	else if (map.selectedPhenomenon == "Einlassdruck") {
+	else if (map.selectedPhenomenon == map.phenomenons[5]) {
 		map.selectedPhenomenonValues = map.PressValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[5];
 	}
-	else if (map.selectedPhenomenon == "Einlasstemperatur") {
+	else if (map.selectedPhenomenon == map.phenomenons[6]) {
 		map.selectedPhenomenonValues = map.TempValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[6];
 	}
