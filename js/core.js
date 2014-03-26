@@ -91,20 +91,30 @@ var page = new function(){
 					page.load("analyse");
 				});
 				$("#timeFilterCheck").click(function(){
+					$("#filter_btn").fadeIn();
 					if($(this).is(':checked')){
 						$("#timeParameters").fadeIn();
 					}
 					else {
 						$("#timeParameters").fadeOut()
+						if($("#spacialFilterCheck").is(":checked")==false){
+							$("#filter_btn").fadeOut();
+						}
 					}
 				});
 				$("#spacialFilterCheck").click(function(){
+					if(filter.filterPolygon.length!=0){
+						$("#filter_btn").fadeIn();
+					}
 					if($(this).is(':checked')){
 						$("#spacialParameters").fadeIn();
 						
 					}
 					else {
 						$("#spacialParameters").fadeOut()
+						if($("#timeFilterCheck").is(":checked")==false){
+							$("#filter_btn").fadeOut();
+						}
 					}
 				});
 				
