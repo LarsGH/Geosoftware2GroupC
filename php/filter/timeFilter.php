@@ -81,26 +81,28 @@ class timeFilter {
 
 
 	/*
-	Check if the $timeString matches a specific $weekday.
-	The $weekday format must be one of the following: MO, TU,  WE, TH, FR, SA, SU
+	Check if the $timeString matches one of the possible $weekdays.
+	$weekdays is an array that contains one or more of the following: MO, TU,  WE, TH, FR, SA, SU
 	Returns true if the $timeString matches the $weekday and false otherwise.
 	*/
-	function checkDay ($timeString, $weekday, $info = false){
+	function checkDay ($timeString, $weekdays, $info = false){
 		if($info == true){
 			echo "<u> function checkDay() </u> </br>"; // Infoprint for testing
 		}
 		// Get the weekday from the $timeString
 		$weekdayFromString = $this->getWeekday($timeString, $info);
-		// Ensure that the $weekday is uppercase
-		$weekday = strtoupper($weekday);
-		if($weekdayFromString == $weekday){
+		// Ensure that the $weekdays parameter are in uppercase
+		foreach ($weekdays as $weekday) {
+			$weekday = strtoupper($weekday);
+		}
+		if(in_array($weekdayFromString, $weekdays)){
 			if($info == true){
-				echo "The timeString weekday $weekdayFromString matches the weekday ($weekday)!</br>";
+				echo "The timeString weekday $weekdayFromString matches the weekdays!</br>";
 			}
 			return true;
 		}
 		if($info == true){
-			echo "The timeString weekday $weekdayFromString does not match the weekday ($weekday)!</br>";
+			echo "The timeString weekday $weekdayFromString does not match the weekdays!</br>";
 		}
 		return false;
 	}
@@ -154,7 +156,7 @@ class timeFilter {
 	Can also check specific weekdays with the $weekday parameter.
 	Returns just the points that are in the time interval ( in the envirocar-query format: {tracks:[{},{},...]} )
 	*/
-	function runTimeFilter ($jsonTracks, $starttime, $endtime, $weekday = null, $info = false) {
+	function runTimeFilter ($jsonTracks, $starttime, $endtime, $weekdays = null, $info = false) {
 		if ($info == true){
 			echo "<u> function runTimeFilter() </u> </br> Logging for time filtering enabled: </br>"; // Infoprint for testing
 		}
@@ -168,10 +170,10 @@ class timeFilter {
 				// Get the timestring from the point
 				$timeString = $feature["properties"]["time"];
 				// Check if $weekday is set.
-				$weekdayBoolean = true; // true = matches the searched weekday
-				if(!is_null($weekday)){
-					// Check if the points weekday matches the searched $weekday
-					$weekdayBoolean = $this->checkDay($timeString, $weekday, $info); // Sets the weekdayBoolean
+				$weekdayBoolean = true; // true = matches the searched weekdays
+				if(!is_null($weekdays)){
+					// Check if the points weekday matches the searched $weekdays
+					$weekdayBoolean = $this->checkDay($timeString, $weekdays, $info); // Sets the weekdayBoolean
 				}
 				// Create a point with the timestamp as attribute
 				$point = array("timestamp"=>$timeString);

@@ -188,7 +188,7 @@ class filteroptions{
 	*/
 	function getSpaceTimeTrack($polygon, $starttime, $endtime, $weekday = null, $limit = 15, $info = false){
 		if($info == true){
-				echo "<u> function getInitialSpatialTrack() </u> </br>"; // Infoprint for testing
+				echo "<u> function getSpaceTimeTrack() </u> </br>"; // Infoprint for testing
 		}
 		// create the filterURL
 		$spaceTimeURL = $this->createSpaceTimeURL($polygon, $starttime, $endtime, $limit, $info)
