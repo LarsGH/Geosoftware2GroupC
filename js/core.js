@@ -670,37 +670,18 @@ $( "#select_phenomenon" ).change(function() {
 						
 						sphenomenon += "</table><hr>" + //index + 
 					
-						"<button id=next_button>N\u00e4chster</button>";
+						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button>";
 						
 
 						sidebar.setContent(sphenomenon);
-						var minX = layer.getBounds().getSouthWest().lng;
-						console.log( JSON.stringify(minX));
-						$("#next_button").click(function() {
-							//mapLeaflet.panTo([51.963491, 7.625840], {duration: 0.5});
-							//alert(feature.properties.id.toString() +", "+ feature.properties.phenomenons.trackID.toString());
-							//url = "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID;
-							var pointIndex = map.getIndex(json, feature.properties.id);
-							var nextPoint = pointIndex +1;
-							var prevPoint = pointIndex -1;
-							//console.log("Index: "+pointIndex +", pointID: "+ feature.properties.id+ ", nextPoint: " + nextPoint+", prevPoint: "+prevPoint);
-							var nextFeature = json.features[nextPoint];
-							//console.log("typeof nextFeature: "+typeof nextFeature)
-							//map.highlightPoint(nextFeature);
-							//console.log("selectedPoint: "+typeof selectedPoint+ "  feature: "+ typeof json.features[nextPoint]+"  ")
-							var prevFeature = json.features[prevPoint];
-							//console.log("current Coordinates: lat: "+feature.geometry.coordinates[1]+", lng: "+feature.geometry.coordinates[0])
-							//console.log("next Coordinates: lat: "+nextFeature.geometry.coordinates[1]+", lng: "+nextFeature.geometry.coordinates[0])
-							var latClick = nextFeature.geometry.coordinates[1];
-							var lngClick = nextFeature.geometry.coordinates[0];
-							//console.log(typeof latClick, typeof lngClick)
-							//layer.fireEvent('click',{layerPoint:(892,1418)});
-							
-							layer.fireEvent('click',
-								{latlng:{
-								lng:lngClick,lat:latClick}
-								}
-							);
+						$("#show_Track").click(function() {
+							console.log(feature.properties.trackID)
+							var blablubb = feature.properties.trackID;
+							map.clearTrackLayers();
+							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(hure){
+							 map.loadTrackJSON(hure);
+							 console.log(typeof hure);
+							});
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
