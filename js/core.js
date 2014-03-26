@@ -27,10 +27,6 @@ var page = new function(){
 
 		page.load("home");
 
-		$( window ).resize(function() {
-			page.resize();
-		});
-
 		$("#home_btn").click(function() {
 			page.load("home");
 		});
@@ -152,9 +148,9 @@ var page = new function(){
 				});
 				break;
 
-			case "help":
-
-				// help Seite wurde geladen !!! TEST !!!
+			case "result":
+			
+				// !!! Analyse-TEST !!!
 				var url = 'cgi-bin/Rcgi/test2?' + ieh;
 					$.ajax({ 
 					    url : url, 
@@ -166,6 +162,9 @@ var page = new function(){
 					    $("#some_target").attr("src", url);
 					    ieh++;
 					});   
+				break;
+
+			case "help":
 			case "about":
 				
 				$('.scroll').on('click', function(e) {
@@ -175,43 +174,6 @@ var page = new function(){
 				}); 
 				break;
 		}
-	};
-
-	// Toggle the info panel
-	this.toggleInfo = function() {
-		if (page.infoShown)
-			page.hideInfo();
-		else
-			page.showInfo();
-	};
-
-	// Show the info panel
-	this.showInfo = function() {
-		if (!page.infoShown) {
-			$('#panel_right_container').animate({ "left": "-=250px" }, function() {
-					$('#panel_right_container').css({ "left": ($( window ).width() - 500) + "px" });
-				}
-			);
-			page.infoShown = true;
-		}
-	};
-
-	// Hide the info panel
-	this.hideInfo = function() {
-		if (page.infoShown) {
-			$('#panel_right_container').animate({ "left": "+=250px" }, function() {
-				}
-			);
-			page.infoShown = false;
-		}
-	};
-
-	// Page resize function to keep the info panel in positon
-	this.resize = function() {
-		if (page.infoShown)
-			$('#panel_right_container').css({ "left": ($( window ).width() - 500) + "px" });
-		else
-			$('#panel_right_container').css({ "left": "" });
 	};
 
 };
