@@ -27,10 +27,6 @@ var page = new function(){
 
 		page.load("home");
 
-		$( window ).resize(function() {
-			page.resize();
-		});
-
 		$("#home_btn").click(function() {
 			page.load("home");
 		});
@@ -131,8 +127,11 @@ var page = new function(){
 				});
 				
 				$("#selectedAttributes").change(function() {
-					if(($("#expertMod").is(':checked'))&&$("#selectedAttributes").val()!=""){
-						$("#methodExp").fadeIn();
+					if($("#selectedAttributes").val()!=""){
+						$("#results_btn").fadeIn();
+						if($("#expertMod").is(':checked')){
+							$("#methodExp").fadeIn();
+						}
 					}
 					else{
 						$("#methodExp").fadeOut();
@@ -152,9 +151,9 @@ var page = new function(){
 				});
 				break;
 
-			case "help":
-
-				// help Seite wurde geladen !!! TEST !!!
+			case "result":
+			
+				// !!! Analyse-TEST !!!
 				var url = 'cgi-bin/Rcgi/test2?' + ieh;
 					$.ajax({ 
 					    url : url, 
@@ -166,6 +165,9 @@ var page = new function(){
 					    $("#some_target").attr("src", url);
 					    ieh++;
 					});   
+				break;
+
+			case "help":
 			case "about":
 				
 				$('.scroll').on('click', function(e) {
@@ -175,43 +177,6 @@ var page = new function(){
 				}); 
 				break;
 		}
-	};
-
-	// Toggle the info panel
-	this.toggleInfo = function() {
-		if (page.infoShown)
-			page.hideInfo();
-		else
-			page.showInfo();
-	};
-
-	// Show the info panel
-	this.showInfo = function() {
-		if (!page.infoShown) {
-			$('#panel_right_container').animate({ "left": "-=250px" }, function() {
-					$('#panel_right_container').css({ "left": ($( window ).width() - 500) + "px" });
-				}
-			);
-			page.infoShown = true;
-		}
-	};
-
-	// Hide the info panel
-	this.hideInfo = function() {
-		if (page.infoShown) {
-			$('#panel_right_container').animate({ "left": "+=250px" }, function() {
-				}
-			);
-			page.infoShown = false;
-		}
-	};
-
-	// Page resize function to keep the info panel in positon
-	this.resize = function() {
-		if (page.infoShown)
-			$('#panel_right_container').css({ "left": ($( window ).width() - 500) + "px" });
-		else
-			$('#panel_right_container').css({ "left": "" });
 	};
 
 };
@@ -705,37 +670,18 @@ $( "#select_phenomenon" ).change(function() {
 						
 						sphenomenon += "</table><hr>" + //index + 
 					
-						"<button id=next_button>N\u00e4chster</button>";
+						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button>";
 						
 
 						sidebar.setContent(sphenomenon);
-						var minX = layer.getBounds().getSouthWest().lng;
-						console.log( JSON.stringify(minX));
-						$("#next_button").click(function() {
-							//mapLeaflet.panTo([51.963491, 7.625840], {duration: 0.5});
-							//alert(feature.properties.id.toString() +", "+ feature.properties.phenomenons.trackID.toString());
-							//url = "https://envirocar.org/api/stable/tracks/" +feature.properties.phenomenons.trackID;
-							var pointIndex = map.getIndex(json, feature.properties.id);
-							var nextPoint = pointIndex +1;
-							var prevPoint = pointIndex -1;
-							//console.log("Index: "+pointIndex +", pointID: "+ feature.properties.id+ ", nextPoint: " + nextPoint+", prevPoint: "+prevPoint);
-							var nextFeature = json.features[nextPoint];
-							//console.log("typeof nextFeature: "+typeof nextFeature)
-							//map.highlightPoint(nextFeature);
-							//console.log("selectedPoint: "+typeof selectedPoint+ "  feature: "+ typeof json.features[nextPoint]+"  ")
-							var prevFeature = json.features[prevPoint];
-							//console.log("current Coordinates: lat: "+feature.geometry.coordinates[1]+", lng: "+feature.geometry.coordinates[0])
-							//console.log("next Coordinates: lat: "+nextFeature.geometry.coordinates[1]+", lng: "+nextFeature.geometry.coordinates[0])
-							var latClick = nextFeature.geometry.coordinates[1];
-							var lngClick = nextFeature.geometry.coordinates[0];
-							//console.log(typeof latClick, typeof lngClick)
-							//layer.fireEvent('click',{layerPoint:(892,1418)});
-							
-							layer.fireEvent('click',
-								{latlng:{
-								lng:lngClick,lat:latClick}
-								}
-							);
+						$("#show_Track").click(function() {
+							console.log(feature.properties.trackID)
+							var blablubb = feature.properties.trackID;
+							map.clearTrackLayers();
+							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(hure){
+							 map.loadTrackJSON(hure);
+							 console.log(typeof hure);
+							});
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
@@ -831,6 +777,32 @@ var filter = new function() {
 
 this.filterPolygon = new Array();
 
+	this.getWeekday = function(){
+		weekArray = [];
+		if($("#cb_mo").is(':checked')){
+			weekArray.push("mo")
+		}
+		if($("#cb_di").is(':checked')){
+			weekArray.push("tu")
+		}
+		if($("#cb_mi").is(':checked')){
+			weekArray.push("we")
+		}
+		if($("#cb_do").is(':checked')){
+			weekArray.push("th")
+		}
+		if($("#cb_fr").is(':checked')){
+			weekArray.push("fr")
+		}
+		if($("#cb_sa").is(':checked')){
+			weekArray.push("sa")
+		}
+		if($("#cb_so").is(':checked')){
+			weekArray.push("su")
+		}
+		console.log(weekArray[1]);
+	}
+
 	this.init = function() {
 
 		$("#filter_btn").click(function() {
@@ -859,10 +831,49 @@ this.filterPolygon = new Array();
 		$("#btn_bb").click(filter.btnBBClick);
 		$("#btn_polygon").click(filter.btnPolygonClick);
 	};
+	
+	this.getSpaceTimeTrack = function(){
+		filter.getWeekday();
+		map.clearTrackLayers();
+		if($("#timeFilterCheck").is(":checked")){
+			var starttime = $( "#from_dt" ).datetimepicker( 'getDate' );
+			var endtime = $( "#to_dt" ).datetimepicker( 'getDate' );
+		}
+		else{
+			var starttime = null;
+			var endtime = null;
+			filter.weekArray = [];
+		}
+		if($("#spacialFilterCheck").is(":checked")){
+			var filterPolygon = map.filterPolygon;
+		}
+		else{
+			var filterPolygon = null;
+		}
+		$.post( "php/filter.php", 
+				{ 
+					f: "getSpaceTimeTrack",
+					starttime: starttime,
+					endtime: enddtime,
+					weekday: filter.weekArray,
+					polygon: filterPolygon,
+					limit: "15",
+					
+				},
+				function( data ) {
+					console.log("Data loaded "+data.tracks.length);
+		 			for (i = 0; i < data.tracks.length; i++){
+
+						map.loadTrackJSON(data.tracks[i]);
+					};
+		 		},
+		 		"json"
+			);
+	}
 
 	this.filter = function() {
 
-		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
+		db.loadDefaultTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
 	this.btnBBClick = function() {
@@ -883,14 +894,14 @@ this.filterPolygon = new Array();
 // Author: Peter Zimmerhof
 var db = new function() {
 
-	this.loadInitTimeTracks = function(from, to) {
+	this.loadDefaultTracks = function(from, to) {
 		map.clearTrackLayers();
 
 		var tracks = "";
 
 		$.post( "php/filter.php", 
 				{ 
-					f: "getInitialTimeTrack",
+					f: "loadDefaultTracks",
 					starttime: helper.dateToRequestDateTimeString(from),
 					endtime: helper.dateToRequestDateTimeString(to),
 					limit: "15" 
