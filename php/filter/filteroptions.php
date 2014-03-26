@@ -191,7 +191,7 @@ class filteroptions{
 				echo "<u> function getSpaceTimeTrack() </u> </br>"; // Infoprint for testing
 		}
 		// create the filterURL
-		$spaceTimeURL = $this->createSpaceTimeURL($polygon, $starttime, $endtime, $limit, $info)
+		$spaceTimeURL = $this->createSpaceTimeURL($polygon, $starttime, $endtime, $limit, $info);
 		// create track from the URL
 		$tracks = $this->createFilterTracks ($spaceTimeURL, $info);
 		// create spatialFilter object

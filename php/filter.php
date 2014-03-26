@@ -119,10 +119,10 @@ else if  ($_POST["f"] == "getSpaceTimeTrack"){
 			}
 		}
 	// CASE2: just spatial data is set
-	} else if(isset($_POST["polygon"]) !isset(($_POST["starttime"])) && !isset($_POST["endtime"]) ){
+	} else if(isset($_POST["polygon"]) && !isset($_POST["starttime"]) && !isset($_POST["endtime"]) ){
 		// if limit is set
 			if(isset($_POST["limit"])){
-				echo $filteroptions -> createTrackFromPolygon($polygon, $limit)
+				echo $filteroptions -> createTrackFromPolygon($polygon, $limit);
 			} else {
 				echo $filteroptions -> createTrackFromPolygon($polygon); // without limit
 			}
