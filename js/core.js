@@ -949,7 +949,7 @@ var db = new function() {
 
 		$.post( "php/filter.php", 
 				{ 
-					f: "getInitialSpatialTrack",
+					f: "loadDefaultTracks",
 					bbox : JSON.stringify(bounds),
 					limit: "5" 
 				},
