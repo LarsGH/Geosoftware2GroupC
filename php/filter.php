@@ -81,6 +81,74 @@ else if  ($_POST["f"] == "getInitialSpatialTrack"){
 	}
 }
 
+// getSpaceTimeTrack
+else if  ($_POST["f"] == "getSpaceTimeTrack"){
+	// bind all variables that are set
+	if(isset($_POST["polygon"])){
+		$polygon = json_decode($_POST["polygon"], true);
+	}
+	if(isset($_POST["starttime"])){
+		$starttime = urldecode($_POST["starttime"]);
+	}
+	if(isset($_POST["endtime"])){
+		$endtime = urldecode($_POST["endtime"]);
+	}
+	if(isset($_POST["weekday"])){
+		$weekday = $_POST["weekday"];
+	}
+	if(isset($_POST["limit"])){
+		$limit = $_POST["limit"];
+	}
+	// CASE1: all needed data is set
+	if(isset(($_POST["starttime"])) && isset($_POST["endtime"]) && isset($_POST["polygon"])){
+		// if weekday is set
+		if(isset($_POST["weekday"])){
+			// if limit is set
+			if(isset($_POST["limit"])){
+				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, $weekday, $polygon, $limit); // with limit
+			} else {
+				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, $weekday, $polygon); // without limit
+			}
+		// weekday not set
+		} else {
+			// if limit is set
+			if(isset($_POST["limit"])){
+				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, null, $polygon, $limit); // with limit
+			} else {
+				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, null, $polygon); // without limit
+			}
+		}
+	// CASE2: just spatial data is set
+	} else if(isset($_POST["polygon"]) !isset(($_POST["starttime"])) && !isset($_POST["endtime"]) ){
+		// if limit is set
+			if(isset($_POST["limit"])){
+				echo $filteroptions -> createTrackFromPolygon($polygon, $limit)
+			} else {
+				echo $filteroptions -> createTrackFromPolygon($polygon); // without limit
+			}
+	// CASE3: just temporal data is set
+	} else {
+		// if weekday is set
+		if(isset($_POST["weekday"])){
+			// if limit is set
+			if(isset($_POST["limit"])){
+				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit, $weekday); // with limit
+			} else {
+				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $weekday); // without limit
+			}
+		// weekday not set
+		} else {
+			// if limit is set
+			if(isset($_POST["limit"])){
+				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit); // with limit
+			} else {
+				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime); // without limit
+			}
+		}
+	}
+}
+
+
 /*
 ###############################
 ### SPATIALFILTER functions ###
