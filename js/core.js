@@ -831,6 +831,45 @@ this.filterPolygon = new Array();
 		$("#btn_bb").click(filter.btnBBClick);
 		$("#btn_polygon").click(filter.btnPolygonClick);
 	};
+	
+	this.getSpaceTimeTrack = function(){
+		filter.getWeekday();
+		map.clearTrackLayers();
+		if($("#timeFilterCheck").is(":checked")){
+			var starttime = $( "#from_dt" ).datetimepicker( 'getDate' );
+			var endtime = $( "#to_dt" ).datetimepicker( 'getDate' );
+		}
+		else{
+			var starttime = null;
+			var endtime = null;
+			filter.weekArray = [];
+		}
+		if($("#spacialFilterCheck").is(":checked")){
+			var filterPolygon = map.filterPolygon;
+		}
+		else{
+			var filterPolygon = null;
+		}
+		$.post( "php/filter.php", 
+				{ 
+					f: "getSpaceTimeTrack",
+					starttime: starttime,
+					endtime: enddtime,
+					weekday: filter.weekArray,
+					polygon: filterPolygon,
+					limit: "15",
+					
+				},
+				function( data ) {
+					console.log("Data loaded "+data.tracks.length);
+		 			for (i = 0; i < data.tracks.length; i++){
+
+						map.loadTrackJSON(data.tracks[i]);
+					};
+		 		},
+		 		"json"
+			);
+	}
 
 	this.filter = function() {
 
