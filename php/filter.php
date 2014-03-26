@@ -94,7 +94,7 @@ else if  ($_POST["f"] == "getSpaceTimeTrack"){
 		$endtime = urldecode($_POST["endtime"]);
 	}
 	if(isset($_POST["weekday"])){
-		$weekday = json_decode($_POST["weekday"]);
+		$weekday = json_decode($_POST["weekday"], true);
 	}
 	if(isset($_POST["limit"])){
 		$limit = $_POST["limit"];
