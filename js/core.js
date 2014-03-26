@@ -435,6 +435,7 @@ $( "#select_phenomenon" ).change(function() {
 		map.mapLeaflet.on('draw:deletestart', function (e) {
 			$("#filter_btn").fadeOut();
 			drawnItems.clearLayers();
+			filter.filterPolygon=[];
 		});
 		map.mapLeaflet.on('draw:created', function (e) {
 			$("#filter_btn").fadeIn();
