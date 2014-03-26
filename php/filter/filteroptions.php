@@ -148,7 +148,7 @@ class filteroptions{
 		// create timeFilter object
 		require_once("timeFilter.php");
 		$timeFilter = new timeFilter();
-		// get the URL
+		// create the filterURL
 		$timeURL = $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit, $info);
 		// create track from the URL
 		$track = $this -> createFilterTracks ($timeURL, $info);
@@ -165,14 +165,14 @@ class filteroptions{
 	The format is the same as the api request result but with all the data:
 	{"tracks":[{},{}, ... ]}
 	*/
-	function getInitialSpatialTrack($bbox, $limit = 15, $info = false){
+	function loadDefaultTracks($bbox, $limit = 15, $info = false){
 		if($info == true){
-			echo "<u> function getInitialSpatialTrack() </u> </br>"; // Infoprint for testing
+			echo "<u> function loadDefaultTracks() </u> </br>"; // Infoprint for testing
 		}
-		// create timeFilter object
+		// create spatialFilter object
 		require_once("spatialFilter.php");
 		$spatialFilter = new spatialFilter();
-		// get the URL
+		// create the filterURL
 		$spatialURL = $spatialFilter -> getBBoxURL($bbox, $limit, $info);
 		// create track from the URL
 		$track = $this -> createFilterTracks ($spatialURL, $info);
@@ -182,6 +182,53 @@ class filteroptions{
 			echo "</br>";
 		}
 		return $track;
+	}
+	
+	/*
+	Create a filter URL that combines the spatial and the temporal filter.
+	*/
+	function createSpaceTimeURL($polygon, $starttime, $endtime, $limit = 15, $info = false){
+		if($info == true){
+			echo "<u> function createSpateTimeURL() </u> </br>"; // Infoprint for testing
+		}
+		// create spatialFilter object
+		require_once("spatialFilter.php");
+		$spatialFilter = new spatialFilter();
+		// create the boundingbox-URL from a given polygon.
+		$bboxURL = $spatialFilter->createBBoxURLfromPolygon($polygon, $limit, $info);
+		// append the URL information for time filtering
+		// Edit the timestamp format
+		$start = substr(trim($starttime), 0, 10)."T".substr(trim($starttime),-8, 8)."Z";
+		$end = substr(trim($endtime), 0, 10)."T".substr(trim($endtime),-8, 8)."Z";
+		$spaceTimeURL = $bboxURL."&contains=".$end.",".$start;
+		if($info == true){
+			echo "The URL to request the selected space and time is: $spaceTimeURL </br>"; // Infoprint for testing
+		}
+		return $spaceTimeURL;
+	}
+	
+	/*
+	Create Track from both, space and time parameter (if available)
+	*/
+	function getSpaceTimeTrack($polygon, $starttime, $endtime, $weekday = null, $limit = 15, $info = false){
+		if($info == true){
+				echo "<u> function getInitialSpatialTrack() </u> </br>"; // Infoprint for testing
+		}
+		// create the filterURL
+		$spaceTimeURL = $this->createSpaceTimeURL($polygon, $starttime, $endtime, $limit, $info)
+		// create track from the URL
+		$tracks = $this -> createFilterTracks ($spaceTimeURL, $info);
+		// create spatialFilter object
+		require_once("spatialFilter.php");
+		$spatialFilter = new spatialFilter();
+		// create timeFilter object
+		require_once("timeFilter.php");
+		$timeFilter = new timeFilter();
+		// run spatialFilter
+		$tracks = $spatialFilter -> runSpatialFilter ($tracks, $polygon, $info);
+		// run timeFilter
+		$tracks = $timeFilter -> runTimeFilter ($jsonTracks, $starttime, $endtime, $weekday, $info);
+		return $tracks;
 	}
 	
 } // end of class
