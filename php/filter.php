@@ -100,7 +100,7 @@ else if  ($_POST["f"] == "getSpaceTimeTrack"){
 		$limit = $_POST["limit"];
 	}
 	// CASE1: all needed data is set
-	if(isset(($_POST["starttime"])) && isset($_POST["endtime"]) && isset($_POST["polygon"])){
+	if(isset($_POST["starttime"]) && isset($_POST["endtime"]) && isset($_POST["polygon"])){
 		// if weekday is set
 		if(isset($_POST["weekday"])){
 			// if limit is set
