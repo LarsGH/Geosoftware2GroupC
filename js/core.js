@@ -127,8 +127,11 @@ var page = new function(){
 				});
 				
 				$("#selectedAttributes").change(function() {
-					if(($("#expertMod").is(':checked'))&&$("#selectedAttributes").val()!=""){
-						$("#methodExp").fadeIn();
+					if($("#selectedAttributes").val()!=""){
+						$("#results_btn").fadeIn();
+						if($("#expertMod").is(':checked')){
+							$("#methodExp").fadeIn();
+						}
 					}
 					else{
 						$("#methodExp").fadeOut();
