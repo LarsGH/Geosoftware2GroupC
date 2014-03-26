@@ -54,14 +54,27 @@ echo "</br></br>";
 */
 
 
-// Test getInitialSpatialTrack()
+// Test loadDefaultTracks()
 // create bbox from Muenster for testing
 $bbox = array("minX" =>7.581, "minY" => 51.938, "maxX" => 7.662, "maxY" => 51.971);
 
-echo "<b>Test  getInitialSpatialTrack() </b> </br>";
+echo "<b>Test  loadDefaultTracks() </b> </br>";
 $initialSpatialTrack = $filteroptions ->getInitialSpatialTrack($bbox, 10, true);
 echo "<b>The initial (spatial) track  is: </b> </br>";
 print_r($initialSpatialTrack);
+echo "</br></br>";
+
+// Test getFullTrack()
+// create a polygon for testing
+$polygon = array();
+array_push( $polygon, array("lon" => 11.56, "lat" => 47.45 ));
+array_push( $polygon, array("lon" => 11.56, "lat" => 47.60 ));
+array_push( $polygon, array("lon" => 11.66, "lat" => 47.60 ));
+array_push( $polygon, array("lon" => 11.66, "lat" => 47.45 ));
+array_push( $polygon, array("lon" => 11.56, "lat" => 47.45 ));
+
+echo "<b>Test  createSpaceTimeURL() </b> </br>";
+$fullTrack = $filteroptions ->createSpaceTimeURL ($polygon, "2014-01-10 16:19:02", "2014-01-10 18:44:40", 15, true);
 echo "</br></br>";
 
 ?>
