@@ -175,12 +175,13 @@ var page = new function(){
 				};
 
 				// !!! Analyse-TEST !!!
-				var url = 'cgi-bin/Rcgi/aggregation?' + ieh;
+				var url = '/cgi-bin/Rcgi/aggregation?' + ieh;
 					$.ajax({ 
 					    url : url, 
 					    cache: true,
 					    data : JSON.stringify(json),
 					    processData : false,
+					    contentType : 'image/png',
 					}).always(function(){
 						
 					    $("#some_target").attr("src", url);
@@ -969,7 +970,7 @@ var db = new function() {
 					console.log("Data loaded "+data.tracks.length);
 
 					map.tracks = data.tracks;
-					
+
 		 			for (i = 0; i < data.tracks.length; i++){
 
 						map.loadTrackJSON(data.tracks[i]);
