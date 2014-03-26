@@ -777,6 +777,32 @@ var filter = new function() {
 
 this.filterPolygon = new Array();
 
+	this.getWeekday = function(){
+		weekArray = [];
+		if($("#cb_mo").is(':checked')){
+			weekArray.push("mo")
+		}
+		if($("#cb_di").is(':checked')){
+			weekArray.push("tu")
+		}
+		if($("#cb_mi").is(':checked')){
+			weekArray.push("we")
+		}
+		if($("#cb_do").is(':checked')){
+			weekArray.push("th")
+		}
+		if($("#cb_fr").is(':checked')){
+			weekArray.push("fr")
+		}
+		if($("#cb_sa").is(':checked')){
+			weekArray.push("sa")
+		}
+		if($("#cb_so").is(':checked')){
+			weekArray.push("su")
+		}
+		console.log(weekArray[1]);
+	}
+
 	this.init = function() {
 
 		$("#filter_btn").click(function() {
