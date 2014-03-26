@@ -432,9 +432,11 @@ $( "#select_phenomenon" ).change(function() {
 		L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
 		map.mapLeaflet.addControl(drawControl);
 		map.mapLeaflet.on('draw:deletestart', function (e) {
+			$("#filter_btn").fadeOut();
 			drawnItems.clearLayers();
 		});
 		map.mapLeaflet.on('draw:created', function (e) {
+			$("#filter_btn").fadeIn();
 			drawnItems.clearLayers();
 			polygon = [];
 			var type = e.layerType,
