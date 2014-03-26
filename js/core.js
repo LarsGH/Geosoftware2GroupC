@@ -678,9 +678,9 @@ $( "#select_phenomenon" ).change(function() {
 							console.log(feature.properties.trackID)
 							var blablubb = feature.properties.trackID;
 							map.clearTrackLayers();
-							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(hure){
-							 map.loadTrackJSON(hure);
-							 console.log(typeof hure);
+							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(data){
+								map.loadTrackJSON(data);
+								console.log(typeof data);
 							});
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
