@@ -153,12 +153,23 @@ var page = new function(){
 
 			case "result":
 			
+				var json = 
+				{
+					"phenomenon" : "Speed",
+					"statistic" : "Mittelwert",
+					"x_cell" : 300,
+					"y_cell" : 300,
+					"mode" : false,
+					"points" : true,
+					"tracks" : map.tracks
+				};
+
 				// !!! Analyse-TEST !!!
-				var url = 'cgi-bin/Rcgi/test2?' + ieh;
+				var url = 'cgi-bin/Rcgi/aggregation?' + ieh;
 					$.ajax({ 
 					    url : url, 
 					    cache: true,
-					    data : {"":""},
+					    data : JSON.stringify(json),
 					    processData : false,
 					}).always(function(){
 						
@@ -198,6 +209,8 @@ var map = new function() {
 	var trackid;
 	var Index;
 	var polygon = new Array();
+
+	this.tracks = null;
 
 	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/s', 'g/s', '%', 'kPa', '°C'];
@@ -678,9 +691,9 @@ $( "#select_phenomenon" ).change(function() {
 							console.log(feature.properties.trackID)
 							var blablubb = feature.properties.trackID;
 							map.clearTrackLayers();
-							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(hure){
-							 map.loadTrackJSON(hure);
-							 console.log(typeof hure);
+							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(data){
+								map.loadTrackJSON(data);
+								console.log(typeof data);
 							});
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
@@ -908,6 +921,9 @@ var db = new function() {
 				},
 				function( data ) {
 					console.log("Data loaded "+data.tracks.length);
+
+					map.tracks = data.tracks;
+
 		 			for (i = 0; i < data.tracks.length; i++){
 
 						map.loadTrackJSON(data.tracks[i]);
@@ -939,6 +955,9 @@ var db = new function() {
 				},
 				function( data ) {
 					console.log("Data loaded "+data.tracks.length);
+
+					map.tracks = data.tracks;
+					
 		 			for (i = 0; i < data.tracks.length; i++){
 
 						map.loadTrackJSON(data.tracks[i]);
