@@ -135,30 +135,6 @@ class filteroptions{
 		$encodedResult = json_encode($decodedTracks); // encode the result
 		return $encodedResult;
 	}
-
-	/*
-	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial time filtering.
-	The format is the same as the api request result but with all the data:
-	{"tracks":[{},{}, ... ]}
-	*/
-	function getInitialTimeTrack($starttime, $endtime, $limit = 15, $weekday = null, $info = false){
-		if($info == true){
-			echo "<u> function getInitialTimeTrack() </u> </br>"; // Infoprint for testing
-		}
-		// create timeFilter object
-		require_once("timeFilter.php");
-		$timeFilter = new timeFilter();
-		// create the filterURL
-		$timeURL = $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit, $info);
-		// create track from the URL
-		$track = $this -> createFilterTracks ($timeURL, $info);
-		// filter the given time interval
-		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
-		if($info == true){
-			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
-		}
-		return $filteredTrack;
-	}
 	
 	/*
 	Combines the functions getBBoxURL() and createFilterTracks() to perform the initial spatial filtering.
@@ -229,6 +205,54 @@ class filteroptions{
 		// run timeFilter
 		$tracks = $timeFilter -> runTimeFilter ($jsonTracks, $starttime, $endtime, $weekday, $info);
 		return $tracks;
+	}
+	
+	/*
+	Create Track from polygon.
+	The polygon has to be an array of points like this: 
+		array("lon"=>lonCoord, "lat"=>latCoord)
+	*/
+	function createTrackFromPolygon($polygon, $limit = 15, $info = false){
+		if($info == true){
+			echo "<u> function createTrackFromPolygon() </u> </br>"; // Infoprint for testing
+		}
+		// create spatialFilter object
+		require_once("spatialFilter.php");
+		$spatialFilter = new spatialFilter();
+		// create the boundingbox-URL from a given polygon.
+		$bboxURL = $spatialFilter->createBBoxURLfromPolygon($polygon, $limit, $info);
+		// create track from the URL
+		$tracks = $this -> createFilterTracks ($spaceTimeURL, $info);
+		// run spatialFilter
+		$tracks = $spatialFilter -> runSpatialFilter ($tracks, $polygon, $info);
+		if($info == true){
+			echo "<u> function createTrackFromPolygon() </u> </br>"; // Infoprint for testing
+		}
+		return $tracks;
+	}
+	
+		/*
+	Combines the functions getTimeintervalURL(), createFilterTracks() and runTimeFilter() to perform the initial time filtering.
+	The format is the same as the api request result but with all the data:
+	{"tracks":[{},{}, ... ]}
+	*/
+	function getInitialTimeTrack($starttime, $endtime, $limit = 15, $weekday = null, $info = false){
+		if($info == true){
+			echo "<u> function getInitialTimeTrack() </u> </br>"; // Infoprint for testing
+		}
+		// create timeFilter object
+		require_once("timeFilter.php");
+		$timeFilter = new timeFilter();
+		// create the filterURL
+		$timeURL = $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit, $info);
+		// create track from the URL
+		$track = $this -> createFilterTracks ($timeURL, $info);
+		// filter the given time interval
+		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
+		if($info == true){
+			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
+		}
+		return $filteredTrack;
 	}
 	
 } // end of class
