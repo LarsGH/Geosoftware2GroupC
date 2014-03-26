@@ -886,7 +886,7 @@ this.filterPolygon = new Array();
 
 	this.filter = function() {
 
-		db.loadDefaultTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
+		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
 	this.btnBBClick = function() {
@@ -907,14 +907,14 @@ this.filterPolygon = new Array();
 // Author: Peter Zimmerhof
 var db = new function() {
 
-	this.loadDefaultTracks = function(from, to) {
+	this.loadInitTimeTracks = function(from, to) {
 		map.clearTrackLayers();
 
 		var tracks = "";
 
 		$.post( "php/filter.php", 
 				{ 
-					f: "loadDefaultTracks",
+					f: "getInitialTimeTrack",
 					starttime: helper.dateToRequestDateTimeString(from),
 					endtime: helper.dateToRequestDateTimeString(to),
 					limit: "15" 
