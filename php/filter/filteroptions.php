@@ -193,7 +193,7 @@ class filteroptions{
 		// create the filterURL
 		$spaceTimeURL = $this->createSpaceTimeURL($polygon, $starttime, $endtime, $limit, $info)
 		// create track from the URL
-		$tracks = $this -> createFilterTracks ($spaceTimeURL, $info);
+		$tracks = $this->createFilterTracks ($spaceTimeURL, $info);
 		// create spatialFilter object
 		require_once("spatialFilter.php");
 		$spatialFilter = new spatialFilter();
@@ -222,7 +222,7 @@ class filteroptions{
 		// create the boundingbox-URL from a given polygon.
 		$bboxURL = $spatialFilter->createBBoxURLfromPolygon($polygon, $limit, $info);
 		// create track from the URL
-		$tracks = $this -> createFilterTracks ($spaceTimeURL, $info);
+		$tracks = $this->createFilterTracks ($spaceTimeURL, $info);
 		// run spatialFilter
 		$tracks = $spatialFilter -> runSpatialFilter ($tracks, $polygon, $info);
 		if($info == true){
@@ -246,7 +246,7 @@ class filteroptions{
 		// create the filterURL
 		$timeURL = $timeFilter -> getTimeintervalURL($starttime, $endtime, $limit, $info);
 		// create track from the URL
-		$track = $this -> createFilterTracks ($timeURL, $info);
+		$track = $this->createFilterTracks ($timeURL, $info);
 		// filter the given time interval
 		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
 		if($info == true){
