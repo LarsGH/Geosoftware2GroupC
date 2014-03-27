@@ -212,13 +212,25 @@ class spatialFilter {
 	The $limit parameter can set the result-limit. To have a better performance this value is set to 15 by default.
 	*/
 	function createBBoxURLfromPolygon($polygon, $limit = 15, $info = false){
-		if($info == true){
-			echo "<u> function createBBoxURLfromPolygon() </u> </br>"; // Infoprint for testing
+		try{
+			if($info == true){
+				echo "<u> function createBBoxURLfromPolygon() </u> </br>"; // Infoprint for testing
+			}
+			$this->checkPolygon($polygon);
+			// get the boundingbox
+			$bbox = $this->getBBox($polygon, $info);
+			$bboxURL = $this->getBBoxURL($bbox, $limit, $info);
+			return $bboxURL;
 		}
-		// get the boundingbox
-		$bbox = $this->getBBox($polygon, $info);
-		$bboxURL = $this->getBBoxURL($bbox, $limit, $info);
-		return $bboxURL;
+		// Catch exception (poygon not closed or less then 3 vertices)
+		catch (Exception $e) {
+			$exceptionString = 'Caught exception: '.$e->getMessage();
+			// A message-box with the exception will pop up
+			echo "<script type=\"text/javascript\" language=\"Javascript\">  
+			alert(\"$exceptionString\")
+			</script>";
+			exit; // The program will be terminated
+		}		
 	}
 	
 } // End of class
