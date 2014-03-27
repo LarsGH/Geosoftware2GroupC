@@ -31,8 +31,10 @@ $getWeekday = $timeFilter -> getWeekday("2014-01-27T17:41:50Z", true);
 echo "</br></br>";
 
 // Test checkDay()
+// create array with possible days
+$test_weekdays = array("mo", "sa", "so");
 echo "<b>Test  checkDay() </b></br>";
-$checkDay = $timeFilter -> checkDay("2014-01-25T17:41:50Z", "sa", true);
+$checkDay = $timeFilter -> checkDay("2014-01-25T17:41:50Z", $test_weekdays, true);
 echo "</br></br>";
 
 // Test pointInTimeinterval()
@@ -53,9 +55,9 @@ echo "</br></br>";
 // Test runTimeFilter()
 $filteroptions = new filteroptions(); // Need filteroptions for prefiltering and creating the json file we need
 $jsonTracks = $filteroptions -> createFilterTracks($exampleRequest);
-
+$test_weekday = array("fr");
 echo "<b>Test  runTimeFilter() </b></br>";
-$timeFilterResult = $timeFilter -> runTimeFilter($jsonTracks, "2014-01-10 15:19:02", "2014-01-10 17:44:40", "fr", true);
+$timeFilterResult = $timeFilter -> runTimeFilter($jsonTracks, "2014-01-10 15:19:02", "2014-01-10 17:44:40", $test_weekday, true);
 echo "</br> <b> timeFilterResult: </b> </br>";
 print_r($timeFilterResult);
 echo "</br></br>";

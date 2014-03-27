@@ -92,8 +92,11 @@ class timeFilter {
 		// Get the weekday from the $timeString
 		$weekdayFromString = $this->getWeekday($timeString, $info);
 		// Ensure that the $weekdays parameter are in uppercase
-		foreach ($weekdays as $weekday) {
-			$weekday = strtoupper($weekday);
+		$weekdays = array_map("strtoupper", $weekdays);
+		if($info == true){
+			echo "The weekdays are: </br>"; // Infoprint for testing
+			print_r($weekdays); // Infoprint for testing
+			echo "</br>"; // Infoprint for testing
 		}
 		if(in_array($weekdayFromString, $weekdays)){
 			if($info == true){
@@ -207,18 +210,32 @@ class timeFilter {
 	This function can be used for pre-filtering.
 	*/
 	function getTimeintervalURL($starttime, $endtime, $limit = 15, $info = false){
-		if($info == true){
-			echo "<u> function getTimeintervalURL() </u> </br>"; // Infoprint for testing
+		try{
+			if($info == true){
+				echo "<u> function getTimeintervalURL() </u> </br>"; // Infoprint for testing
+			}
+			// Check if the time interval is correct
+			$this->checkTimeLogic($starttime, $endtime, $info);
+		
+			// Edit the timestamp format
+			$start = substr(trim($starttime), 0, 10)."T".substr(trim($starttime),-8, 8)."Z";
+			$end = substr(trim($endtime), 0, 10)."T".substr(trim($endtime),-8, 8)."Z";
+			$timeURL = "https://envirocar.org/api/stable/tracks?limit=".$limit;
+			$timeURL .= "&contains=".$end.",".$start;
+			if($info == true){
+				echo "The URL to request the time interval is: $timeURL </br>"; // Infoprint for testing
+			}
+			return $timeURL;
 		}
-		// Edit the timestamp format
-		$start = substr(trim($starttime), 0, 10)."T".substr(trim($starttime),-8, 8)."Z";
-		$end = substr(trim($endtime), 0, 10)."T".substr(trim($endtime),-8, 8)."Z";
-		$timeURL = "https://envirocar.org/api/stable/tracks?limit=".$limit;
-		$timeURL .= "&contains=".$end.",".$start;
-		if($info == true){
-			echo "The URL to request the time interval is: $timeURL </br>"; // Infoprint for testing
+		// Catch exception (starttime is after endtime)
+		catch (Exception $e) {
+			$exceptionString = 'Caught exception: '.$e->getMessage();
+			// A message-box with the exception will pop up
+			echo "<script type=\"text/javascript\" language=\"Javascript\">  
+			alert(\"$exceptionString\")
+			</script>";
+			exit; // The program will terminate
 		}
-		return $timeURL;
 	}
 
 } // End of class
