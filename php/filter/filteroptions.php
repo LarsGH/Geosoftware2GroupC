@@ -19,6 +19,7 @@ class filteroptions{
 			// search every point inside the track
 			foreach ($track["features"] as $feature){
 				if($feature["properties"]["id"]==$poiID){
+					// get the trackID
 					$trackID = $track["properties"]["id"];
 					if($info == true){
 						echo "The track-ID of the point ($poiID) is: $trackID </br>"; // Infoprint for testing
@@ -165,7 +166,7 @@ class filteroptions{
 	*/
 	function createSpaceTimeURL($polygon, $starttime, $endtime, $limit = 15, $info = false){
 		if($info == true){
-			echo "<u> function createSpateTimeURL() </u> </br>"; // Infoprint for testing
+			echo "<u> function createSpaceTimeURL() </u> </br>"; // Infoprint for testing
 		}
 		// create spatialFilter object
 		require_once("spatialFilter.php");
@@ -184,7 +185,7 @@ class filteroptions{
 	}
 	
 	/*
-	Create Track from both, space and time parameter (if available)
+	Create Track from both, space and time parameter.
 	*/
 	function getSpaceTimeTrack($polygon, $starttime, $endtime, $weekday = null, $limit = 15, $info = false){
 		if($info == true){
@@ -203,7 +204,7 @@ class filteroptions{
 		// run spatialFilter
 		$tracks = $spatialFilter -> runSpatialFilter ($tracks, $polygon, $info);
 		// run timeFilter
-		$tracks = $timeFilter -> runTimeFilter ($jsonTracks, $starttime, $endtime, $weekday, $info);
+		$tracks = $timeFilter -> runTimeFilter ($tracks, $starttime, $endtime, $weekday, $info);
 		return $tracks;
 	}
 	
@@ -222,11 +223,13 @@ class filteroptions{
 		// create the boundingbox-URL from a given polygon.
 		$bboxURL = $spatialFilter->createBBoxURLfromPolygon($polygon, $limit, $info);
 		// create track from the URL
-		$tracks = $this->createFilterTracks ($spaceTimeURL, $info);
+		$tracks = $this->createFilterTracks ($bboxURL, $info);
 		// run spatialFilter
 		$tracks = $spatialFilter -> runSpatialFilter ($tracks, $polygon, $info);
 		if($info == true){
-			echo "<u> function createTrackFromPolygon() </u> </br>"; // Infoprint for testing
+			echo "<u> Track has been created from given polygon: </u> </br>"; // Infoprint for testing
+			print_r($tracks);
+			echo "</br>";
 		}
 		return $tracks;
 	}
@@ -251,6 +254,8 @@ class filteroptions{
 		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
 		if($info == true){
 			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
+			print_r($filteredTrack);
+			echo "</br>";
 		}
 		return $filteredTrack;
 	}
