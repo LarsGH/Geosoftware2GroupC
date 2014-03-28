@@ -888,7 +888,7 @@ var weekArray;
 			var phpEndtime;
 			var phpWeekArray;
 		}
-		if($("#spacialFilterCheck").is(":checked")){
+		if(($("#spacialFilterCheck").is(":checked")) && (filter.filterPolygon.length != 0)){
 			var phpFilterPolygon = filter.filterPolygon;
 			console.log(filter.filterPolygon[2].lat);
 		}
