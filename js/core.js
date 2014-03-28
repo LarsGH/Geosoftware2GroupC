@@ -807,29 +807,37 @@ $( "#select_phenomenon" ).change(function() {
 var filter = new function() {
 
 this.filterPolygon = new Array();
-
+var weekArray;
 	this.getWeekday = function(){
-		var weekArray = [];
-		if($("#cb_mo").is(':checked')){
-			weekArray.push("mo")
-		}
-		if($("#cb_di").is(':checked')){
-			weekArray.push("tu")
-		}
-		if($("#cb_mi").is(':checked')){
-			weekArray.push("we")
-		}
-		if($("#cb_do").is(':checked')){
-			weekArray.push("th")
-		}
-		if($("#cb_fr").is(':checked')){
-			weekArray.push("fr")
-		}
-		if($("#cb_sa").is(':checked')){
-			weekArray.push("sa")
-		}
-		if($("#cb_so").is(':checked')){
-			weekArray.push("su")
+		if(($("#cb_mo").is(':checked'))||
+			($("#cb_di").is(':checked'))||
+			($("#cb_mi").is(':checked'))||
+			($("#cb_do").is(':checked'))||
+			($("#cb_fr").is(':checked'))||
+			($("#cb_sa").is(':checked'))||
+			($("#cb_so").is(':checked'))){
+				filter.weekArray = [];
+				if($("#cb_mo").is(':checked')){
+					filter.weekArray.push("mo")
+				}
+				if($("#cb_di").is(':checked')){
+					filter.weekArray.push("tu")
+				}
+				if($("#cb_mi").is(':checked')){
+					filter.weekArray.push("we")
+				}
+				if($("#cb_do").is(':checked')){
+					filter.weekArray.push("th")
+				}
+				if($("#cb_fr").is(':checked')){
+					filter.weekArray.push("fr")
+				}
+				if($("#cb_sa").is(':checked')){
+					filter.weekArray.push("sa")
+				}
+				if($("#cb_so").is(':checked')){
+					filter.weekArray.push("su")
+			}
 		}
 	}
 
@@ -864,10 +872,12 @@ this.filterPolygon = new Array();
 	
 	this.getSpaceTimeTrack = function(){
 		map.clearTrackLayers();
-		filter.getWeekday();
-		var phpWeekArray = filter.weekArray;
+		var emtyArray;
+		filter.weekArray = emtyArray
 		
 		if($("#timeFilterCheck").is(":checked")){
+			filter.getWeekday();
+			var phpWeekArray = filter.weekArray;
 			var starttime = $( "#from_dt" ).datetimepicker( 'getDate' );
 			var phpStarttime = helper.dateToRequestDateTimeString(starttime);
 			var endtime = $( "#to_dt" ).datetimepicker( 'getDate' );
@@ -885,12 +895,6 @@ this.filterPolygon = new Array();
 		else{
 			var phpFilterPolygon;
 		}
-		// var phpFilterPolygon = [
-		// {"lon": "11.56", "lat": "47.45"},
-		// {"lon": "11.56", "lat": "47.60"},
-		// {"lon": "11.66", "lat": "47.60"},
-		// {"lon": "11.66", "lat": "47.45"},
-		// {"lon": "11.56", "lat": "47.45"}];
 
 		console.log(phpStarttime);
 		console.log(phpEndtime);
