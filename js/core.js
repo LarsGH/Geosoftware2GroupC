@@ -177,16 +177,17 @@ var page = new function(){
 				};
 
 				// !!! Analyse-TEST !!!
-				var url = '/cgi-bin/Rcgi/aggregation?' + ieh;
+				var url = 'cgi-bin/Rcgi/aggregation';
 					$.ajax({ 
+						type: "POST",
 					    url : url, 
-					    cache: true,
+					    cache: false,
 					    data : JSON.stringify(json),
 					    processData : false,
-					    contentType : 'image/png',
-					}).always(function(){
-						
-					    $("#some_target").attr("src", url);
+					}).done(function(data){
+						//$("#some_target").attr("src", "");
+					    $("#some_target").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + 'aggPlot.png' + '&mime=image/png');
+
 					    ieh++;
 					});   
 				break;
@@ -514,7 +515,7 @@ $( "#select_phenomenon" ).change(function() {
 		//map.loadTracks("json/measurements7.json");	
 		//map.loadTrack("json/measurements6.json");
 		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		map.loadTracks("json/trackarray.json");
+		//map.loadTracks("json/trackarray.json");
 		
 		map.mapLeaflet.on('click', map.onMapClick);
 				
@@ -706,13 +707,27 @@ $( "#select_phenomenon" ).change(function() {
 
 						sidebar.setContent(sphenomenon);
 						$("#show_Track").click(function() {
-							console.log(feature.properties.trackID)
-							var blablubb = feature.properties.trackID;
+							
 							map.clearTrackLayers();
-							$.getJSON("https://envirocar.org/api/stable/tracks/" +blablubb, function(data){
-								map.loadTrackJSON(data);
-								console.log(typeof data);
-							});
+
+							$.post( "php/filter.php", 
+								{ 
+									f: "getSelectedTrack",
+									jsonTracks: JSON.stringify( { tracks : map.tracks } ),
+									poiID: feature.properties.id
+								},
+								function( data ) {
+									console.log("Data loaded "+data.tracks.length);
+
+									map.tracks = data.tracks;
+
+						 			for (i = 0; i < data.tracks.length; i++){
+
+										map.loadTrackJSON(data.tracks[i]);
+									};
+						 		},
+						 		"json"
+							);
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
