@@ -67,6 +67,17 @@ var page = new function(){
 
 			case "analyse":
 				$("#results_btn").off('click');
+
+				analyse.expertMode = $('#expertMod').is(':checked');
+
+				analyse.selectedPhenomenon = $('#selectedAttributes').val();
+				analyse.selectedMethod = $('#selectedMethod').val();
+
+				analyse.xCell = parseInt($('#metersX').val());
+				analyse.yCell = parseInt($('#metersY').val());
+
+				analyse.pointOverlay = $('#pointOverlay').is(':checked');
+
 				break;
 		}
 	};
@@ -166,12 +177,12 @@ var page = new function(){
 			
 				var json = 
 				{
-					"phenomenon" : "Speed",
-					"statistic" : "Mittelwert",
-					"x_cell" : 300,
-					"y_cell" : 300,
-					"mode" : false,
-					"points" : true,
+					"phenomenon" : analyse.selectedPhenomenon,
+					"statistic" : analyse.selectedMethod,
+					"x_cell" : analyse.xCell,
+					"y_cell" : analyse.yCell,
+					"mode" : analyse.expertMode,
+					"points" : analyse.pointOverlay,
 					"tracks" : map.tracks
 				};
 
@@ -184,7 +195,7 @@ var page = new function(){
 					    data : JSON.stringify(json),
 					    processData : false,
 					}).done(function(data){
-					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + 'aggPlot.png' + '&mime=image/png');
+					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + data + '&mime=image/png');
 					});   
 				break;
 
@@ -956,6 +967,23 @@ var weekArray;
 };
 
 
+
+
+// Filter class
+// Description: Class for filter functions
+// Author: Peter Zimmerhof
+var analyse = new function() {
+
+	this.expertMode = false;
+
+	this.selectedPhenomenon = '';
+	this.selectedMethod = '';
+
+	this.xCell = 300;
+	this.yCell = 300;
+
+	this.pointOverlay = true;
+};
 
 
 // DB class
