@@ -130,15 +130,15 @@ class spatialFilter {
 		if($info == true){
 			echo "<u> function checkPolygon() </u> </br>"; // Infoprint for testing
 		}
-		$vertices_count = count($polygon); // Get number of vertices
-		// Polygon needs at least 3 points (4 because first = last)
-		if($vertices_count < 4){ 
-			throw new Exception('Polygon needs at least 3 different points!');
-		}
-		// The first point needs to be equal to the last point
-		if($polygon[0]!=$polygon[$vertices_count-1]){ 
-			throw new Exception('Polygon not closed!');
-		}
+		// $vertices_count = count($polygon); // Get number of vertices
+		// // Polygon needs at least 3 points (4 because first = last)
+		// if($vertices_count < 4){ 
+			// throw new Exception('Polygon needs at least 3 different points!');
+		// }
+		// // The first point needs to be equal to the last point
+		// if($polygon[0]!=$polygon[$vertices_count-1]){ 
+			// throw new Exception('Polygon not closed!');
+		// }
 	}
 	
 	/*

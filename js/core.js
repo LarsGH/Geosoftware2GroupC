@@ -103,14 +103,16 @@ var page = new function(){
 					}
 				});
 				$("#spacialFilterCheck").click(function(){
-					if(filter.filterPolygon.length!=0){
-						$("#filter_btn").fadeIn();
-					}
+					
 					if($(this).is(':checked')){
 						$("#spacialParameters").fadeIn();
-						
+									if(filter.filterPolygon.length!=0){
+						$("#filter_btn").fadeIn();
 					}
+					}
+		
 					else {
+						//map.drawnItems.clearLayers();
 						$("#spacialParameters").fadeOut()
 						if($("#timeFilterCheck").is(":checked")==false){
 							$("#filter_btn").fadeOut();
@@ -457,16 +459,18 @@ $( "#select_phenomenon" ).change(function() {
 				var lng = latLngString.slice(comma+2, bracketClose);
 				
 				polygon[i] = new Object();
-				polygon[i]["lat"]=lat;
-				polygon[i]["lng"]=lng
+				polygon[i]["lat"]=lat.toString();
+				polygon[i]["lon"]=lng.toString();
 			};
 			filter.filterPolygon = [];
 			polygon[latLngs.length] = polygon[0];
 			for(var i=0; i < polygon.length; i++){
-				for (var prop in polygon[i]){
-					filter.filterPolygon.push(polygon[i][prop]);
-				};
-			};
+					filter.filterPolygon.push({
+						lat: polygon[i].lat,
+						lon: polygon[i].lon
+					});
+					
+				};				
 			//alert(filter.filterPolygon.toString())
 			drawnItems.addLayer(layer);
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
@@ -805,7 +809,7 @@ var filter = new function() {
 this.filterPolygon = new Array();
 
 	this.getWeekday = function(){
-		weekArray = [];
+		var weekArray = [];
 		if($("#cb_mo").is(':checked')){
 			weekArray.push("mo")
 		}
@@ -827,13 +831,12 @@ this.filterPolygon = new Array();
 		if($("#cb_so").is(':checked')){
 			weekArray.push("su")
 		}
-		console.log(weekArray[1]);
 	}
 
 	this.init = function() {
 
 		$("#filter_btn").click(function() {
-			filter.filter();
+			filter.getSpaceTimeTrack();
 		});
 
 		$( "#from_dt" ).datetimepicker();
@@ -860,37 +863,51 @@ this.filterPolygon = new Array();
 	};
 	
 	this.getSpaceTimeTrack = function(){
-		filter.getWeekday();
 		map.clearTrackLayers();
+		filter.getWeekday();
+		var phpWeekArray = filter.weekArray;
+		
 		if($("#timeFilterCheck").is(":checked")){
 			var starttime = $( "#from_dt" ).datetimepicker( 'getDate' );
+			var phpStarttime = helper.dateToRequestDateTimeString(starttime);
 			var endtime = $( "#to_dt" ).datetimepicker( 'getDate' );
+			var phpEndtime = helper.dateToRequestDateTimeString(endtime);
 		}
 		else{
-			var starttime = null;
-			var endtime = null;
-			filter.weekArray = [];
+			var phpStarttime;
+			var phpEndtime;
+			var phpWeekArray;
 		}
 		if($("#spacialFilterCheck").is(":checked")){
-			var filterPolygon = map.filterPolygon;
+			var phpFilterPolygon = filter.filterPolygon;
+			console.log(filter.filterPolygon[2].lat);
 		}
 		else{
-			var filterPolygon = null;
+			var phpFilterPolygon;
 		}
+		// var phpFilterPolygon = [
+		// {"lon": "11.56", "lat": "47.45"},
+		// {"lon": "11.56", "lat": "47.60"},
+		// {"lon": "11.66", "lat": "47.60"},
+		// {"lon": "11.66", "lat": "47.45"},
+		// {"lon": "11.56", "lat": "47.45"}];
+
+		console.log(phpStarttime);
+		console.log(phpEndtime);
+		console.log(phpWeekArray);
 		$.post( "php/filter.php", 
 				{ 
 					f: "getSpaceTimeTrack",
-					starttime: starttime,
-					endtime: enddtime,
-					weekday: filter.weekArray,
-					polygon: filterPolygon,
-					limit: "15",
+					polygon: JSON.stringify(phpFilterPolygon),
+					starttime: phpStarttime,
+					endtime: phpEndtime,
+					limit: "6"
 					
 				},
 				function( data ) {
 					console.log("Data loaded "+data.tracks.length);
 		 			for (i = 0; i < data.tracks.length; i++){
-
+						console.log(i)
 						map.loadTrackJSON(data.tracks[i]);
 					};
 		 		},
