@@ -880,6 +880,7 @@ var weekArray;
 	};
 	
 	this.getSpaceTimeTrack = function(){
+		$("#analyse_btn").fadeOut();
 		map.clearTrackLayers();
 		var emtyArray;
 		filter.weekArray = emtyArray
@@ -927,6 +928,7 @@ var weekArray;
 
 						map.loadTrackJSON(data.tracks[i]);
 					};
+					$("#analyse_btn").fadeIn();
 		 		},
 		 		"json"
 			);
@@ -1010,6 +1012,7 @@ var db = new function() {
 
 						map.loadTrackJSON(data.tracks[i]);
 					};
+					$("#analyse_btn").fadeIn();
 		 		},
 		 		"json"
 			);

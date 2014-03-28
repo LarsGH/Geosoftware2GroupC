@@ -25,7 +25,7 @@
 	<br>
 	
 	<button id="filter_btn" hidden="hidden">Filtern</button>
-	<button id="analyse_btn">Analysieren</button>
+	<button id="analyse_btn" hidden="hidden">Analysieren</button>
 
 </div>
 
@@ -42,14 +42,14 @@
 	Bitte wählen Sie ein Attribut:<br>
 	<select id="selectedAttributes">
 		<option></option>
-		<option>Geschwindigkeit</option>
-		<option>Upm</option>
-		<option>CO2</option>
-		<option>MAF</option>
-		<option>Ber. MAF</option>
-		<option>Last</option>
-		<option>Ansaugdruck</option>
-		<option>Ansaugtemperatur</option>
+		<option value="Speed">Geschwindigkeit</option>
+		<option value="Rpm">Upm</option>
+		<option value="CO2">CO2</option>
+		<option value="MAF">MAF</option>
+		<option value="Calculated MAF">Berechneter MAF</option>
+		<option value="Engine Load">Last</option>
+		<option value="Intake Pressure">Ansaugdruck</option>
+		<option value="Intake Temperature">Ansaugtemperatur</option>
 	</select>
 	<br>
 	<div id="methodExp" hidden="hidden">
