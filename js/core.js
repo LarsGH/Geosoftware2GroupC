@@ -222,12 +222,13 @@ var map = new function() {
 
 	this.tracks = null;
 
-	this.phenomenons = ["Speed", "Rpm", "C02", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
-	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
-	this.phenomenonUnits = ['km/h', 'u/min', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
+	this.phenomenons = ["Speed", "Rpm", "Consumption", "C02", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
+	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
+	this.phenomenonUnits = ['km/h', 'u/min', 'l/h', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
 	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
 	this.RpmValues = 	[0, 	750, 	1500, 	2250, 	3000];
+	this.ConsumValues = [0,		4,		8,		13,		16],
 	this.CO2Values = 	[0, 	1, 		2, 		3, 		4];
 	this.MafValues = 	[0, 	5, 		10, 	15, 	20];
 	this.CalMafValues = [0, 	5, 		10, 	15, 	20];
@@ -304,6 +305,7 @@ legend.onAdd = function (Lmap) {
         div.innerHTML += '<select id="select_phenomenon">' +
 	'<option value="Speed">Geschwindigkeit</option>' +
 	'<option value="Rpm">Upm</option>' +
+	'<option value="Consumption">Verbrauch</option>' +
 	'<option value="CO2">CO2</option>' +
 	'<option value="MAF">MAF</option>' +
 	'<option value="Calculated MAF">Ber. MAF</option>' +
@@ -350,29 +352,33 @@ $( "#select_phenomenon" ).change(function() {
 		map.selectedPhenomenonValues = map.RpmValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
 	}
-	else if (map.selectedPhenomenon == map.phenomenons[1]) {
-		map.selectedPhenomenonValues = map.CO2Values;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
-	}
 	else if (map.selectedPhenomenon == map.phenomenons[2]) {
-		map.selectedPhenomenonValues = map.MafValues; 
+		map.selectedPhenomenonValues = map.ConsumValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[2];
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[3]) {
-		map.selectedPhenomenonValues = map.CalMafValues;
+		map.selectedPhenomenonValues = map.CO2Values;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[3];
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[4]) {
-		map.selectedPhenomenonValues = map.EngineValues;
+		map.selectedPhenomenonValues = map.MafValues; 
 		map.selectedPhenomenonUnit = map.phenomenonUnits[4];
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[5]) {
-		map.selectedPhenomenonValues = map.PressValues;
+		map.selectedPhenomenonValues = map.CalMafValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[5];
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[6]) {
-		map.selectedPhenomenonValues = map.TempValues;
+		map.selectedPhenomenonValues = map.EngineValues;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[6];
+	}
+	else if (map.selectedPhenomenon == map.phenomenons[7]) {
+		map.selectedPhenomenonValues = map.PressValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[7];
+	}
+	else if (map.selectedPhenomenon == map.phenomenons[8]) {
+		map.selectedPhenomenonValues = map.TempValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[8];
 	}
 
 	map.setLegend();
@@ -694,12 +700,12 @@ $( "#select_phenomenon" ).change(function() {
 								feature.properties.phenomenons[p].value :
 								(Math.round(feature.properties.phenomenons[p].value* 100)/100).toFixed(2)) + 
 								"</td><td>" +
-								feature.properties.phenomenons[p].unit + 
+								map.phenomenonUnits[i] + 
 								"</td></tr>";
 							}
 							else 
 							{
-								sphenomenon += "<tr><td>" + p + "</td><td>-</td><td>-</td></tr>";
+								sphenomenon += "<tr><td>" + map.phenomenonsDE[i] + "</td><td>-</td><td>" + map.phenomenonUnits[i] + "</td></tr>";
 							}
 						};
 						
