@@ -9,7 +9,6 @@
 
 // Global variables
 
-var ieh = 1;
 
 // Page class
 // Description: Class for handling all page related functions / events
@@ -185,10 +184,7 @@ var page = new function(){
 					    data : JSON.stringify(json),
 					    processData : false,
 					}).done(function(data){
-						//$("#some_target").attr("src", "");
-					    $("#some_target").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + 'aggPlot.png' + '&mime=image/png');
-
-					    ieh++;
+					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + 'aggPlot.png' + '&mime=image/png');
 					});   
 				break;
 
@@ -226,11 +222,13 @@ var map = new function() {
 
 	this.tracks = null;
 
-	this.phenomenons = ["Speed", "Rpm", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
-	this.phenomenonUnits = ['km/h', 'u/min', 'l/s', 'g/s', '%', 'kPa', '°C'];
+	this.phenomenons = ["Speed", "Rpm", "C02", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
+	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
+	this.phenomenonUnits = ['km/h', 'u/min', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
 	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
 	this.RpmValues = 	[0, 	750, 	1500, 	2250, 	3000];
+	this.CO2Values = 	[0, 	1, 		2, 		3, 		4];
 	this.MafValues = 	[0, 	5, 		10, 	15, 	20];
 	this.CalMafValues = [0, 	5, 		10, 	15, 	20];
 	this.EngineValues = [0, 	20, 	40, 	60, 	80];
@@ -306,11 +304,12 @@ legend.onAdd = function (Lmap) {
         div.innerHTML += '<select id="select_phenomenon">' +
 	'<option value="Speed">Geschwindigkeit</option>' +
 	'<option value="Rpm">Upm</option>' +
+	'<option value="CO2">CO2</option>' +
 	'<option value="MAF">MAF</option>' +
-	'<option value="Calculated MAF">Berechneter MAF</option>' +
+	'<option value="Calculated MAF">Ber. MAF</option>' +
 	'<option value="Engine Load">Last</option>' +
-	'<option value="Intake Pressure">Einlassdruck</option>' +
-	'<option value="Intake Temperature">Einlasstemperatur</option>' +
+	'<option value="Intake Pressure">Ansaugdruck</option>' +
+	'<option value="Intake Temperature">Ansaugtemperatur</option>' +
 	'</select><br>' + 
 	'<div id="legend_inner"></div>';
 
@@ -349,6 +348,10 @@ $( "#select_phenomenon" ).change(function() {
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[1]) {
 		map.selectedPhenomenonValues = map.RpmValues;
+		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
+	}
+	else if (map.selectedPhenomenon == map.phenomenons[1]) {
+		map.selectedPhenomenonValues = map.CO2Values;
 		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
 	}
 	else if (map.selectedPhenomenon == map.phenomenons[2]) {
@@ -685,7 +688,7 @@ $( "#select_phenomenon" ).change(function() {
 							{
 							sphenomenon += 
 								"<tr><td>" +
-								p + 
+								map.phenomenonsDE[i] + 
 								"</td><td>" +
 								((feature.properties.phenomenons[p].value % 1 == 0) ?
 								feature.properties.phenomenons[p].value :
@@ -710,24 +713,15 @@ $( "#select_phenomenon" ).change(function() {
 							
 							map.clearTrackLayers();
 
-							$.post( "php/filter.php", 
-								{ 
-									f: "getSelectedTrack",
-									jsonTracks: JSON.stringify( { tracks : map.tracks } ),
-									poiID: feature.properties.id
-								},
-								function( data ) {
-									console.log("Data loaded "+data.tracks.length);
+							for (i = 0; i < map.tracks.length; i++){
 
-									map.tracks = data.tracks;
-
-						 			for (i = 0; i < data.tracks.length; i++){
-
-										map.loadTrackJSON(data.tracks[i]);
-									};
-						 		},
-						 		"json"
-							);
+								if (map.tracks[i].properties.id == feature.properties.trackID)
+								{
+									map.tracks = [map.tracks[i]];
+									map.loadTrackJSON(map.tracks[i]);
+									break;
+								}
+							};
 						});
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
@@ -925,8 +919,12 @@ var weekArray;
 				},
 				function( data ) {
 					console.log("Data loaded "+data.tracks.length);
+
+					map.tracks = data.tracks;
+
 		 			for (i = 0; i < data.tracks.length; i++){
 						console.log(i)
+
 						map.loadTrackJSON(data.tracks[i]);
 					};
 		 		},
