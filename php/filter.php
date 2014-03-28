@@ -105,17 +105,17 @@ else if  ($_POST["f"] == "getSpaceTimeTrack"){
 		if(isset($_POST["weekday"])){
 			// if limit is set
 			if(isset($_POST["limit"])){
-				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, $weekday, $polygon, $limit); // with limit
+				echo $filteroptions -> getSpaceTimeTrack($polygon, $starttime, $endtime, $weekday, $limit); // with limit
 			} else {
-				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, $weekday, $polygon); // without limit
+				echo $filteroptions -> getSpaceTimeTrack($polygon, $starttime, $endtime, $weekday); // without limit
 			}
 		// weekday not set
 		} else {
 			// if limit is set
 			if(isset($_POST["limit"])){
-				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, null, $polygon, $limit); // with limit
+				echo $filteroptions -> getSpaceTimeTrack($polygon, $starttime, $endtime, null, $limit); // with limit
 			} else {
-				echo $filteroptions -> getSpaceTimeTrack($starttime, $endtime, null, $polygon); // without limit
+				echo $filteroptions -> getSpaceTimeTrack( $polygon, $starttime, $endtime, null); // without limit
 			}
 		}
 	// CASE2: just spatial data is set
