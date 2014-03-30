@@ -3,6 +3,10 @@
 
 	- page class
 	- map class
+	- filter class
+	- analyse class
+	- db class
+	- helper class
 
 ******************************************/
 
@@ -76,15 +80,7 @@ var page = new function(){
 			case "analyse":
 				$("#results_btn").off('click');
 
-				analyse.expertMode = $('#expertMod').is(':checked');
-
-				analyse.selectedPhenomenon = $('#selectedAttributes').val();
-				analyse.selectedMethod = $('#selectedMethod').val();
-
-				analyse.xCell = parseInt($('#metersX').val());
-				analyse.yCell = parseInt($('#metersY').val());
-
-				analyse.pointOverlay = $('#pointOverlay').is(':checked');
+				analyse.setValues();
 
 				break;
 		}
@@ -104,109 +100,18 @@ var page = new function(){
 
 			case "home":
 
-				filter.init();
 				map.init();
-
-				$("#analyse_btn").click(function() {
-					page.load("analyse");
-				});
-				$("#timeFilterCheck").click(function(){
-					$("#filter_btn").fadeIn();
-					if($(this).is(':checked')){
-						$("#timeParameters").fadeIn();
-					}
-					else {
-						$("#timeParameters").fadeOut()
-						if($("#spacialFilterCheck").is(":checked")==false){
-							$("#filter_btn").fadeOut();
-						}
-					}
-				});
-				$("#spacialFilterCheck").click(function(){
-					
-					if($(this).is(':checked')){
-						$("#spacialParameters").fadeIn();
-									if(filter.filterPolygon.length!=0){
-						$("#filter_btn").fadeIn();
-					}
-					}
-		
-					else {
-						//map.drawnItems.clearLayers();
-						$("#spacialParameters").fadeOut()
-						if($("#timeFilterCheck").is(":checked")==false){
-							$("#filter_btn").fadeOut();
-						}
-					}
-				});
-				
-				
+				filter.init();
 				break;
 			
 			case "analyse":
-				$("#expertMod").click(function() {
-				if($("#expertMod").is(":checked")){
-					if($("#selectedAttributes").val()!=""){
-						$("#methodExp").fadeIn();
-						if($("#selectedMethod").val()!=""){
-							$("#rasterSize").fadeIn();
-						}
-					}}
-					else{
-						$("#rasterSize").fadeOut();
-						$("#methodExp").fadeOut();
-					}
-				});
-				
-				$("#selectedAttributes").change(function() {
-					if($("#selectedAttributes").val()!=""){
-						$("#results_btn").fadeIn();
-						if($("#expertMod").is(':checked')){
-							$("#methodExp").fadeIn();
-						}
-					}
-					else{
-						$("#methodExp").fadeOut();
-					}
-				});
-				$("#selectedMethod").change(function() {
-					if($("#selectedMethod").val()!=""){
-						$("#rasterSize").fadeIn();
-						$("#results_btn").fadeIn();
-					}
-					else{
-						$("#rasterSize").fadeOut();
-					}
-				});				
-				$("#results_btn").click(function() {
-					page.load("result");
-				});
+
+				analyse.init();
 				break;
 
 			case "result":
-			
-				var json = 
-				{
-					"phenomenon" : analyse.selectedPhenomenon,
-					"statistic" : analyse.selectedMethod,
-					"x_cell" : analyse.xCell,
-					"y_cell" : analyse.yCell,
-					"mode" : analyse.expertMode,
-					"points" : analyse.pointOverlay,
-					"tracks" : map.tracks
-				};
-
-				// !!! Analyse-TEST !!!
-				var url = 'cgi-bin/Rcgi/aggregation';
-					$.ajax({ 
-						type: "POST",
-					    url : url, 
-					    cache: false,
-					    data : JSON.stringify(json),
-					    processData : false,
-					}).done(function(data){
-					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
-					});   
+				
+				analyse.showResults();  
 				break;
 
 			case "help":
@@ -272,12 +177,37 @@ var map = new function() {
 
 	// Initialization
 	this.init = function() {
+
 		map.mapLeaflet = L.map('map', {
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
 		
 		this.LayerGroup = new L.LayerGroup();
 		this.LayerGroup.addTo(map.mapLeaflet);
+		
+		L.control.pan().addTo(map.mapLeaflet);
+		L.control.zoomslider().addTo(map.mapLeaflet);
+		L.control.locate().addTo(map.mapLeaflet);
+
+		L.control.mousePosition({
+			separator: ' , ',
+			position: 'bottomright',
+			prefix: 'Mauszeigerkoordinaten: '
+			}).addTo(map.mapLeaflet);
+
+		map.loadLayers();
+		map.loadScale();
+		map.loadSidebar();
+		map.loadLegend();
+		map.loadDrawItems();
+
+		map.mapLeaflet.on('click', map.onMapClick);
+
+		db.loadInitSpaceTracks();
+	};
+
+
+	this.loadLayers = function() {
 
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
@@ -292,147 +222,159 @@ var map = new function() {
 		
 		var ggl = new L.Google();
 		var ggl2 = new L.Google('TERRAIN');
-		map.mapLeaflet.addLayer(osm);
-		var Topos = L.TileLayer.multi({
-	13: {
-		url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-		subdomains:'1234'
-	},
-	17: {
-		url: 'http://www.wms.nrw.de/geobasis/wms_nw_dtk10',
-		layers: 'nw_dtk10_col',
-			format: 'image/png'
-	}
-}, {
-	minZoom: 0,
-	maxZoom: 17,
-});
-		map.mapLeaflet.addControl(new L.Control.Layers( {'OpenStreetMap':osm, 'Google Satellit':ggl, 'Google Geländekarte':ggl2, 'Topografische Karte':NRWgeoWMS}, {}));
 		
+		map.mapLeaflet.addLayer(osm);
+
+		var Topos = L.TileLayer.multi({
+			13: {
+				url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+				subdomains:'1234'
+			},
+			17: {
+				url: 'http://www.wms.nrw.de/geobasis/wms_nw_dtk10',
+				layers: 'nw_dtk10_col',
+					format: 'image/png'
+			}
+		}, {
+			minZoom: 0,
+			maxZoom: 17,
+		});
+		
+		map.mapLeaflet.addControl(new L.Control.Layers( {'OpenStreetMap':osm, 'Google Satellit':ggl, 'Google Geländekarte':ggl2, 'Topografische Karte':NRWgeoWMS}, {}));
+
+	};
+	
+	// Load the Scale
+	this.loadScale = function() {
+		L.control.scale({
+			position: 'bottomleft',
+			maxWidth: 150,
+			imperial: false
+		}).addTo(map.mapLeaflet);
+	};
+
+	this.loadSidebar = function() {
+
 		sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
-
+		
 		map.mapLeaflet.addControl(sidebar);
-		L.control.mousePosition({
-			separator: ' , ',
-			position: 'bottomright',
-			prefix: 'Mauszeigerkoordinaten: '
-			}).addTo(map.mapLeaflet);
-		L.control.pan().addTo(map.mapLeaflet);
-		L.control.zoomslider().addTo(map.mapLeaflet);
-		L.control.locate().addTo(map.mapLeaflet);
-		map.loadScale();
-		
-		
-		var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (Lmap) {
-
-    var div = L.DomUtil.create('div', 'info legend');
-        div.id = "legend";
-        div.innerHTML += '<select id="select_phenomenon">' +
-	'<option value="Speed">Geschwindigkeit</option>' +
-	'<option value="Rpm">Upm</option>' +
-	'<option value="Consumption">Verbrauch</option>' +
-	'<option value="CO2">CO2</option>' +
-	'<option value="MAF">MAF</option>' +
-	'<option value="Calculated MAF">Ber. MAF</option>' +
-	'<option value="Engine Load">Last</option>' +
-	'<option value="Intake Pressure">Ansaugdruck</option>' +
-	'<option value="Intake Temperature">Ansaugtemperatur</option>' +
-	'</select><br>' + 
-	'<div id="legend_inner"></div>';
-
-    return div;
-};
-
-legend.addTo(map.mapLeaflet);
-map.setLegend();
-
-
-//Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
-document.getElementById("legend").onmouseover = function(e) {
-    map.mapLeaflet.dragging.disable();
-	map.mapLeaflet.touchZoom.disable();
-	map.mapLeaflet.doubleClickZoom.disable();
-	map.mapLeaflet.scrollWheelZoom.disable();
-	map.mapLeaflet.boxZoom.disable();
-	map.mapLeaflet.keyboard.disable();
-};
-document.getElementById("legend").onmouseout = function() {
-    map.mapLeaflet.dragging.enable();
-	map.mapLeaflet.touchZoom.enable();
-	map.mapLeaflet.doubleClickZoom.enable();
-	map.mapLeaflet.scrollWheelZoom.enable();
-	map.mapLeaflet.boxZoom.enable();
-	map.mapLeaflet.keyboard.enable();
-};
-
-$( "#select_phenomenon" ).change(function() {
-
-	map.selectedPhenomenon = $("#select_phenomenon").val();
-
-	if (map.selectedPhenomenon == map.phenomenons[0]) {
-		map.selectedPhenomenonValues = map.SpeedValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[0];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[1]) {
-		map.selectedPhenomenonValues = map.RpmValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[1];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[2]) {
-		map.selectedPhenomenonValues = map.ConsumValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[2];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[3]) {
-		map.selectedPhenomenonValues = map.CO2Values;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[3];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[4]) {
-		map.selectedPhenomenonValues = map.MafValues; 
-		map.selectedPhenomenonUnit = map.phenomenonUnits[4];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[5]) {
-		map.selectedPhenomenonValues = map.CalMafValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[5];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[6]) {
-		map.selectedPhenomenonValues = map.EngineValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[6];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[7]) {
-		map.selectedPhenomenonValues = map.PressValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[7];
-	}
-	else if (map.selectedPhenomenon == map.phenomenons[8]) {
-		map.selectedPhenomenonValues = map.TempValues;
-		map.selectedPhenomenonUnit = map.phenomenonUnits[8];
-	}
-
-	map.setLegend();
-
-	for (var i = 0; i < map.LayerGroup.getLayers().length; i++) {
-		map.LayerGroup.getLayers()[i].setStyle(function (feature) {
-
-					col = "#fff";
-					phenomenon = feature.properties.phenomenons[map.selectedPhenomenon];
-
-					if (phenomenon != null && phenomenon != undefined)
-						col = map.getPhenomenonColor(phenomenon.value);
-
-					return {
-						radius: 5,
-						color: "#000",
-						fillColor: col,
-					    weight: 0.5,
-					    opacity: 1,
-					    fillOpacity: 1
-					};
-				});
 	};
 
-});
+	this.loadLegend = function() {
+
+		var legend = L.control({position: 'bottomright'});
+
+		legend.onAdd = function (Lmap) {
+
+		    var div = L.DomUtil.create('div', 'info legend');
+		        div.id = "legend";
+		        div.innerHTML += '<select id="select_phenomenon">' +
+			'<option value="Speed">Geschwindigkeit</option>' +
+			'<option value="Rpm">Upm</option>' +
+			'<option value="Consumption">Verbrauch</option>' +
+			'<option value="CO2">CO2</option>' +
+			'<option value="MAF">MAF</option>' +
+			'<option value="Calculated MAF">Ber. MAF</option>' +
+			'<option value="Engine Load">Last</option>' +
+			'<option value="Intake Pressure">Ansaugdruck</option>' +
+			'<option value="Intake Temperature">Ansaugtemperatur</option>' +
+			'</select><br>' + 
+			'<div id="legend_inner"></div>';
+
+		    return div;
+		};
+
+		legend.addTo(map.mapLeaflet);
+		map.setLegend();
+
+
+		//Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
+		document.getElementById("legend").onmouseover = function(e) {
+		    map.mapLeaflet.dragging.disable();
+			map.mapLeaflet.touchZoom.disable();
+			map.mapLeaflet.doubleClickZoom.disable();
+			map.mapLeaflet.scrollWheelZoom.disable();
+			map.mapLeaflet.boxZoom.disable();
+			map.mapLeaflet.keyboard.disable();
+		};
+		document.getElementById("legend").onmouseout = function() {
+		    map.mapLeaflet.dragging.enable();
+			map.mapLeaflet.touchZoom.enable();
+			map.mapLeaflet.doubleClickZoom.enable();
+			map.mapLeaflet.scrollWheelZoom.enable();
+			map.mapLeaflet.boxZoom.enable();
+			map.mapLeaflet.keyboard.enable();
+		};
+
+		$( "#select_phenomenon" ).change(function() {
+
+			map.selectedPhenomenon = $("#select_phenomenon").val();
+
+			if (map.selectedPhenomenon == map.phenomenons[0]) {
+				map.selectedPhenomenonValues = map.SpeedValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[0];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[1]) {
+				map.selectedPhenomenonValues = map.RpmValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[1];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[2]) {
+				map.selectedPhenomenonValues = map.ConsumValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[2];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[3]) {
+				map.selectedPhenomenonValues = map.CO2Values;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[3];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[4]) {
+				map.selectedPhenomenonValues = map.MafValues; 
+				map.selectedPhenomenonUnit = map.phenomenonUnits[4];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[5]) {
+				map.selectedPhenomenonValues = map.CalMafValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[5];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[6]) {
+				map.selectedPhenomenonValues = map.EngineValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[6];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[7]) {
+				map.selectedPhenomenonValues = map.PressValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[7];
+			}
+			else if (map.selectedPhenomenon == map.phenomenons[8]) {
+				map.selectedPhenomenonValues = map.TempValues;
+				map.selectedPhenomenonUnit = map.phenomenonUnits[8];
+			}
+
+			map.setLegend();
+
+			for (var i = 0; i < map.LayerGroup.getLayers().length; i++) {
+				map.LayerGroup.getLayers()[i].setStyle(function (feature) {
+
+							col = "#fff";
+							phenomenon = feature.properties.phenomenons[map.selectedPhenomenon];
+
+							if (phenomenon != null && phenomenon != undefined)
+								col = map.getPhenomenonColor(phenomenon.value);
+
+							return {
+								radius: 5,
+								color: "#000",
+								fillColor: col,
+							    weight: 0.5,
+							    opacity: 1,
+							    fillOpacity: 1
+							};
+						});
+			};
+		});
+	};
+
+
+	this.loadDrawItems = function() {
 
 		// Initialise the FeatureGroup to store editable layers
 		var drawnItems = new L.FeatureGroup();
@@ -541,22 +483,7 @@ $( "#select_phenomenon" ).change(function() {
 				allowIntersection: false,
 			}
 		});	
-		
-		// $.getJSON("https://envirocar.org/api/stable/tracks?limit=3&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462", function(json) {
-			
-		// 	for (i = 0; i <= json.tracks.length; i++){
-			
-		// 	trackid = json.tracks[i].id;
-		// 	map.loadTrack("https://envirocar.org/api/stable/tracks/" +trackid);
-		// 	};});
-		//map.loadTracks("json/measurements.json")
-		//map.loadTracks("json/measurements7.json");	
-		//map.loadTrack("json/measurements6.json");
-		//map.loadTracks("http://giv-geosoft2c.uni-muenster.de/php/filter/filteroptions2.php?f=createFilterTracks&filterurl=https://envirocar.org/api/stable/tracks?limit=2&bbox=7.581596374511719,51.948761868981265,7.670001983642577,51.97821922232462");
-		//map.loadTracks("json/trackarray.json");
-		
-		map.mapLeaflet.on('click', map.onMapClick);
-				
+						
 		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
 		//$(".leaflet-draw-draw-polygon").html("Polygon");
 		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
@@ -586,16 +513,6 @@ $( "#select_phenomenon" ).change(function() {
 			};
 		});
 
-		db.loadInitSpaceTracks();
-	};
-	
-	// Load the Scale
-	this.loadScale = function() {
-		L.control.scale({
-			position: 'bottomleft',
-			maxWidth: 150,
-			imperial: false
-		}).addTo(map.mapLeaflet);
 	};
 	
 	this.onMapClick = function(e) {
@@ -632,40 +549,21 @@ $( "#select_phenomenon" ).change(function() {
 
 	
 	// Load test measurements from json
-	this.loadTracks = function(jsonFile) {
-	$.getJSON(jsonFile, function(json) {
-		for (i = 0; i < json.tracks.length; i++){
+	this.loadTracks = function(tracks) {
+	
+		console.log("Data loaded "+ tracks.length);
 
-			map.loadTrackJSON(json.tracks[i]);
-			};
-		});
+		map.tracks = tracks;
+
+		map.clearTrackLayers();
+
+		for (i = 0; i < tracks.length; i++){
+
+			map.loadTrackJSON(tracks[i]);
+		};
+
+		page.toggleLoadingOverlay(false);
 	};
-	
-	// Load test measurements from json
-	this.loadTrack = function(jsonFile) {
-	
-		$.getJSON(jsonFile, function(json) {
-		
-		map.loadTrackJSON(json);
-		
-		});
-	};
-	
-	
-	this.getIndex = function(json, PointID){
-		//console.log("länge des json: "+json.features.length);
-			var jsonLength = json.features.length;
-			for ( var i=0; i < jsonLength; i++ ){
-				var chx = json.features[i].properties.id;
-				//alert(data.features[i].properties.id.toString());
-				if(chx === PointID){
-					var Index = i;
-				}
-			}
-			return Index;
-	};	
-	
-	
 	
 	
 	// Load test measurements from json
@@ -784,6 +682,7 @@ $( "#select_phenomenon" ).change(function() {
 
 	};
 
+
 	this.clearTrackLayers = function() {
 		var layers = this.LayerGroup.getLayers();
 
@@ -791,6 +690,21 @@ $( "#select_phenomenon" ).change(function() {
 			this.LayerGroup.removeLayer(layers[i]);
 		};
 	};
+
+
+	this.getIndex = function(json, PointID){
+		//console.log("länge des json: "+json.features.length);
+			var jsonLength = json.features.length;
+			for ( var i=0; i < jsonLength; i++ ){
+				var chx = json.features[i].properties.id;
+				//alert(data.features[i].properties.id.toString());
+				if(chx === PointID){
+					var Index = i;
+				}
+			}
+			return Index;
+	};
+
 
 	this.setLegend = function () {
 		legend_inner = '';
@@ -805,6 +719,7 @@ $( "#select_phenomenon" ).change(function() {
 
 		$( "#legend_inner" ).html(legend_inner);
 	};
+
 
 	this.getPhenomenonColor = function (value) {
 
@@ -828,6 +743,7 @@ $( "#select_phenomenon" ).change(function() {
 		return col;
 	};
 
+
 	this.getGreenToRed = function (percent){
             r = percent>50 ? 255 : Math.floor((percent*2)*255/100);
             g = percent<50 ? 255 : Math.floor(255-(percent*2-100)*255/100);
@@ -839,7 +755,8 @@ $( "#select_phenomenon" ).change(function() {
             if (g < 10) g = '0' + g;
 
             return '#'+r+''+g+'00';
-    }
+    };
+
 };
 
 
@@ -850,8 +767,76 @@ $( "#select_phenomenon" ).change(function() {
 // Author: Peter Zimmerhof
 var filter = new function() {
 
-this.filterPolygon = new Array();
-var weekArray;
+	this.filterPolygon = new Array();
+	this.weekArray;
+
+	this.init = function() {
+
+		$("#analyse_btn").click(function() {
+			page.load("analyse");
+		});
+
+		$("#filter_btn").click(function() {
+			db.getSpaceTimeTrack();
+		});
+
+		$( "#from_dt" ).datetimepicker();
+		$( "#to_dt" ).datetimepicker();
+
+
+		startdate =  new Date();
+		enddate =  new Date();
+
+		startdate.setTime(startdate.getTime() - (7 * (1000 * 60 * 60 * 24)));
+		startdate.setHours(0);
+		startdate.setMinutes(0);
+		startdate.setSeconds(0);
+
+		enddate.setHours(23);
+		enddate.setMinutes(59);
+		enddate.setSeconds(59);
+
+		$( "#from_dt" ).datetimepicker('setDate', startdate);
+		$( "#to_dt" ).datetimepicker('setDate', enddate);
+
+		
+		$("#timeFilterCheck").click(function(){
+			$("#filter_btn").fadeIn();
+			if($(this).is(':checked')){
+				$("#timeParameters").fadeIn();
+			}
+			else {
+				$("#timeParameters").fadeOut()
+				if($("#spacialFilterCheck").is(":checked")==false){
+					$("#filter_btn").fadeOut();
+				}
+			}
+		});
+		$("#spacialFilterCheck").click(function(){
+			
+			if($(this).is(':checked')){
+				$("#spacialParameters").fadeIn();
+							if(filter.filterPolygon.length!=0){
+				$("#filter_btn").fadeIn();
+			}
+			}
+		
+			else {
+				//map.drawnItems.clearLayers();
+				$("#spacialParameters").fadeOut()
+				if($("#timeFilterCheck").is(":checked")==false){
+					$("#filter_btn").fadeOut();
+				}
+			}
+		});
+		
+	};
+
+	this.filter = function() {
+
+		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
+	};
+
 	this.getWeekday = function(){
 		if(($("#cb_mo").is(':checked'))||
 			($("#cb_di").is(':checked'))||
@@ -883,40 +868,184 @@ var weekArray;
 					filter.weekArray.push("su")
 			}
 		}
-	}
+	};
+	
+};
+
+
+
+
+// Filter class
+// Description: Class for analyse functions
+// Author: Peter Zimmerhof
+var analyse = new function() {
+
+	this.expertMode = false;
+
+	this.selectedPhenomenon = '';
+	this.selectedMethod = '';
+
+	this.xCell = 300;
+	this.yCell = 300;
+
+	this.pointOverlay = true;
+
 
 	this.init = function() {
 
-		$("#filter_btn").click(function() {
-			filter.getSpaceTimeTrack();
+		$("#results_btn").click(function() {
+			page.load("result");
 		});
 
-		$( "#from_dt" ).datetimepicker();
-		$( "#to_dt" ).datetimepicker();
-
-
-		startdate =  new Date();
-		enddate =  new Date();
-
-		startdate.setTime(startdate.getTime() - (7 * (1000 * 60 * 60 * 24)));
-		startdate.setHours(0);
-		startdate.setMinutes(0);
-		startdate.setSeconds(0);
-
-		enddate.setHours(23);
-		enddate.setMinutes(59);
-		enddate.setSeconds(59);
-
-		$( "#from_dt" ).datetimepicker('setDate', startdate);
-		$( "#to_dt" ).datetimepicker('setDate', enddate);
-
-		$("#btn_bb").click(filter.btnBBClick);
-		$("#btn_polygon").click(filter.btnPolygonClick);
+		$("#expertMod").click(function() {
+		if($("#expertMod").is(":checked")){
+			if($("#selectedAttributes").val()!=""){
+				$("#methodExp").fadeIn();
+				if($("#selectedMethod").val()!=""){
+					$("#rasterSize").fadeIn();
+				}
+			}}
+			else{
+				$("#rasterSize").fadeOut();
+				$("#methodExp").fadeOut();
+			}
+		});
+		
+		$("#selectedAttributes").change(function() {
+			if($("#selectedAttributes").val()!=""){
+				$("#results_btn").fadeIn();
+				if($("#expertMod").is(':checked')){
+					$("#methodExp").fadeIn();
+				}
+			}
+			else{
+				$("#methodExp").fadeOut();
+			}
+		});
+		$("#selectedMethod").change(function() {
+			if($("#selectedMethod").val()!=""){
+				$("#rasterSize").fadeIn();
+				$("#results_btn").fadeIn();
+			}
+			else{
+				$("#rasterSize").fadeOut();
+			}
+		});				
+		
 	};
-	
+
+
+	this.setValues = function() {
+		analyse.expertMode = $('#expertMod').is(':checked');
+
+		analyse.selectedPhenomenon = $('#selectedAttributes').val();
+		analyse.selectedMethod = $('#selectedMethod').val();
+
+		analyse.xCell = parseInt($('#metersX').val());
+		analyse.yCell = parseInt($('#metersY').val());
+
+		analyse.pointOverlay = $('#pointOverlay').is(':checked');
+	};
+
+
+	this.getValues = function() {
+		var json = 
+			{
+				"phenomenon" : analyse.selectedPhenomenon,
+				"statistic" : analyse.selectedMethod,
+				"x_cell" : analyse.xCell,
+				"y_cell" : analyse.yCell,
+				"mode" : analyse.expertMode,
+				"points" : analyse.pointOverlay,
+				"tracks" : map.tracks
+			};
+
+		return json;
+	};
+
+
+	this.showResults = function() {
+
+		var json = analyse.getValues();
+
+		// !!! Analyse-TEST !!!
+		var url = 'cgi-bin/Rcgi/aggregation';
+			$.ajax({ 
+				type: "POST",
+			    url : url, 
+			    cache: false,
+			    data : JSON.stringify(json),
+			    processData : false,
+			}).done(function(data){
+			    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
+			}); 
+	};
+
+};
+
+
+
+
+// DB class
+// Description: Class for DB functions
+// Author: Peter Zimmerhof
+var db = new function() {
+
+	this.loadInitTimeTracks = function(from, to) {
+
+		page.toggleLoadingOverlay(true);
+
+		$.post( "php/filter.php", 
+			{ 
+				f: "getInitialTimeTrack",
+				starttime: helper.dateToRequestDateTimeString(from),
+				endtime: helper.dateToRequestDateTimeString(to),
+				limit: "15" 
+			},
+			function( data ) {
+				map.loadTracks(data.tracks);
+		 	},
+		 	"json"
+		);
+	};
+
+		
+	this.loadInitSpaceTracks = function() {
+
+		page.toggleLoadingOverlay(true);
+
+		var tracks = "";
+		var bounds = {
+			minX : map.mapLeaflet.getBounds().getSouthWest().lng,
+			minY : map.mapLeaflet.getBounds().getSouthWest().lat,
+			maxX : map.mapLeaflet.getBounds().getNorthEast().lng,
+			maxY : map.mapLeaflet.getBounds().getNorthEast().lat
+		};
+
+		console.log( JSON.stringify(bounds));
+
+		$.post( "php/filter.php", 
+			{ 
+				f: "loadDefaultTracks",
+				bbox : JSON.stringify(bounds),
+				limit: "5" 
+			},
+			function( data ) {
+				
+				map.loadTracks(data.tracks);
+
+				$("#analyse_btn").fadeIn();
+		 	},
+		 	"json"
+		);
+	};
+
 	this.getSpaceTimeTrack = function(){
+		
+		page.toggleLoadingOverlay(true);
+
 		$("#analyse_btn").fadeOut();
-		map.clearTrackLayers();
+		
 		var emtyArray;
 		filter.weekArray = emtyArray
 		
@@ -944,139 +1073,25 @@ var weekArray;
 		console.log(phpStarttime);
 		console.log(phpEndtime);
 		console.log(phpWeekArray);
-		$.post( "php/filter.php", 
-				{ 
-					f: "getSpaceTimeTrack",
-					polygon: JSON.stringify(phpFilterPolygon),
-					starttime: phpStarttime,
-					endtime: phpEndtime,
-					weekday: JSON.stringify(phpWeekArray),
-					limit: "6"
-					
-				},
-				function( data ) {
-					console.log("Data loaded "+data.tracks.length);
-
-					map.tracks = data.tracks;
-
-		 			for (i = 0; i < data.tracks.length; i++){
-						console.log(i)
-
-						map.loadTrackJSON(data.tracks[i]);
-					};
-					$("#analyse_btn").fadeIn();
-		 		},
-		 		"json"
-			);
-	}
-
-	this.filter = function() {
-
-		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
-	};
-
-	this.btnBBClick = function() {
-		alert("bbox");
-	};
-
-	this.btnPolygonClick = function() {
-		alert("polygon");
-	};
-	
-};
-
-
-
-
-// Filter class
-// Description: Class for filter functions
-// Author: Peter Zimmerhof
-var analyse = new function() {
-
-	this.expertMode = false;
-
-	this.selectedPhenomenon = '';
-	this.selectedMethod = '';
-
-	this.xCell = 300;
-	this.yCell = 300;
-
-	this.pointOverlay = true;
-};
-
-
-// DB class
-// Description: Class for DB functions
-// Author: Peter Zimmerhof
-var db = new function() {
-
-	this.loadInitTimeTracks = function(from, to) {
-		map.clearTrackLayers();
-
-		var tracks = "";
 
 		$.post( "php/filter.php", 
-				{ 
-					f: "getInitialTimeTrack",
-					starttime: helper.dateToRequestDateTimeString(from),
-					endtime: helper.dateToRequestDateTimeString(to),
-					limit: "15" 
-				},
-				function( data ) {
-					console.log("Data loaded "+data.tracks.length);
+			{ 
+				f: "getSpaceTimeTrack",
+				polygon: JSON.stringify(phpFilterPolygon),
+				starttime: phpStarttime,
+				endtime: phpEndtime,
+				weekday: JSON.stringify(phpWeekArray),
+				limit: "6"
+				
+			},
+			function( data ) {
+				map.loadTracks(data.tracks);
 
-					map.tracks = data.tracks;
-
-		 			for (i = 0; i < data.tracks.length; i++){
-
-						map.loadTrackJSON(data.tracks[i]);
-					};
-		 		},
-		 		"json"
-			);
+				$("#analyse_btn").fadeIn();
+		 	},
+		 	"json"
+		);
 	};
-
-		
-	this.loadInitSpaceTracks = function() {
-
-		page.toggleLoadingOverlay(true);
-
-		map.clearTrackLayers();
-
-		var tracks = "";
-		var bounds = {
-			minX : map.mapLeaflet.getBounds().getSouthWest().lng,
-			minY : map.mapLeaflet.getBounds().getSouthWest().lat,
-			maxX : map.mapLeaflet.getBounds().getNorthEast().lng,
-			maxY : map.mapLeaflet.getBounds().getNorthEast().lat
-		};
-
-			console.log( JSON.stringify(bounds));
-
-		$.post( "php/filter.php", 
-				{ 
-					f: "loadDefaultTracks",
-					bbox : JSON.stringify(bounds),
-					limit: "5" 
-				},
-				function( data ) {
-					console.log("Data loaded "+data.tracks.length);
-
-					map.tracks = data.tracks;
-
-		 			for (i = 0; i < data.tracks.length; i++){
-
-						map.loadTrackJSON(data.tracks[i]);
-
-						page.toggleLoadingOverlay(false);
-					};
-					$("#analyse_btn").fadeIn();
-		 		},
-		 		"json"
-			);
-	};
-
-
 };
 
 

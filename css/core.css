@@ -298,9 +298,11 @@ input[type="text"] {
 	display: inline-block;
 	line-height: 27px;
 }
+
 #draw_buttons .leaflet-draw-draw-polygon {
 	background-position: -31px -2px;
 }
+
 #draw_buttons .leaflet-draw-draw-rectangle {
 	background-position: -62px -2px;
 }
@@ -340,18 +342,22 @@ input[type="text"] {
 	        border-radius: 0 0 0 0;
 	width: auto;
 }
+
 #draw_buttons .leaflet-draw-actions-bottom {
 	margin-top: 1px;
 }
+
 #draw_buttons.leaflet-touch .leaflet-draw-actions a {
 	font-size: 12px;
 	line-height: 30px;
 	height: 30px;
 }
+
 #selectedAttributes, #selectedMethod{
 	width: 230px;
 	height: 30px;
 }
+
 #show_Track{
 	margin-top: 10px;
 	height: 40px;
