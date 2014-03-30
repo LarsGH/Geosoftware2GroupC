@@ -604,13 +604,19 @@ var map = new function() {
                         
                         oldselectedPoint = selectedPoint;
 						
-						
 						var d = new Date(Date.parse(feature.properties.time));
+
+						var car = map.getCar(feature.properties.trackID);
+
 						var sphenomenon = "<h3>Attribute</h3>" +
 							"<table width=100%>" +
 							"<tr><td>ID</td><td>" + feature.properties.id + "</td></tr>" + 
 							"<tr><td>Datum</td><td>" + helper.dateToDateString(d) + "</td></tr>" + 
-							"<tr><td>Uhrzeit</td><td>" + helper.dateToTimeString(d) + "</td></tr></table>" + 
+							"<tr><td>Uhrzeit</td><td>" + helper.dateToTimeString(d) + "</td></tr>" + 
+							"<tr><td>Fahrzeug</td><td>" + car + "</td></tr>" + 							
+							"<tr><td>Lat</td><td>" + feature.geometry.coordinates[1] + "</td></tr>" + 
+							"<tr><td>Long</td><td>" + feature.geometry.coordinates[0] + "</td></tr>" +
+							"</table>" + 
 							"<hr> <table width=100%>";
 						
 
@@ -680,6 +686,20 @@ var map = new function() {
 			})
 			);
 
+	};
+
+	this.getCar = function(trackID) {
+
+		var car = '-';
+
+		for (var i = 0; i < map.tracks.length; i++) {
+			if (map.tracks[i].id = trackID) {
+				car = map.tracks[i].properties.sensor.properties.manufacturer + ' ' + map.tracks[i].properties.sensor.properties.model;
+				break;
+			};
+		};
+
+		return car;
 	};
 
 
