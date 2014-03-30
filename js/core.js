@@ -543,8 +543,8 @@ var map = new function() {
 		//if the sidebar is open it's gonna close now
 		sidebar.hide();
 		//if there is a highlighted Point, it will be unHighlighted
-		if (oldselectedPoint != undefined && oldselectedPoint != null && oldselectedPoint != ""){
-             map.unHighlightPoint(oldselectedPoint);
+		if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != ""){
+             map.unHighlightPoint(map.oldselectedPoint);
         }
 	};
 	
@@ -616,16 +616,16 @@ var map = new function() {
 					layer.on('click', function (e) {
 						
 						//highlighting the clicked point
-						if (oldselectedPoint != undefined && oldselectedPoint != null && oldselectedPoint != "")
+						if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != "")
                         {
-                            map.unHighlightPoint(oldselectedPoint);
+                            map.unHighlightPoint(map.oldselectedPoint);
                         }
 						//var index = feature.properties.indexOf("id");
                         //highlighting the clicked point
                         selectedPoint = e.target;
 						map.highlightPoint(selectedPoint);
                         
-                        oldselectedPoint = selectedPoint;
+                        map.oldselectedPoint = selectedPoint;
 						
 						var d = new Date(Date.parse(feature.properties.time));
 
@@ -693,7 +693,7 @@ var map = new function() {
 					map.highlightPoint(e.target);
 				});
 				layer.on('mouseout', function (e) {
-					if (oldselectedPoint != e.target){
+					if (map.oldselectedPoint != e.target){
 					map.unHighlightPoint(e.target);}
 				});
 					
@@ -1052,6 +1052,8 @@ var analyse = new function() {
 	// Load and show the calculated image
 	this.showResults = function() {
 
+		page.toggleLoadingOverlay(true);
+
 		var json = analyse.getValues();
 
 		// !!! Analyse-TEST !!!
@@ -1064,6 +1066,7 @@ var analyse = new function() {
 			    processData : false,
 			}).done(function(data){
 			    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
+			    page.toggleLoadingOverlay(false);
 			}); 
 	};
 
