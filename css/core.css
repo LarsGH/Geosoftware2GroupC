@@ -13,7 +13,7 @@ body, html {
   left: 0;
   margin:0;
   padding:0px 0;
-  z-index: 1001;
+  z-index: 1002;
   background:#4C4C4C;
   box-shadow:0px 0px 10px rgba(0, 0, 0, 0.15);
    -webkit-transition: all 0.4s linear;
@@ -174,29 +174,37 @@ body, html {
   min-width: 100%;
 }
 
-#panel_right_container {
-  min-height: 100%;
-  width: 250px;
-  display: block;
-  float: right;
-  top: 0px;
-  right: -250px;
-  left: 2000px;
+#loading_overlay{
+  width: 0px;
+  overflow: hidden;
   position: absolute;
-  background:#fff;
-  z-index: 1000;
-  box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, .25);
+  z-index: 1001;
+
+}
+
+#loading_overlay.loading{
+  top: 75px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+#loading_overlay img {
+  position: absolute;
+  padding: 15px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow:0px 0px 10px rgba(0, 0, 0, 0.15);
    -webkit-transition: all 0.4s linear;
    -moz-transition: all 0.4s linear;
    -o-transition: all 0.4s linear;
   transition: all 0.4s linear;
-}
-
-#panel_right {
-  position:inherit;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
 }
 
 #filter_btn, #analyse_btn, #results_btn {

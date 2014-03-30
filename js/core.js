@@ -48,15 +48,23 @@ var page = new function(){
 		page.currentPage = name;
 
 		$( "#panel_left_container" ).load( "pages.html #" + name + "_panel", function () {
-			$( "#page_container" ).load( "pages.html #" + name + "_page", function () {
 
+			if (name != "analyse") {
+				$( "#page_container" ).load( "pages.html #" + name + "_page", function () {
+
+					page.afterLoad(name);
+				});
+			} else {
 				page.afterLoad(name);
-			});
-		});		
+			}
+		});
+
 	};
 
 	// Before page unloading
 	this.beforeUnload = function(name) {
+
+		page.toggleLoadingOverlay(true);
 
 		switch (name) {
 
@@ -89,6 +97,8 @@ var page = new function(){
 
 	// After page loading
 	this.afterLoad = function(name) {
+
+		page.toggleLoadingOverlay(false);
 
 		switch (name) {
 
@@ -209,7 +219,15 @@ var page = new function(){
 				}); 
 				break;
 		}
+
 	};
+
+	this.toggleLoadingOverlay = function(show) {
+		if (show) 
+			$('#loading_overlay').addClass('loading');
+		else
+			$('#loading_overlay').removeClass('loading');
+	}
 
 };
 
@@ -1020,6 +1038,9 @@ var db = new function() {
 
 		
 	this.loadInitSpaceTracks = function() {
+
+		page.toggleLoadingOverlay(true);
+
 		map.clearTrackLayers();
 
 		var tracks = "";
@@ -1046,6 +1067,8 @@ var db = new function() {
 		 			for (i = 0; i < data.tracks.length; i++){
 
 						map.loadTrackJSON(data.tracks[i]);
+
+						page.toggleLoadingOverlay(false);
 					};
 					$("#analyse_btn").fadeIn();
 		 		},
