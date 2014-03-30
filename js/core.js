@@ -11,7 +11,9 @@
 ******************************************/
 
 
-// Global variables
+/*
+	When I wrote this, only God and I understood what I was doing. Now, God only knows.
+*/
 
 
 // Page class
@@ -21,20 +23,17 @@ var page = new function(){
 
 	// Page variables
 	this.currentPage = "home";
-	this.infoShown = false;
+
 
 	// Initialization
 	this.init = function() {
 
-		$('#panel_right_container').css({ "left": ($( window ).width() - 250) + "px" });
-
+		// Load home on entry
 		page.load("home");
 
+		// Register nav button click events
 		$("#home_btn").click(function() {
 			page.load("home");
-		});
-		$("#expert_btn").click(function() {
-			page.switchExpert("expert");
 		});
 		$("#help_btn").click(function() {
 			page.load("help");
@@ -46,19 +45,26 @@ var page = new function(){
 
 	// Load a page
 	this.load = function(name) {
+
+		// Fire events
 		page.beforeUnload(this.currentPage);
 		page.beforeLoad(name);
 
 		page.currentPage = name;
 
+		// 
 		$( "#panel_left_container" ).load( "pages.html #" + name + "_panel", function () {
 
+			// Only load page content when it's not the analyse page
 			if (name != "analyse") {
 				$( "#page_container" ).load( "pages.html #" + name + "_page", function () {
 
+					// Fire event
 					page.afterLoad(name);
 				});
 			} else {
+
+				// Fire event
 				page.afterLoad(name);
 			}
 		});
@@ -73,13 +79,18 @@ var page = new function(){
 		switch (name) {
 
 			case "home":
+
+				// Deregister button events
 				$('#filter_btn').off('click');
 				$('#analyse_btn').off('click');
 				break;
 
 			case "analyse":
+
+				// Deregister button events
 				$("#results_btn").off('click');
 
+				// Set the anaylse values
 				analyse.setValues();
 
 				break;
@@ -100,39 +111,47 @@ var page = new function(){
 
 			case "home":
 
+				// Initialize
 				map.init();
 				filter.init();
 				break;
 			
 			case "analyse":
 
+				// Initialize
 				analyse.init();
 				break;
 
 			case "result":
 				
+				// Load results
 				analyse.showResults();  
 				break;
 
 			case "help":
 			case "about":
 				
+				// Left hand navigation system on help and about page
 				$('.scroll').on('click', function(e) {
-					var href = $(this).attr('id');
-					var el = document.getElementById(href + '_target');
-    				el.scrollIntoView(true);
+
+					var href = $(this).attr('id'); // Get the source
+					var target = document.getElementById(href + '_target'); // Get the target
+    				
+    				target.scrollIntoView(true); // Scroll to target
 				}); 
 				break;
 		}
 
 	};
 
+	// Show / Hide the loading overlay
 	this.toggleLoadingOverlay = function(show) {
+
 		if (show) 
 			$('#loading_overlay').addClass('loading');
 		else
 			$('#loading_overlay').removeClass('loading');
-	}
+	};
 
 };
 
@@ -148,11 +167,11 @@ var map = new function() {
 	this.mapLeaflet = "";
 	this.LayerGroup = "";
 	this.sidebar = "";
-	var oldselectedPoint;
-	var datatrack;
-	var trackid;
-	var Index;
-	var polygon = new Array();
+	this.oldselectedPoint;
+	this.datatrack;
+	this.trackid;
+	this.Index;
+	this.polygon = new Array();
 
 	this.tracks = null;
 
@@ -174,6 +193,7 @@ var map = new function() {
 	this.selectedPhenomenonUnit = "km/h";
 
 	this.selectedPhenomenonValues = this.SpeedValues;
+
 
 	// Initialization
 	this.init = function() {
@@ -206,7 +226,7 @@ var map = new function() {
 		db.loadInitSpaceTracks();
 	};
 
-
+	// Load the layer control
 	this.loadLayers = function() {
 
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -244,7 +264,7 @@ var map = new function() {
 
 	};
 	
-	// Load the Scale
+	// Load the scale control
 	this.loadScale = function() {
 		L.control.scale({
 			position: 'bottomleft',
@@ -253,6 +273,7 @@ var map = new function() {
 		}).addTo(map.mapLeaflet);
 	};
 
+	// Load the sidebar control
 	this.loadSidebar = function() {
 
 		sidebar = L.control.sidebar('sidebar', {
@@ -262,6 +283,7 @@ var map = new function() {
 		map.mapLeaflet.addControl(sidebar);
 	};
 
+	// Load the legend control
 	this.loadLegend = function() {
 
 		var legend = L.control({position: 'bottomright'});
@@ -373,14 +395,14 @@ var map = new function() {
 		});
 	};
 
-
+	// Load the controls for spatial filtering
 	this.loadDrawItems = function() {
 
-		// Initialise the FeatureGroup to store editable layers
+		// Initialize the FeatureGroup to store editable layers
 		var drawnItems = new L.FeatureGroup();
 		map.mapLeaflet.addLayer(drawnItems);
 
-		// Initialise the draw control and pass it the FeatureGroup of editable layers
+		// Initialize the draw control and pass it the FeatureGroup of editable layers
 		var drawControl = new L.Control.Draw({
 			position: 'topleft',
 			draw: {
@@ -515,6 +537,7 @@ var map = new function() {
 
 	};
 	
+	// Map click event function
 	this.onMapClick = function(e) {
 		
 		//if the sidebar is open it's gonna close now
@@ -525,7 +548,7 @@ var map = new function() {
         }
 	};
 	
-	// highlight the selected Point
+	// Highlight the selected Point
 	this.highlightPoint = function(Point) {
         Point.setStyle({
 			radius: 5.5,
@@ -536,7 +559,7 @@ var map = new function() {
         });
 	};
 	
-	// unhighlight the deselected Point
+	// Dehighlight the deselected Point
 	this.unHighlightPoint = function(Point) {
         Point.setStyle({
 			radius: 5,
@@ -688,6 +711,7 @@ var map = new function() {
 
 	};
 
+	// Get a car info string matching the trackID
 	this.getCar = function(trackID) {
 
 		var car = '-';
@@ -702,7 +726,7 @@ var map = new function() {
 		return car;
 	};
 
-
+	// Clear the layers displayed on the map
 	this.clearTrackLayers = function() {
 		var layers = this.LayerGroup.getLayers();
 
@@ -711,7 +735,7 @@ var map = new function() {
 		};
 	};
 
-
+	// 
 	this.getIndex = function(json, PointID){
 		//console.log("länge des json: "+json.features.length);
 			var jsonLength = json.features.length;
@@ -725,7 +749,7 @@ var map = new function() {
 			return Index;
 	};
 
-
+	// Set and update the legend
 	this.setLegend = function () {
 		legend_inner = '';
 
@@ -740,7 +764,7 @@ var map = new function() {
 		$( "#legend_inner" ).html(legend_inner);
 	};
 
-
+	// Get a phenomenon color for a number value
 	this.getPhenomenonColor = function (value) {
 
 		col = "#fff";
@@ -763,7 +787,7 @@ var map = new function() {
 		return col;
 	};
 
-
+	// Get an green to red color based on percentage value
 	this.getGreenToRed = function (percent){
             r = percent>50 ? 255 : Math.floor((percent*2)*255/100);
             g = percent<50 ? 255 : Math.floor(255-(percent*2-100)*255/100);
@@ -787,9 +811,12 @@ var map = new function() {
 // Author: Peter Zimmerhof
 var filter = new function() {
 
+	// Filter variables
 	this.filterPolygon = new Array();
 	this.weekArray;
 
+
+	// Initialization
 	this.init = function() {
 
 		$("#analyse_btn").click(function() {
@@ -852,11 +879,13 @@ var filter = new function() {
 		
 	};
 
+	// Main filter function
 	this.filter = function() {
 
 		db.loadInitTimeTracks($( "#from_dt" ).datetimepicker( 'getDate' ), $( "#to_dt" ).datetimepicker( 'getDate' ))
 	};
 
+	// Get an weekday array
 	this.getWeekday = function(){
 		if(($("#cb_mo").is(':checked'))||
 			($("#cb_di").is(':checked'))||
@@ -900,6 +929,7 @@ var filter = new function() {
 // Author: Peter Zimmerhof
 var analyse = new function() {
 
+	// Analyse variables
 	this.expertMode = false;
 
 	this.selectedPhenomenon = '';
@@ -911,6 +941,7 @@ var analyse = new function() {
 	this.pointOverlay = true;
 
 
+	// Initialization
 	this.init = function() {
 
 		$("#results_btn").click(function() {
@@ -954,7 +985,7 @@ var analyse = new function() {
 		
 	};
 
-
+	// Set the analyse values from the controls
 	this.setValues = function() {
 		analyse.expertMode = $('#expertMod').is(':checked');
 
@@ -967,7 +998,7 @@ var analyse = new function() {
 		analyse.pointOverlay = $('#pointOverlay').is(':checked');
 	};
 
-
+	// Get a json object holding the analyse settings
 	this.getValues = function() {
 		var json = 
 			{
@@ -983,7 +1014,7 @@ var analyse = new function() {
 		return json;
 	};
 
-
+	// Load and show the calculated image
 	this.showResults = function() {
 
 		var json = analyse.getValues();
@@ -1011,6 +1042,7 @@ var analyse = new function() {
 // Author: Peter Zimmerhof
 var db = new function() {
 
+	// Load a initial set of tracks based on time
 	this.loadInitTimeTracks = function(from, to) {
 
 		page.toggleLoadingOverlay(true);
@@ -1029,7 +1061,7 @@ var db = new function() {
 		);
 	};
 
-		
+	// Load a initial set of tracks based on space
 	this.loadInitSpaceTracks = function() {
 
 		page.toggleLoadingOverlay(true);
@@ -1060,6 +1092,7 @@ var db = new function() {
 		);
 	};
 
+	// Load a set of tracks based on time and space
 	this.getSpaceTimeTrack = function(){
 		
 		page.toggleLoadingOverlay(true);
@@ -1122,6 +1155,7 @@ var db = new function() {
 // Author: Peter Zimmerhof
 var helper = new function() {
 
+	// Get a formated date string
 	this.dateToRequestDateTimeString = function(date) {
 
 		var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
