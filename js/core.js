@@ -932,6 +932,7 @@ var weekArray;
 					polygon: JSON.stringify(phpFilterPolygon),
 					starttime: phpStarttime,
 					endtime: phpEndtime,
+					weekday: JSON.stringify(phpWeekArray),
 					limit: "6"
 					
 				},

@@ -134,7 +134,7 @@ else if  ($_POST["f"] == "getSpaceTimeTrack"){
 			if(isset($_POST["limit"])){
 				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $limit, $weekday); // with limit
 			} else {
-				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, $weekday); // without limit
+				echo $filteroptions -> getInitialTimeTrack($starttime, $endtime, 6, $weekday); // without limit (default 6)
 			}
 		// weekday not set
 		} else {

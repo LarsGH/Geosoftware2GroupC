@@ -55,7 +55,7 @@ echo "</br></br>";
 // Test runTimeFilter()
 $filteroptions = new filteroptions(); // Need filteroptions for prefiltering and creating the json file we need
 $jsonTracks = $filteroptions -> createFilterTracks($exampleRequest);
-$test_weekday = array("fr");
+$test_weekday = array("sa", "so", "fr");
 echo "<b>Test  runTimeFilter() </b></br>";
 $timeFilterResult = $timeFilter -> runTimeFilter($jsonTracks, "2014-01-10 15:19:02", "2014-01-10 17:44:40", $test_weekday, true);
 echo "</br> <b> timeFilterResult: </b> </br>";

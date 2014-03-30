@@ -251,7 +251,7 @@ class filteroptions{
 		// create track from the URL
 		$track = $this->createFilterTracks ($timeURL, $info);
 		// filter the given time interval
-		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, null, $info);
+		$filteredTrack = $timeFilter -> runTimeFilter ($track, $starttime, $endtime, $weekday, $info);
 		if($info == true){
 			echo "<u> The initial Track has been created from the given time interval: [Starttime: $starttime, Endtime: $endtime] </u> </br>"; // Infoprint for testing
 			print_r($filteredTrack);

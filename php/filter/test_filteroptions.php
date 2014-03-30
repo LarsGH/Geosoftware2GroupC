@@ -83,8 +83,10 @@ $fullTrack = $filteroptions ->createTrackFromPolygon ($polygon, 1, true);
 echo "</br></br>";
 
 // Test getInitialTimeTrack()
+$test_weekday = array("sa", "su", "fr");
+$test_weekday_no_match = array("sa", "su");
 echo "<b>Test  getInitialTimeTrack() </b> </br>";
-$fullTrack = $filteroptions ->getInitialTimeTrack ("2014-01-10 16:19:02", "2014-01-10 18:44:40", $limit = 1, null, true);
+$fullTrack = $filteroptions ->getInitialTimeTrack ("2014-01-10 15:19:02", "2014-01-10 17:44:40", 1, $test_weekday, true); // 10.01. is a friday!
 echo "</br></br>";
 
 ?>
