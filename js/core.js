@@ -827,10 +827,45 @@ var filter = new function() {
 			db.getSpaceTimeTrack();
 		});
 
-		$( "#from_dt" ).datetimepicker();
-		$( "#to_dt" ).datetimepicker();
 
+		// Set dateTimePicker and restrict time selection logic
+		var startDateTextBox = $('#from_dt');
+		var endDateTextBox = $('#to_dt');
 
+		startDateTextBox.datetimepicker({
+			onClose: function(dateText, inst) {
+				if (endDateTextBox.val() != '') {
+					var testStartDate = startDateTextBox.datetimepicker('getDate');
+					var testEndDate = endDateTextBox.datetimepicker('getDate');
+					if (testStartDate > testEndDate)
+						endDateTextBox.datetimepicker('setDate', testStartDate);
+				}
+				else {
+					endDateTextBox.val(dateText);
+				}
+			},
+			onSelect: function (selectedDateTime){
+				endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+			}
+		});
+		endDateTextBox.datetimepicker({
+			onClose: function(dateText, inst) {
+				if (startDateTextBox.val() != '') {
+					var testStartDate = startDateTextBox.datetimepicker('getDate');
+					var testEndDate = endDateTextBox.datetimepicker('getDate');
+					if (testStartDate > testEndDate)
+						startDateTextBox.datetimepicker('setDate', testEndDate);
+				}
+				else {
+					startDateTextBox.val(dateText);
+				}
+			},
+			onSelect: function (selectedDateTime){
+				startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+			}
+		});
+
+		// Set time preselection
 		startdate =  new Date();
 		enddate =  new Date();
 
@@ -846,7 +881,7 @@ var filter = new function() {
 		$( "#from_dt" ).datetimepicker('setDate', startdate);
 		$( "#to_dt" ).datetimepicker('setDate', enddate);
 
-		
+
 		$("#timeFilterCheck").click(function(){
 			$("#filter_btn").fadeIn();
 			if($(this).is(':checked')){
