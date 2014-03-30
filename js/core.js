@@ -195,7 +195,7 @@ var page = new function(){
 					    data : JSON.stringify(json),
 					    processData : false,
 					}).done(function(data){
-					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/cgi-bin/Rcgi/tmp?file=' + data + '&mime=image/png');
+					    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
 					});   
 				break;
 
