@@ -4,9 +4,9 @@ body, html {
 }
 
 #navbar {
-	min-height: 75px;
-	width: 100%;
-	padding-bottom: 0px;
+  min-height: 75px;
+  width: 100%;
+  padding-bottom: 0px;
   float: top;
   position: absolute;
   top: 0;
@@ -78,7 +78,7 @@ body, html {
 }
 
 #navigation li a:hover {
-  background: #eeeeff;
+  background: #777;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -100,7 +100,7 @@ body, html {
   left: 0px;
   bottom: 0px;
   position: absolute;
-  background:#808080;
+  background:#777;
   z-index: 1000;
   color: #FFFFFF;
   box-shadow:0px 10px 10px rgba(0, 0, 0, 0.15);
@@ -149,7 +149,7 @@ body, html {
 }
 
 .page {
-    overflow: scroll;
+  overflow: scroll;
   height: 100%;
   width: 100%;
 }
@@ -169,6 +169,8 @@ body, html {
   padding-right: 10px;
   padding-bottom: 20px;
   margin: 0px;
+  text-align: justify;
+  max-width: 700px;
 }
 
 .page ul{
@@ -178,6 +180,11 @@ body, html {
 #map { 
   min-height: 100%;
   min-width: 100%;
+}
+
+#sidebar h3{
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #loading_overlay{
@@ -289,86 +296,86 @@ input[type="text"] {
 .ui-timepicker-rtl dl dt{ float: right; clear: right; }
 .ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
 #draw_buttons{
-	background: white;
+  background: white;
     background: rgba(255,255,255,1.0);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	height: 27px;
+  height: 27px;
 }
 
 #draw_buttons a {
-	background-image: url('../img/spritesheet.png');
-	background-repeat: no-repeat;
-	width: 27px;
-	height: 27px;
-	white-space: nowrap;
-	display: inline-block;
-	line-height: 27px;
+  background-image: url('../img/spritesheet.png');
+  background-repeat: no-repeat;
+  width: 27px;
+  height: 27px;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 27px;
 }
 
 #draw_buttons .leaflet-draw-draw-polygon {
-	background-position: -31px -2px;
+  background-position: -31px -2px;
 }
 
 #draw_buttons .leaflet-draw-draw-rectangle {
-	background-position: -62px -2px;
+  background-position: -62px -2px;
 }
 
 #draw_buttons a:hover {
-	background-color: #E5E5E5;
+  background-color: #E5E5E5;
 }
 
 #draw_buttons .leaflet-draw-edit-remove.leaflet-disabled {
-	background-position: -242px -2px;
+  background-position: -242px -2px;
 }
 
 #draw_buttons .leaflet-draw-edit-edit.leaflet-disabled {
-	background-position: -212px -2px;
+  background-position: -212px -2px;
 }
 
 #draw_buttons .leaflet-draw-edit-remove {
-	background-position: -182px -2px;
+  background-position: -182px -2px;
 }
 
 #draw_buttons .leaflet-draw-edit-edit {
-	background-position: -152px -2px;
+  background-position: -152px -2px;
 }
 
 #draw_buttons .leaflet-draw-actions a {
-	background-image: none;
-	background-color: #919187;
-	border-left: 1px solid #AAA;
-	color: #FFF;
-	font: 11px/19px "Helvetica Neue", Arial, Helvetica, sans-serif;
-	line-height: 28px;
-	text-decoration: none;
-	padding-left: 2px;
-	padding-right: 2px;
-	height: 27px;
-	-webkit-border-radius: 0 0 0 0;
-	        border-radius: 0 0 0 0;
-	width: auto;
+  background-image: none;
+  background-color: #919187;
+  border-left: 1px solid #AAA;
+  color: #FFF;
+  font: 11px/19px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  line-height: 28px;
+  text-decoration: none;
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 27px;
+  -webkit-border-radius: 0 0 0 0;
+          border-radius: 0 0 0 0;
+  width: auto;
 }
 
 #draw_buttons .leaflet-draw-actions-bottom {
-	margin-top: 1px;
+  margin-top: 1px;
 }
 
 #draw_buttons.leaflet-touch .leaflet-draw-actions a {
-	font-size: 12px;
-	line-height: 30px;
-	height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  height: 30px;
 }
 
 #selectedAttributes, #selectedMethod{
-	width: 230px;
-	height: 30px;
+  width: 230px;
+  height: 30px;
 }
 
 #show_Track{
-	margin-top: 10px;
-	height: 40px;
-	width: 247px;
-	background: silver;
-	border: 0;
-	color: white;
+  margin-top: 10px;
+  height: 40px;
+  width: 247px;
+  background: silver;
+  border: 0;
+  color: white;
 }
