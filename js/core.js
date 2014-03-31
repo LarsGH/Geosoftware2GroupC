@@ -856,7 +856,7 @@ var map = new function() {
 			    data : JSON.stringify(json_track),
 			    processData : false,
 			}).done(function(data){
-			    var img = '<img src="http://giv-geosoft2c.uni-muenster.de/img/r/' + data.toString() + '"></img>';
+			    var img = '<img src="img/r/' + data.toString() + '"></img>';
 			    $("#result_page").append(img);
 			    page.toggleLoadingOverlay(false);
 			}); 
@@ -1135,7 +1135,7 @@ var analyse = new function() {
 			    data : JSON.stringify(json),
 			    processData : false,
 			}).done(function(data){
-			    var img = '<img id="result_img" src="http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '"></img>';
+			    var img = '<img id="result_img" src="img/r/' + data + '"></img>';
 			    $("#result_page").append(img);
 			    page.toggleLoadingOverlay(false);
 			}); 
