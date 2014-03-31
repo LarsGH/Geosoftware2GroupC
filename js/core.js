@@ -128,6 +128,8 @@ var page = new function(){
 				// Load results if it is not a boxplot
 				if(!map.resultBoxplot){
 					analyse.showResults();  
+				} else {
+					map.resultBoxplot = false;
 				}
 				break;
 
@@ -715,9 +717,9 @@ var map = new function() {
 						// show statistic
 						$("#show_Stat").click(function() {
 							map.resultBoxplot = true;
+
 							page.load("result");
 							map.showBoxplot(feature.properties.trackID);
-							map.resultBoxplot = false;
 						});
 						
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
