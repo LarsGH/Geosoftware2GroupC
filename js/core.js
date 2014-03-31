@@ -916,17 +916,22 @@ var filter = new function() {
 				}
 			}
 		});
+		var oldPolygon;
 		$("#spacialFilterCheck").click(function(){
 			
 			if($(this).is(':checked')){
 				$("#spacialParameters").fadeIn();
-							if(filter.filterPolygon.length!=0){
-				$("#filter_btn").fadeIn();
-			}
+				if (oldPolygon != undefined && oldPolygon != null && oldPolygon != ""){
+					filter.filterPolygon = oldPolygon;
+					if(filter.filterPolygon.length!=0){
+						$("#filter_btn").fadeIn();
+					}
+				}
 			}
 		
 			else {
-				//map.drawnItems.clearLayers();
+				oldPolygon = filter.filterPolygon
+				filter.filterPolygon=[];
 				$("#spacialParameters").fadeOut()
 				if($("#timeFilterCheck").is(":checked")==false){
 					$("#filter_btn").fadeOut();
@@ -1181,10 +1186,6 @@ var db = new function() {
 		else{
 			var phpFilterPolygon;
 		}
-
-		console.log(phpStarttime);
-		console.log(phpEndtime);
-		console.log(phpWeekArray);
 
 		$.post( "php/filter.php", 
 			{ 
