@@ -126,7 +126,7 @@ var page = new function(){
 			case "result":
 				
 				// Load results if it is not a boxplot
-				if(!resultBoxplot){
+				if(!map.resultBoxplot){
 					analyse.showResults();  
 				}
 				break;
@@ -840,7 +840,7 @@ var map = new function() {
 	this.showBoxplot = function(trackID) {
 		page.toggleLoadingOverlay(true);
 		var json_track;
-		for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
+		for (var i = 1; i < map.tracks.length; i++) {
 			if(map.tracks[i].properties.id==trackID)
 				json_track = {tracks:[map.tracks[i]]};
 		}
