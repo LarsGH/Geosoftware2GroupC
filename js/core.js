@@ -125,8 +125,10 @@ var page = new function(){
 
 			case "result":
 				
-				// Load results
-				analyse.showResults();  
+				// Load results if it is not a boxplot
+				if(!resultBoxplot){
+					analyse.showResults();  
+				}
 				break;
 
 			case "help":
@@ -194,7 +196,8 @@ var map = new function() {
 	this.selectedPhenomenonUnit;
 
 	this.selectedPhenomenonValues;
-
+	
+	this.resultBoxplot = false;
 
 	// Initialization
 	this.init = function() {
@@ -690,10 +693,11 @@ var map = new function() {
 						
 						sphenomenon += "</table><hr>" + //index + 
 					
-						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button>";
+						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button><br>" +
+						"<button id=show_Stat>Statistik zur ausgewählten Fahrt anzeigen</button>";
 						
-
 						sidebar.setContent(sphenomenon);
+						// show track
 						$("#show_Track").click(function() {
 
 							page.toggleLoadingOverlay(true);
@@ -707,6 +711,15 @@ var map = new function() {
 								}
 							};
 						});
+						
+						// show statistic
+						$("#show_Stat").click(function() {
+							map.resultBoxplot = true;
+							page.load("result");
+							map.showBoxplot(feature.properties.trackID);
+							map.resultBoxplot = false;
+						});
+						
 						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
 					});
@@ -822,6 +835,32 @@ var map = new function() {
 
             return '#'+r+''+g+'00';
     };
+	
+	// Load and show the calculated image
+	this.showBoxplot = function(trackID) {
+		page.toggleLoadingOverlay(true);
+		var json_track;
+		for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
+			if(map.tracks[i].properties.id==trackID)
+				json_track = {tracks:[map.tracks[i]]};
+		}
+		if(json_track != null && json_track != undefined){
+			// !!! Analyse-TEST !!!
+			var url = 'cgi-bin/Rcgi/boxplot';
+			$.ajax({ 
+				type: "POST",
+			    url : url, 
+			    cache: false,
+			    data : JSON.stringify(json_track),
+			    processData : false,
+			}).done(function(data){
+			    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
+			    page.toggleLoadingOverlay(false);
+			}); 
+		}
+
+
+	};
 
 };
 
@@ -928,6 +967,7 @@ var filter = new function() {
 					}
 				}
 			}
+		
 		
 			else {
 				oldPolygon = filter.filterPolygon
