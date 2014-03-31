@@ -97,18 +97,66 @@
 
 <div id="help_panel" class="panel_left">
 	<h3>Hilfe</h3>
-	<a id="p1" class="scroll">Absatz 1</a><br>
-	<a id="p2" class="scroll">Absatz 2</a>
+	<a id="p1" class="scroll">Erster Einstieg - Allgemeines</a><br>
+	<a id="p2" class="scroll">Navigation in der Karte</a><br>
+	<a id="p3" class="scroll">Filtern - So funktioniert’s</a><br>
+	<a id="p4" class="scroll">Analyse - Räumliche Aggregation</a><br>
+	<a id="p5" class="scroll">Coming soon</a><br>
 </div>
 
 <div id="help_page" class="page">
 	
-	<h3 id="p1_target">1</h3>
+	<h3 id="p1_target">Erster Einstieg - Allgemeines</h3>
 	<p>
 		
 	</p>
 	
-	<h3 id="p2_target">2</h3>
+	<h3 id="p2_target">Navigation in der Karte</h3>
+	<p>
+		
+	</p>
+	
+	<h3 id="p3_target">Filtern - So funktioniert’s</h3>
+	<p>
+	Unsere Applikation ermöglicht das zeitliche und räumliche Filtern sowohl einzeln als auch als Kombination! <br>
+	Wird ein Filter angewendet, so geschieht dies unabhängig von den zu diesem Zeitpunkt in der Applikation angezeigten Tracks. 
+	Bei jedem Filtervorgang (Klick auf den “Filtern”-Button) wird eine neue Anfrage an die enviroCar Datenbank gestellt, und es werden Tracks entsprechend der Filtervorgaben geladen.
+	Die Filter arbeiten genau! Beim Ziehen einer Bounding Box werden alle Punkte außerhalb der Boundig Box abgeschnitten. 
+	Gleiches gilt für den zeitlichen Filter, bei dem alle Punkte außerhalb des gesetzten Zeitintervalls nicht mehr angezeigt werden.
+	Falls bei einem Filter keine Ergebnisse angezeigt werden, sollte zunächst versucht werden, die Filterreichweite durch eine größere räumliche und/oder zeitliche Auswahl zu vergrößern. 
+	Bei zu klein gewählten Ausschnitten kann es passieren, dass für die Auswahl keine Daten vorliegen. Dies gilt insbesondere bei der Kombination von räumlichem und zeitlichem Filter. <br>
+	Falls man aufgrund des gewählten Filters nicht alle Punkte einer Fahrt angezeigt bekommt, sich aber trotzdem für die ganze Fahrt interessiert, kann man sich diese wie folgt anzeigen lassen: 
+	<ul>
+		<li>Auswahl eines beliebigen Punktes der gewünschten Fahrt (durch einen Linksklick)</li>
+		<li>Klick auf den Button “Fahrt zu diesem Punkt anzeigen” (unterhalb der Attributtabelle)</li>
+	</ul>
+	</p>
+	<p>
+	<u>Was beim Filtern passiert: </u><br>
+	Zunächst wird je nach Filtereinstellung ein Request für die Envirocar-API erstellt um entsprechende Ergebnistracks zu erhalten. <br><br>
+	<i>
+	Beispiel-URLs: <br>
+	Zeitlich: <br>
+	https://envirocar.org/api/stable/tracks?limit=15&contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z <br>
+	Räumlich: <br>
+	https://envirocar.org/api/stable/tracks?limit=15&bbox=11.56,47.45,11.66,47.6 <br>
+	Zeitlich + räumlich: <br>
+	https://envirocar.org/api/stable/tracks?limit=15&bbox=11.56,47.45,11.66,47.6&contains=2014-01-10T18:44:40Z,2014-01-10T16:19:02Z <br><br>
+	</i>
+	Nicht alle Messpunkte der Ergebnisse, die man so erhält liegen auch in dem ausgewählten Bereich sondern stellen lediglich eine Schnittmenge mit dem ausgewählten Bereich dar. 
+	Auf das Ergebnis des Requests wird daher unser eigener Filter angewendet um die genauen Ergebnisse zu erhalten. 
+	Dadurch stellen wir sicher, dass nur noch die Punkte angezeigt werden, welche den Filtereinstellungen entsprechen.
+
+	</p>
+	
+	<h3 id="p4_target">Analyse - Räumliche Aggregation</h3>
+	<p>
+		
+	</p>
+	
+	
+	
+	<h3 id="p5_target">Coming soon</h3>
 	<p>
 		
 	</p>
