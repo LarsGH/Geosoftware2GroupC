@@ -840,7 +840,7 @@ var map = new function() {
 	this.showBoxplot = function(trackID) {
 		page.toggleLoadingOverlay(true);
 		var json_track;
-		for (var i = 1; i < map.tracks.length; i++) {
+		for (var i = 0; i < map.tracks.length; i++) {
 			if(map.tracks[i].properties.id==trackID)
 				json_track = {tracks:[map.tracks[i]]};
 		}
@@ -854,7 +854,7 @@ var map = new function() {
 			    data : JSON.stringify(json_track),
 			    processData : false,
 			}).done(function(data){
-			    var img = '<img src="http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '"></img>';
+			    var img = '<img src="http://giv-geosoft2c.uni-muenster.de/img/r/' + data.toString() + '"></img>';
 			    $("#result_page").append(img);
 			    page.toggleLoadingOverlay(false);
 			}); 
