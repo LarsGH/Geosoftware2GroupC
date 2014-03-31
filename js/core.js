@@ -106,7 +106,9 @@ var page = new function(){
 	// After page loading
 	this.afterLoad = function(name) {
 
-		page.toggleLoadingOverlay(false);
+		// Close overlay when a page other then result is loaded
+		if(name != "result")
+			page.toggleLoadingOverlay(false);
 
 		switch (name) {
 
