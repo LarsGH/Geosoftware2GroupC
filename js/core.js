@@ -224,6 +224,12 @@ var map = new function() {
 
 		map.mapLeaflet.on('click', map.onMapClick);
 
+		
+		// Reset selected legend values
+		map.selectedPhenomenon = "Speed";
+		map.selectedPhenomenonUnit = "km/h";
+
+		// Load map.tracks or get initial tracks depending if it's the first startup
 		if (!firstStart) {
 			map.loadTracks(map.tracks);
 		}
