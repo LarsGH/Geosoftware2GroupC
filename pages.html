@@ -38,7 +38,6 @@
 
 
 <div id="analyse_panel" class="panel_left">
-	<input type="checkbox" id="expertMod">Expertenmodus<br>
 	Bitte wählen Sie ein Attribut:<br>
 	<select id="selectedAttributes">
 		<option value="Speed">Geschwindigkeit</option>
@@ -51,6 +50,7 @@
 		<option value="Intake Temperature">Ansaugtemperatur</option>
 	</select>
 	<br>
+	<input type="checkbox" id="expertMod">Expertenmodus<br>
 	<div id="methodExp" hidden="hidden">
 	Bitte wählen Sie die Aggregationsmethode
 	<br>
@@ -64,11 +64,11 @@
 		<br>
 	</div>
 	<div id="rasterSize" hidden="hidden">
-		Rasterbreite (in Meter):
+		Rasterzellenbreite (in Meter):
 		<br>
 		<input class="textbox"type="text"id="metersX" value="15">
 		<br>
-		Rasterhöhe (in Meter):
+		Rasterzellenhöhe (in Meter):
 		<br>
 		<input class="textbox"type="text"id="metersY" value="15">
 		<br>
