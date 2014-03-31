@@ -190,10 +190,10 @@ var map = new function() {
 	this.PressValues = 	[0, 	25, 	50, 	75, 	100];
 	this.TempValues = 	[0, 	10, 	20, 	30, 	40];
 
-	this.selectedPhenomenon = "Speed";
-	this.selectedPhenomenonUnit = "km/h";
+	this.selectedPhenomenon;
+	this.selectedPhenomenonUnit;
 
-	this.selectedPhenomenonValues = this.SpeedValues;
+	this.selectedPhenomenonValues;
 
 
 	// Initialization
@@ -216,27 +216,30 @@ var map = new function() {
 			prefix: 'Mauszeigerkoordinaten: '
 			}).addTo(map.mapLeaflet);
 
+		// Set selected legend values
+		map.selectedPhenomenon = "Speed";
+		map.selectedPhenomenonUnit = "km/h";
+		map.selectedPhenomenonValues = map.SpeedValues;
+
+		// Load controls
 		map.loadLayers();
 		map.loadScale();
 		map.loadSidebar();
 		map.loadLegend();
 		map.loadDrawItems();
 
-		map.mapLeaflet.on('click', map.onMapClick);
-
-		
-		// Reset selected legend values
-		map.selectedPhenomenon = "Speed";
-		map.selectedPhenomenonUnit = "km/h";
-
 		// Load map.tracks or get initial tracks depending if it's the first startup
 		if (!firstStart) {
+
 			map.loadTracks(map.tracks);
 		}
 		else {
+
 			firstStart = false;
 			db.loadInitSpaceTracks();
 		}
+
+		map.mapLeaflet.on('click', map.onMapClick);
 	};
 
 	// Load the layer control
@@ -323,7 +326,6 @@ var map = new function() {
 
 		legend.addTo(map.mapLeaflet);
 		map.setLegend();
-
 
 		//Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
 		document.getElementById("legend").onmouseover = function(e) {
