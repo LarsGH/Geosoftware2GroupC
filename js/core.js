@@ -15,6 +15,7 @@
 	When I wrote this, only God and I understood what I was doing. Now, God only knows.
 */
 
+var firstStart = true;
 
 // Page class
 // Description: Class for handling all page related functions / events
@@ -223,7 +224,13 @@ var map = new function() {
 
 		map.mapLeaflet.on('click', map.onMapClick);
 
-		db.loadInitSpaceTracks();
+		if (!firstStart) {
+			map.loadTracks(map.tracks);
+		}
+		else {
+			firstStart = false;
+			db.loadInitSpaceTracks();
+		}
 	};
 
 	// Load the layer control
@@ -573,19 +580,27 @@ var map = new function() {
 	
 	// Load test measurements from json
 	this.loadTracks = function(tracks) {
-	
-		console.log("Data loaded "+ tracks.length);
 
-		map.tracks = tracks;
+		if (tracks != null && tracks != undefined) {
 
-		map.clearTrackLayers();
+			console.log("Data loaded "+ tracks.length);
 
-		for (i = 0; i < tracks.length; i++){
+			map.tracks = tracks;
 
-			map.loadTrackJSON(tracks[i]);
-		};
+			map.clearTrackLayers();
 
-		page.toggleLoadingOverlay(false);
+			for (i = 0; i < tracks.length; i++){
+
+				map.loadTrackJSON(tracks[i]);
+			};
+
+			$("#analyse_btn").fadeIn();
+			
+			page.toggleLoadingOverlay(false);
+		}
+		else {
+			console.log("Data is null");
+		}
 	};
 	
 	
@@ -672,15 +687,14 @@ var map = new function() {
 
 						sidebar.setContent(sphenomenon);
 						$("#show_Track").click(function() {
-							
-							map.clearTrackLayers();
+
+							page.toggleLoadingOverlay(true);
 
 							for (i = 0; i < map.tracks.length; i++){
 
 								if (map.tracks[i].properties.id == feature.properties.trackID)
 								{
-									map.tracks = [map.tracks[i]];
-									map.loadTrackJSON(map.tracks[i]);
+									map.loadTracks([map.tracks[i]]);
 									break;
 								}
 							};
@@ -1093,6 +1107,7 @@ var db = new function() {
 				limit: "15" 
 			},
 			function( data ) {
+
 				map.loadTracks(data.tracks);
 		 	},
 		 	"json"
@@ -1123,8 +1138,6 @@ var db = new function() {
 			function( data ) {
 				
 				map.loadTracks(data.tracks);
-
-				$("#analyse_btn").fadeIn();
 		 	},
 		 	"json"
 		);
@@ -1176,9 +1189,8 @@ var db = new function() {
 				
 			},
 			function( data ) {
-				map.loadTracks(data.tracks);
 
-				$("#analyse_btn").fadeIn();
+				map.loadTracks(data.tracks);
 		 	},
 		 	"json"
 		);
@@ -1195,6 +1207,9 @@ var helper = new function() {
 
 	// Get a formated date string
 	this.dateToRequestDateTimeString = function(date) {
+
+		// Remove 1 hour to match GMT stamp
+		date.setTime(date.getTime() - (1 * (1000 * 60 * 60)));
 
 		var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
 		var month12 = date.getMonth() + 1;
