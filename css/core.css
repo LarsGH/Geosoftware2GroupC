@@ -83,6 +83,7 @@ body, html {
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 #navigation li a.selected{
@@ -378,7 +379,7 @@ input[type="text"] {
   height: 30px;
 }
 
-#show_Track{
+#show_Track, #show_Stat{
   margin-top: 10px;
   height: 40px;
   width: 247px;

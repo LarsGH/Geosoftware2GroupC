@@ -498,6 +498,7 @@ var map = new function() {
 				};				
 			//alert(filter.filterPolygon.toString())
 			drawnItems.addLayer(layer);
+			drawnItems.bringToBack();
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
@@ -621,7 +622,6 @@ var map = new function() {
 	
 	// Load test measurements from json
 	this.loadTrackJSON = function(json) {
-	
 			this.LayerGroup.addLayer(
 				L.geoJson(json, {
 				style: function (feature) {
@@ -696,7 +696,6 @@ var map = new function() {
 						};
 						
 						sphenomenon += "</table><hr>" + //index + 
-					
 						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button><br>" +
 						"<button id=show_Stat>Statistik zur ausgewählten Fahrt anzeigen</button>";
 						
@@ -705,15 +704,31 @@ var map = new function() {
 						$("#show_Track").click(function() {
 
 							page.toggleLoadingOverlay(true);
+							if($("#spacialFilterCheck").is(":checked")){
+								for (i = 0; i < map.tracks.length; i++){
 
-							for (i = 0; i < map.tracks.length; i++){
-
-								if (map.tracks[i].properties.id == feature.properties.trackID)
-								{
-									map.loadTracks([map.tracks[i]]);
-									break;
-								}
-							};
+									if (map.tracks[i].properties.id == feature.properties.trackID)
+									{
+										map.loadTracks([map.tracks[i]]);
+										break;
+									}
+								};
+							}
+							else{
+								$.post( "php/filter.php", 
+									{ 
+										f: "createTrackFromID",
+										trackID: feature.properties.trackID,
+										encoded: false
+									},
+									function( data ) {
+										map.clearTrackLayers();
+										map.loadTrackJSON(data);
+										page.toggleLoadingOverlay(false);
+									},
+									"json"
+								);
+							}
 						});
 						
 						// show statistic
@@ -749,7 +764,6 @@ var map = new function() {
 			);
 
 	};
-
 	// Get a car info string matching the trackID
 	this.getCar = function(trackID) {
 
@@ -1244,7 +1258,6 @@ var db = new function() {
 				
 			},
 			function( data ) {
-
 				map.loadTracks(data.tracks);
 		 	},
 		 	"json"
