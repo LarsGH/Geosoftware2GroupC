@@ -1,5 +1,5 @@
 <div id="home_panel" class="panel_left">
-	<input type="checkbox" id="timeFilterCheck">Zeitlichen Filter anwenden<br>
+	<label><input type="checkbox" id="timeFilterCheck">Zeitlichen Filter anwenden</label><br>
 	<div id="timeParameters" hidden="hidden">
 		Von:<br>
 		<input class="textbox"type="text"id="from_dt">
@@ -8,16 +8,16 @@
 		
 		<br><br>
 		Wochentag:<br>
-		<input type="checkbox" id="cb_mo" checked>Mo.
-		<input type="checkbox" id="cb_di" checked>Di.
-		<input type="checkbox" id="cb_mi" checked>Mi.
-		<input type="checkbox" id="cb_do" checked>Do.
-		<input type="checkbox" id="cb_fr" checked>Fr.
-		<input type="checkbox" id="cb_sa" checked>Sa.
-		<input type="checkbox" id="cb_so" checked>So.
+		<label><input type="checkbox" id="cb_mo" checked>Mo.</label>
+		<label><input type="checkbox" id="cb_di" checked>Di.</label>
+		<label><input type="checkbox" id="cb_mi" checked>Mi.</label>
+		<label><input type="checkbox" id="cb_do" checked>Do.</label>
+		<label><input type="checkbox" id="cb_fr" checked>Fr.</label>
+		<label><input type="checkbox" id="cb_sa" checked>Sa.</label>
+		<label><input type="checkbox" id="cb_so" checked>So.</label>
 	</div>
 	<br>
-	<input type="checkbox" id="spacialFilterCheck">Räumlichen Filter anwenden<br>
+	<label><input type="checkbox" id="spacialFilterCheck">Räumlichen Filter anwenden</label><br>
 	<div id="spacialParameters"hidden="hidden">
 		<br>
 		<div id ="draw_buttons"></div>
@@ -50,7 +50,7 @@
 		<option value="Intake Temperature">Ansaugtemperatur</option>
 	</select>
 	<br>
-	<input type="checkbox" id="expertMod">Expertenmodus<br>
+	<label><input type="checkbox" id="expertMod">Expertenmodus</label><br>
 	<div id="methodExp" hidden="hidden">
 	Bitte wählen Sie die Aggregationsmethode
 	<br>
@@ -73,7 +73,7 @@
 		<input class="textbox"type="text"id="metersY" value="15">
 		<br>
 	</div>
-	<input type="checkbox" id="pointOverlay">Messpunkte im Ergebnis mit darstellen<br>
+	<label><input type="checkbox" id="pointOverlay">Messpunkte im Ergebnis mit darstellen</label><br>
 	<br>
 
 	<button id="results_btn" hidden="hidden">Aggregation starten</button>
