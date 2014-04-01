@@ -98,32 +98,88 @@
 <div id="help_panel" class="panel_left">
 	<h3>Hilfe</h3>
 	<a id="p1" class="scroll">Erster Einstieg - Allgemeines</a><br>
-	<a id="p2" class="scroll">Navigation in der Karte</a><br>
-	<a id="p3" class="scroll">Filtern - So funktioniert’s</a><br>
-	<a id="p4" class="scroll">Analyse - Räumliche Aggregation</a><br>
-	<a id="p5" class="scroll">Coming soon</a><br>
+	<a id="p2" class="scroll">Informationen zu einer Fahrt</a><br>
+	<a id="p3" class="scroll">Navigation in der Karte</a><br>
+	<a id="p4" class="scroll">Filtern - So funktioniert’s</a><br>
+	<a id="p5" class="scroll">Analyse - Räumliche Aggregation</a><br>
+	<a id="p6" class="scroll">Coming soon</a><br>
 </div>
 
 <div id="help_page" class="page">
 	
 	<h3 id="p1_target">Erster Einstieg - Allgemeines</h3>
 	<p>
-		
+	Beim Aufruf der Applikation werden aktuelle Fahrten aus dem Stadtgebiet Münster auf der Karte angezeigt. <br>
+	Am linken Rand innerhalb der Karte befinden sich die Navigationswerkzeuge. Details zur Navigation in der Karte finden sich im Abschnitt Navigation.
+	Über das Drop-Down Menü in der unteren rechten Ecke innerhalb der Karte lässt sich das gewünschte in der Karte darzustellende Attribut auswählen. Zur Verfügung stehen: <br>
+	<ul>
+	<li> Geschwindigkeit </li>
+	<li> Upm - Umdrehungen pro Minute </li>
+	<li> Verbrauch - Kraftstoffverbrauch </li>
+	<li> CO2 - CO2-Ausstoß </li>
+	<li> MAF - Luftmassendurchfluss </li>
+	<li> Ber. MAF - Berechneter Luftmassendurchfluss </li>
+	<li> Last - Motorlast </li>
+	<li> Ansaugdruck </li>
+	<li> Ansaugtemperatur </li>
+	</ul>
 	</p>
-	
-	<h3 id="p2_target">Navigation in der Karte</h3>
 	<p>
-		
+	In der oberen rechten Ecke der Karte lässt sich zwischen verschiedenen (Hintergrund-) Karten auswählen. Zur Verfügung stehen folgende Karten: <br>
+	<ul>
+	<li> OpenStreetMap Karte </li>
+	<li> Google Satellit - Satellitenbilder </li>
+	<li> Google Geländekarte </li>
+	<li> Topografische Karte </li>
+	</ul>
+	</p>
+	<p>
+	Unten rechts in der Karte werden die geographischen Koordinaten der Position, an der sich der Mauszeiger in der Karte befindet, angegeben. 
+	Der Maßstab befindet sich unten links in der Karte. Über die Menüleiste am oberen Rand lässt sich über den Button “Start” zur Startseite navigieren. 
+	Bei dem Aufruf der Startseite werden die Fahrten erneut geladen, die vor Verlassen der Startseite geladen waren. 
+	Des Weiteren lässt die über die Menüleiste die Hilfeseite sowie das Impressum (“Über uns”) anzeigen. <br>
+	Im Bereich links von der Karte bietet sich die Möglichkeit eine eigene Auswahl bezüglich der darzustellenden Fahrten hinsichtlich eines spezifischen Zeitraums 
+	und / oder eines spezifischen Raumausschnitts zu treffen (Filtern). Details zur Filterung von Fahrten finden sich im Abschnitt Filtern.
+	Des Weiteren bietet das Panel links von der Karte die Möglichkeit die Analyse über den Button “Analysieren” zu starten. 
+	Details zur Analyse finden sich im Abschnitt “Analyse - Räumliche Aggregation”. 
+	Wie detaillierte Informationen über eine Fahrt abgerufen werden können wird im nächsten Abschnitt beschrieben.
 	</p>
 	
-	<h3 id="p3_target">Filtern - So funktioniert’s</h3>
+	<h3 id="p2_target">Informationen zu einer Fahrt</h3>
+	<p>
+	Es besteht die Möglichkeit durch einen Klick mit der linken Maustaste auf einen beliebigen Messpunkt innerhalb der Karte detaillierte Informationen zu diesem Punkt abzurufen. 
+	Nach einem solchen Klick öffnet sich das Attributpanel am rechten Rand der Karte, in dem die Details zu dem ausgewählten Messpunkt angezeigt werden. 
+	Neben den Messwerten zu den oben genannten Attributen werden die ID des Beobachtungspunkts, das Datum und die Uhrzeit der Messung, 
+	der Fahrzeugtyp und die Koordinaten des Punktes (WGS84) ausgegeben. 
+	Es ist zu beachten, dass nicht für jeden Messpunkt alle Attribute zur Verfügung stehen!
+	Ist das Attributpanel geöffnet, so besteht die Möglichkeit, die Auswahl der dargestellten Fahrten in der Karte auf die Fahrt zu beschränken, zu dem der ausgewählte Punkt gehört. 
+	Dazu wird der Button “Fahrt zu diesem Punkt anzeigen” gedrückt.
+	Durch Klicken auf den Button “Statistik zur ausgewählten Fahrt anzeigen” öffnet sich die Ergebnisseite, und es wird ein Diagramm erzeugt, 
+	das die Verteilung der Messdaten getrennt nach Attributen darstellt (Boxplot). Weitere Informationen dazu finden sich in dem Abschnitt “Boxplot”.
+	</p>
+	
+	<h3 id="p3_target">Navigation in der Karte</h3>
+	<p>
+	Die Navigationswerkzeuge befinden sich am linken Rand innerhalb der Karte . 
+	Mit den obersten vier Buttons lässt sich der Kartenausschnitt verschieben. 
+	Mit dem sich darunter befindenden Schieberegler lässt sich in die Karte hinein- oder aus der Karte herauszoomen. 
+	Betätigt der Benutzer den unterhalb des Schiebereglers liegenden Button, so wird auf die aktuelle Position des Benutzer gezoomt 
+	und die ungefähre Position wird durch einen blauen Kreis visualisiert. <br>
+	Durch ein Klicken und gedrückt Halten der linken Maustaste mit anschließendem Bewegen der Maus lässt sich der angezeigte Kartenausschnitt ebenfalls  verschieben (Panning). 
+	Verfügt die “Maus” über ein “Mausrad”, so ist es möglich über Betätigung des Mausrades in die Karte hinein- oder aus der Karte heraus zu zoomen, 
+	sofern sich der Mauszeiger innerhalb der Karte befindet.
+	</p>
+	
+	<h3 id="p4_target">Filtern - So funktioniert’s</h3>
 	<p>
 	Unsere Applikation ermöglicht das zeitliche und räumliche Filtern sowohl einzeln als auch als Kombination! <br>
 	Wird ein Filter angewendet, so geschieht dies unabhängig von den zu diesem Zeitpunkt in der Applikation angezeigten Tracks. 
 	Bei jedem Filtervorgang (Klick auf den “Filtern”-Button) wird eine neue Anfrage an die enviroCar Datenbank gestellt, und es werden Tracks entsprechend der Filtervorgaben geladen.
 	Die Filter arbeiten genau! Beim Ziehen einer Bounding Box werden alle Punkte außerhalb der Boundig Box abgeschnitten. 
 	Gleiches gilt für den zeitlichen Filter, bei dem alle Punkte außerhalb des gesetzten Zeitintervalls nicht mehr angezeigt werden.
-	Falls bei einem Filter keine Ergebnisse angezeigt werden, sollte zunächst versucht werden, die Filterreichweite durch eine größere räumliche und/oder zeitliche Auswahl zu vergrößern. 
+	Falls bei einem Filter keine Ergebnisse angezeigt werden, sollte zunächst versucht werden, die Filterreichweite durch eine größere räumliche und/oder zeitliche Auswahl zu vergrößern.
+	Bei der Anwendung des zeitlichen Filters ohne räumlichen Filter kann es zudem vorkommen, dass die Resultate nicht im aktuellen Bildschirmausschnitt liegen. 
+	Durch herauszoomen lässt sich aber schnell feststellen, wo die Fahrten liegen.
 	Bei zu klein gewählten Ausschnitten kann es passieren, dass für die Auswahl keine Daten vorliegen. Dies gilt insbesondere bei der Kombination von räumlichem und zeitlichem Filter. <br>
 	Falls man aufgrund des gewählten Filters nicht alle Punkte einer Fahrt angezeigt bekommt, sich aber trotzdem für die ganze Fahrt interessiert, kann man sich diese wie folgt anzeigen lassen: 
 	<ul>
@@ -149,14 +205,38 @@
 
 	</p>
 	
-	<h3 id="p4_target">Analyse - Räumliche Aggregation</h3>
+	<h3 id="p5_target">Analyse - Räumliche Aggregation</h3>
 	<p>
-		
+	Es besteht die Möglichkeit eine oder mehrere Fahrten hinsichtlich der Ausprägung eines gewünschten Attributs über eine räumliche Aggregation zu analysieren. 
+	Das Ergebnis der räumlichen Aggregation wird in einer Karte dargestellt, wobei zur besseren Orientierung in der Ergebniskarte eine google-Karte als Hintergrund verwendet wird, 
+	sofern der google-Server die Kartenanfrage erfolgreich beantwortet. Ansonsten wird die Aggregation ohne Hintergrundkarte dargestellt. 
+	Eine Aggregation bezieht sich immer auf die im aktuellen Zustand geladenen Fahrten. 
+	Um sicher zu gehen, dass die Aggregation nur auf im Kartenfenster sichtbare Fahrten angewendet wird, kann zuvor ein räumlicher Filter benutzt werden. <br>
+	
+	Bei der räumlichen Aggregation werden die zu analysierenden Messwerte bezogen auf spezifizierte Raumausschnitte zusammengefasst (aggregiert). 
+	Als Grundlage für die Aggregation der Messwerte wird ein Raster aus gleichgroßen Zellen verwendet, das den gesamten Raumausschnitt der zu analysierenden Messpunkte abdeckt. 
+	Jeder dieser Rasterzellen wird dann ein Wert zugeordnet, der sich aus der Zusammenfassung (z.B. über die Bildung des Mittelwerts) der Messwerte ergibt, 
+	die innerhalb dieser Rasterzelle liegen. <br>
+	
+	Die Aggregation wird mit einem Klick auf den Button “Analysieren” gestartet. 
+	Daraufhin öffnet sich die Analyseseite, wo es eine Reihe an Auswahlmöglichkeiten gibt. 
+	Grundsätzlich gibt es zwei verschiedene Modi, in denen die Aggregation durchgeführt werden kann: 
+	Einerseits den voreingestellten Standard, sowie einen Expertenmodus, der durch aktivieren der Checkbox “Expertenmodus” gestartet werden kann. <br>
+	
+	<u>Standardmodus: </u><br>
+	Das gewünschte zu analysierende Attribut muss in dem bereitgestellten Drop-Down Menü ausgewählt werden. 
+	Optional können durch Aktivieren der entsprechenden Checkbox die Messpunkte im Ergebnis mit dargestellt werden. 
+	Als Aggregationsfunktion wird im Standardmodus der Mittelwert verwendet. Zum Starten der Aggregation wird auf den Button “Aggregation starten” geklickt. 
+	Daraufhin öffnet sich die Ergebnisansicht mit einer Karte, auf der die berechneten Aggregationswerte in Form eines Rasters dargestellt werden. 
+	Für den Standardmodus ist das Aggregationsraster so definiert, dass die längere Seite des durch ein Rechteck gebildeten Raumausschnitts, 
+	der genau die zu analysierenden Messpunkte umfasst, durch 20 Aggregationszellen repräsentiert wird. Die Aggregationszellen im Standardmodus sind annähernd quadratisch. <br>
+	
+	
 	</p>
 	
 	
 	
-	<h3 id="p5_target">Coming soon</h3>
+	<h3 id="p6_target">Coming soon</h3>
 	<p>
 		
 	</p>
