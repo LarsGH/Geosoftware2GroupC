@@ -83,6 +83,7 @@ body, html {
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 #navigation li a.selected{
@@ -173,6 +174,14 @@ body, html {
   max-width: 700px;
 }
 
+.page img{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  margin: 0px;
+  max-width: 700px;
+}
+
 .page ul{
   margin: 0px;
 }
@@ -193,7 +202,6 @@ body, html {
   position: absolute;
   background: rgba(64, 64, 64, .25);
   z-index: 1001;
-
 }
 
 #loading_overlay.loading{
@@ -371,7 +379,7 @@ input[type="text"] {
   height: 30px;
 }
 
-#show_Track{
+#show_Track, #show_Stat{
   margin-top: 10px;
   height: 40px;
   width: 247px;

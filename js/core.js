@@ -106,7 +106,9 @@ var page = new function(){
 	// After page loading
 	this.afterLoad = function(name) {
 
-		page.toggleLoadingOverlay(false);
+		// Close overlay when a page other then result is loaded
+		if(name != "result")
+			page.toggleLoadingOverlay(false);
 
 		switch (name) {
 
@@ -128,6 +130,8 @@ var page = new function(){
 				// Load results if it is not a boxplot
 				if(!map.resultBoxplot){
 					analyse.showResults();  
+				} else {
+					map.resultBoxplot = false;
 				}
 				break;
 
@@ -178,7 +182,7 @@ var map = new function() {
 
 	this.tracks = null;
 
-	this.phenomenons = ["Speed", "Rpm", "Consumption", "C02", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
+	this.phenomenons = ["Speed", "Rpm", "Consumption", "CO2", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/h', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
@@ -295,11 +299,11 @@ var map = new function() {
 	// Load the sidebar control
 	this.loadSidebar = function() {
 
-		sidebar = L.control.sidebar('sidebar', {
+		map.sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
 		
-		map.mapLeaflet.addControl(sidebar);
+		map.mapLeaflet.addControl(map.sidebar);
 	};
 
 	// Load the legend control
@@ -494,6 +498,7 @@ var map = new function() {
 				};				
 			//alert(filter.filterPolygon.toString())
 			drawnItems.addLayer(layer);
+			drawnItems.bringToBack();
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
@@ -559,7 +564,7 @@ var map = new function() {
 	this.onMapClick = function(e) {
 		
 		//if the sidebar is open it's gonna close now
-		sidebar.hide();
+		map.sidebar.hide();
 		//if there is a highlighted Point, it will be unHighlighted
 		if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != ""){
              map.unHighlightPoint(map.oldselectedPoint);
@@ -617,7 +622,6 @@ var map = new function() {
 	
 	// Load test measurements from json
 	this.loadTrackJSON = function(json) {
-	
 			this.LayerGroup.addLayer(
 				L.geoJson(json, {
 				style: function (feature) {
@@ -692,35 +696,52 @@ var map = new function() {
 						};
 						
 						sphenomenon += "</table><hr>" + //index + 
-					
 						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button><br>" +
 						"<button id=show_Stat>Statistik zur ausgewählten Fahrt anzeigen</button>";
 						
-						sidebar.setContent(sphenomenon);
+						map.sidebar.setContent(sphenomenon);
 						// show track
 						$("#show_Track").click(function() {
 
 							page.toggleLoadingOverlay(true);
+							
+							map.sidebar.hide();
 
-							for (i = 0; i < map.tracks.length; i++){
+							if($("#spacialFilterCheck").is(":checked")){
+								for (i = 0; i < map.tracks.length; i++){
 
-								if (map.tracks[i].properties.id == feature.properties.trackID)
-								{
-									map.loadTracks([map.tracks[i]]);
-									break;
-								}
-							};
+									if (map.tracks[i].properties.id == feature.properties.trackID)
+									{
+										map.loadTracks([map.tracks[i]]);
+										break;
+									}
+								};
+							}
+							else{
+
+								$.post( "php/filter.php", 
+									{ 
+										f: "createTrackFromID",
+										trackID: feature.properties.trackID,
+										encoded: false
+									},
+									function( data ) {
+										map.loadTracks(data.tracks);
+										// not map.loadTrackJSON(data);
+									},
+									"json"
+								);
+							}
 						});
 						
 						// show statistic
 						$("#show_Stat").click(function() {
 							map.resultBoxplot = true;
+
 							page.load("result");
 							map.showBoxplot(feature.properties.trackID);
-							map.resultBoxplot = false;
 						});
-						
-						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
+						map.sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
 					});
 				
@@ -745,7 +766,6 @@ var map = new function() {
 			);
 
 	};
-
 	// Get a car info string matching the trackID
 	this.getCar = function(trackID) {
 
@@ -806,7 +826,7 @@ var map = new function() {
 
 		if (value != null && value != undefined) {
 			for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
-				if (value < this.selectedPhenomenonValues[i]) {
+				if ((value-0.001) < this.selectedPhenomenonValues[i]) {
 
 					col = map.getGreenToRed((i-1) / (this.selectedPhenomenonValues.length - 1) * 100);
 					break;
@@ -840,7 +860,7 @@ var map = new function() {
 	this.showBoxplot = function(trackID) {
 		page.toggleLoadingOverlay(true);
 		var json_track;
-		for (var i = 1; i < map.tracks.length; i++) {
+		for (var i = 0; i < map.tracks.length; i++) {
 			if(map.tracks[i].properties.id==trackID)
 				json_track = {tracks:[map.tracks[i]]};
 		}
@@ -854,7 +874,8 @@ var map = new function() {
 			    data : JSON.stringify(json_track),
 			    processData : false,
 			}).done(function(data){
-			    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
+			    var img = '<img src="img/r/' + data.toString() + '"></img>';
+			    $("#result_page").append(img);
 			    page.toggleLoadingOverlay(false);
 			}); 
 		}
@@ -1132,7 +1153,8 @@ var analyse = new function() {
 			    data : JSON.stringify(json),
 			    processData : false,
 			}).done(function(data){
-			    $("#result_img").attr("src", 'http://giv-geosoft2c.uni-muenster.de/img/r/' + data + '');
+			    var img = '<img id="result_img" src="img/r/' + data + '"></img>';
+			    $("#result_page").append(img);
 			    page.toggleLoadingOverlay(false);
 			}); 
 	};
@@ -1238,7 +1260,6 @@ var db = new function() {
 				
 			},
 			function( data ) {
-
 				map.loadTracks(data.tracks);
 		 	},
 		 	"json"
