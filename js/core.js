@@ -475,27 +475,7 @@ var map = new function() {
 			//	layer.bindPopup('A popup!');
 			//}
 			var latLngs = layer.getLatLngs();
-			for(var i=0; i < latLngs.length; i++){
-				var latLngString = latLngs[i].toString();
-				var openBracket = latLngString.indexOf("(");
-				var comma = latLngString.indexOf(",");
-				var bracketClose = latLngString.indexOf(")");
-				var lat = latLngString.slice(openBracket+1, comma);
-				var lng = latLngString.slice(comma+2, bracketClose);
-				
-				polygon[i] = new Object();
-				polygon[i]["lat"]=lat.toString();
-				polygon[i]["lon"]=lng.toString();
-			};
-			filter.filterPolygon = [];
-			polygon[latLngs.length] = polygon[0];
-			for(var i=0; i < polygon.length; i++){
-					filter.filterPolygon.push({
-						lat: polygon[i].lat,
-						lon: polygon[i].lon
-					});
-					
-				};				
+			filter.createDrawPolygon(latLngs);
 			//alert(filter.filterPolygon.toString())
 			drawnItems.addLayer(layer);
 			drawnItems.bringToBack();
@@ -506,7 +486,9 @@ var map = new function() {
 			var layers = e.layers;
 			var countOfEditedLayers = 0;
 			layers.eachLayer(function(layer) {
-			countOfEditedLayers++;
+				countOfEditedLayers++;
+				var latLngs = layer.getLatLngs();
+				filter.createDrawPolygon(latLngs);
 			});
 			console.log("Edited " + countOfEditedLayers + " layers");
 			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
@@ -570,7 +552,7 @@ var map = new function() {
              map.unHighlightPoint(map.oldselectedPoint);
         }
 	};
-	
+
 	// Highlight the selected Point
 	this.highlightPoint = function(Point) {
         Point.setStyle({
@@ -882,7 +864,30 @@ var filter = new function() {
 	// Filter variables
 	this.filterPolygon = new Array();
 	this.weekArray;
-
+	
+	this.createDrawPolygon = function(latLngs){
+		for(var i=0; i < latLngs.length; i++){
+			var latLngString = latLngs[i].toString();
+			var openBracket = latLngString.indexOf("(");
+			var comma = latLngString.indexOf(",");
+			var bracketClose = latLngString.indexOf(")");
+			var lat = latLngString.slice(openBracket+1, comma);
+			var lng = latLngString.slice(comma+2, bracketClose);
+			
+			polygon[i] = new Object();
+			polygon[i]["lat"]=lat.toString();
+			polygon[i]["lon"]=lng.toString();
+		};
+		filter.filterPolygon = [];
+		polygon[latLngs.length] = polygon[0];
+		for(var i=0; i < polygon.length; i++){
+			filter.filterPolygon.push({
+				lat: polygon[i].lat,
+				lon: polygon[i].lon
+			});
+			
+		};
+	}
 
 	// Initialization
 	this.init = function() {
