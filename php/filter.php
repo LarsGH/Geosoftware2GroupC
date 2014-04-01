@@ -53,9 +53,8 @@ else if  ($_POST["f"] == "getFullTrack_fromPoiID"){
 
 // getFullTrack_fromTrackID
 else if  ($_POST["f"] == "getFullTrack_fromTrackID"){
-	$jsonTracks = $_POST["jsonTracks"];
 	$trackID = $_POST["trackID"];
-    echo $filteroptions -> getFullTrack_fromTrackID($jsonTracks, $trackID);
+    echo $filteroptions -> getFullTrack_fromTrackID($trackID);
 }
 
 // getSelectedTrack

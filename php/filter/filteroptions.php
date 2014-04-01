@@ -111,7 +111,7 @@ class filteroptions{
 	The format is the same as the api request result but with all the data:
 	{"tracks":[{},{}, ... ]}
 	*/
-	function getFullTrack_fromTrackID ($jsonTracks, $trackID, $info = false){
+	function getFullTrack_fromTrackID ($trackID, $info = false){
 		if($info == true){
 			echo "<u> function getFullTrack_fromTrackID() </u> </br>"; // Infoprint for testing
 		}
