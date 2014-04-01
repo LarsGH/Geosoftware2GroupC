@@ -37,9 +37,9 @@ echo "<b>The selected track is: </b> </br>";
 print_r($selectedTrack);
 echo "</br></br>";
 
-// Test getFullTrack()
-echo "<b>Test  getFullTrack() </b> </br>";
-$fullTrack = $filteroptions ->getFullTrack ($jsonTracks, $poiID, true);
+// Test getFullTrack_fromPoiID()
+echo "<b>Test  getFullTrack_fromPoiID() </b> </br>";
+$fullTrack = $filteroptions ->getFullTrack_fromPoiID ($jsonTracks, $poiID, true);
 echo "<b>The wanted track is: </b> </br>";
 print_r($fullTrack);
 echo "</br></br>";

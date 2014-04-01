@@ -92,11 +92,29 @@ class filteroptions{
 	The format is the same as the api request result but with all the data:
 	{"tracks":[{},{}, ... ]}
 	*/
-	function getFullTrack ($jsonTracks, $poiID, $info = false){
+	function getFullTrack_fromPoiID ($jsonTracks, $poiID, $info = false){
 		if($info == true){
-			echo "<u> function getFullTrack() </u> </br>"; // Infoprint for testing
+			echo "<u> function getFullTrack_fromPoiID() </u> </br>"; // Infoprint for testing
 		}
 		$trackID = $this->getTrackID ($jsonTracks, $poiID);
+		$track = $this->createTrackFromID ($trackID, false); //decoded
+		$result = array("tracks"=>$track); // get the structure from the filterURL again
+		$encodedResult = json_encode($result); // encode the array
+		if($info == true){
+			echo "A new json containing one track ($trackID) only - has been created! </br>"; // Infoprint for testing
+		}
+		return $encodedResult;
+	}
+	
+	/*
+	Load one complete Track from given trackID and stores just this one track!
+	The format is the same as the api request result but with all the data:
+	{"tracks":[{},{}, ... ]}
+	*/
+	function getFullTrack_fromTrackID ($jsonTracks, $trackID, $info = false){
+		if($info == true){
+			echo "<u> function getFullTrack_fromTrackID() </u> </br>"; // Infoprint for testing
+		}
 		$track = $this->createTrackFromID ($trackID, false); //decoded
 		$result = array("tracks"=>$track); // get the structure from the filterURL again
 		$encodedResult = json_encode($result); // encode the array

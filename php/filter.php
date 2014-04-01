@@ -44,11 +44,18 @@ else if  ($_POST["f"] == "createFilterTracks"){
     echo $filteroptions -> createFilterTracks($filterURL);
 }
 
-// getFullTrack
-else if  ($_POST["f"] == "getFullTrack"){
+// getFullTrack_fromPoiID
+else if  ($_POST["f"] == "getFullTrack_fromPoiID"){
 	$jsonTracks = $_POST["jsonTracks"];
 	$poiID = $_POST["poiID"];
-    echo $filteroptions -> getFullTrack($jsonTracks, $poiID);
+    echo $filteroptions -> getFullTrack_fromPoiID($jsonTracks, $poiID);
+}
+
+// getFullTrack_fromTrackID
+else if  ($_POST["f"] == "getFullTrack_fromTrackID"){
+	$jsonTracks = $_POST["jsonTracks"];
+	$trackID = $_POST["trackID"];
+    echo $filteroptions -> getFullTrack_fromTrackID($jsonTracks, $trackID);
 }
 
 // getSelectedTrack
