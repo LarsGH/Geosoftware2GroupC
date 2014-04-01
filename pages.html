@@ -100,7 +100,7 @@
 	<a id="p3" class="scroll">Navigation in der Karte</a><br>
 	<a id="p4" class="scroll">Filtern - So funktioniert’s</a><br>
 	<a id="p5" class="scroll">Analyse - Räumliche Aggregation</a><br>
-	<a id="p6" class="scroll">Coming soon</a><br>
+	<a id="p6" class="scroll">Boxplot</a><br>
 </div>
 
 <div id="help_page" class="page">
@@ -219,7 +219,7 @@
 	Die Aggregation wird mit einem Klick auf den Button “Analysieren” gestartet. 
 	Daraufhin öffnet sich die Analyseseite, wo es eine Reihe an Auswahlmöglichkeiten gibt. 
 	Grundsätzlich gibt es zwei verschiedene Modi, in denen die Aggregation durchgeführt werden kann: 
-	Einerseits den voreingestellten Standard, sowie einen Expertenmodus, der durch aktivieren der Checkbox “Expertenmodus” gestartet werden kann. <br>
+	Einerseits den voreingestellten Standard, sowie einen Expertenmodus, der durch aktivieren der Checkbox “Expertenmodus” gestartet werden kann. <br><br>
 	
 	<u>Standardmodus: </u><br>
 	Das gewünschte zu analysierende Attribut muss in dem bereitgestellten Drop-Down Menü ausgewählt werden. 
@@ -227,16 +227,29 @@
 	Als Aggregationsfunktion wird im Standardmodus der Mittelwert verwendet. Zum Starten der Aggregation wird auf den Button “Aggregation starten” geklickt. 
 	Daraufhin öffnet sich die Ergebnisansicht mit einer Karte, auf der die berechneten Aggregationswerte in Form eines Rasters dargestellt werden. 
 	Für den Standardmodus ist das Aggregationsraster so definiert, dass die längere Seite des durch ein Rechteck gebildeten Raumausschnitts, 
-	der genau die zu analysierenden Messpunkte umfasst, durch 20 Aggregationszellen repräsentiert wird. Die Aggregationszellen im Standardmodus sind annähernd quadratisch. <br>
+	der genau die zu analysierenden Messpunkte umfasst, durch 20 Aggregationszellen repräsentiert wird. Die Aggregationszellen im Standardmodus sind annähernd quadratisch. <br><br>
 	
+	<u>Expertenmodus: </u><br>
+	Der Standardmodus bildet die Basis für den Expertenmodus. 
+	Ist die Checkbox “Expertenmodus” aktiviert, so eröffnen sich dem Benutzer nach Auswahl des gewünschten Attributs schrittweise weitere Einstellungsmöglichkeiten. 
+	Die Funktion zur Zusammenfassung der Messwerte kann ausgewählt werden. Als Aggregationsfunktionen werden Minimum, Maximum, Mittelwert, Median und Standardabweichung angeboten. 
+	Es ist zu beachten, dass bei der Wahl der Standardabweichung als Aggregationsfunktion mindestens zwei Messwerte innerhalb einer Aggregationszelle liegen müssen, damit ein 
+	Aggregationswert bestimmt werden kann. Nach der Auswahl einer Aggregationsfunktion kann die Breite und Höhe der das Aggregationsraster bildenden Rasterzellen angegeben werden. 
+	Die Angabe der Rasterzellengröße erfolgt in Metern. Zum Schluss muss der Button “Aggregation starten” durch einen Klick betätigt werden. <br>
 	
+	Die räumliche Aggregation der Messdaten wird - um den Client zu entlasten - auf einem Webserver durchgeführt. 
+	Je nach Umfang der zu analysierenden und daher zu übertragenden Datenmenge kann es eine gewisse Zeit in Anspruch nehmen, bis das Ergebnis der Aggregation dargestellt werden kann. 
+	Bitte haben Sie etwas Geduld!
 	</p>
 	
-	
-	
-	<h3 id="p6_target">Coming soon</h3>
+	<h3 id="p6_target">Boxplot</h3>
 	<p>
-		
+	Ein Boxplot dient zur graphischen Darstellung der Verteilung von Daten. Durch ein Boxplot kann z.B. ein schneller Eindruck gewonnen werden, 
+	ob sich die Werte eines Attributs sehr stark voneinander unterscheiden.
+	Ein Boxplot besteht aus einem Rechteck und zwei Linien, die dieses Rechteck verlängern. Der schwarze Balken in der Mitte der Box repräsentiert den Median. 
+	Die Box (Rechteck) entspricht dem Bereich, in dem die mittleren 50 % der Daten liegen, und die Linien repräsentieren den Rest der Daten, abgesehen von den Ausreißern, 
+	die durch Kreise dargestellt sind. Jede der Linien steht also für die oberen und unteren 25 % der Daten.
+	Hinweis für Experten: Länge der Linien (Antennen / Whisker) = 1,5 * Interquartil-Range der Box.
 	</p>
 
 </div>
