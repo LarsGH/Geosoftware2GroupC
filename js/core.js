@@ -299,11 +299,11 @@ var map = new function() {
 	// Load the sidebar control
 	this.loadSidebar = function() {
 
-		sidebar = L.control.sidebar('sidebar', {
+		map.sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
 		
-		map.mapLeaflet.addControl(sidebar);
+		map.mapLeaflet.addControl(map.sidebar);
 	};
 
 	// Load the legend control
@@ -564,7 +564,7 @@ var map = new function() {
 	this.onMapClick = function(e) {
 		
 		//if the sidebar is open it's gonna close now
-		sidebar.hide();
+		map.sidebar.hide();
 		//if there is a highlighted Point, it will be unHighlighted
 		if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != ""){
              map.unHighlightPoint(map.oldselectedPoint);
@@ -699,11 +699,14 @@ var map = new function() {
 						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button><br>" +
 						"<button id=show_Stat>Statistik zur ausgewählten Fahrt anzeigen</button>";
 						
-						sidebar.setContent(sphenomenon);
+						map.sidebar.setContent(sphenomenon);
 						// show track
 						$("#show_Track").click(function() {
 
 							page.toggleLoadingOverlay(true);
+							
+							map.sidebar.hide();
+
 							if($("#spacialFilterCheck").is(":checked")){
 								for (i = 0; i < map.tracks.length; i++){
 
@@ -715,6 +718,7 @@ var map = new function() {
 								};
 							}
 							else{
+
 								$.post( "php/filter.php", 
 									{ 
 										f: "createTrackFromID",
@@ -722,9 +726,8 @@ var map = new function() {
 										encoded: false
 									},
 									function( data ) {
-										map.clearTrackLayers();
-										map.loadTrackJSON(data);
-										page.toggleLoadingOverlay(false);
+										map.loadTracks(data.tracks);
+										// not map.loadTrackJSON(data);
 									},
 									"json"
 								);
@@ -738,8 +741,7 @@ var map = new function() {
 							page.load("result");
 							map.showBoxplot(feature.properties.trackID);
 						});
-						
-						sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
+						map.sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 						
 					});
 				
@@ -824,7 +826,7 @@ var map = new function() {
 
 		if (value != null && value != undefined) {
 			for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
-				if (value < this.selectedPhenomenonValues[i]) {
+				if ((value-0.001) < this.selectedPhenomenonValues[i]) {
 
 					col = map.getGreenToRed((i-1) / (this.selectedPhenomenonValues.length - 1) * 100);
 					break;
