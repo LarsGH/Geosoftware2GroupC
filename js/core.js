@@ -181,7 +181,8 @@ var map = new function() {
 	this.polygon = new Array();
 
 	this.tracks = null;
-
+	
+	//initialize the legend values
 	this.phenomenons = ["Speed", "Rpm", "Consumption", "CO2", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/h', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
@@ -203,9 +204,9 @@ var map = new function() {
 	
 	this.resultBoxplot = false;
 
-	// Initialization
+	// Initialization of map
 	this.init = function() {
-
+		//creating the map
 		map.mapLeaflet = L.map('map', {
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
@@ -213,10 +214,10 @@ var map = new function() {
 		this.LayerGroup = new L.LayerGroup();
 		this.LayerGroup.addTo(map.mapLeaflet);
 		
+		//initialize pan-, zoomslider-, locate and mousePosition-Control
 		L.control.pan().addTo(map.mapLeaflet);
 		L.control.zoomslider().addTo(map.mapLeaflet);
 		L.control.locate().addTo(map.mapLeaflet);
-
 		L.control.mousePosition({
 			separator: ' , ',
 			position: 'bottomright',
@@ -251,38 +252,23 @@ var map = new function() {
 
 	// Load the layer control
 	this.loadLayers = function() {
-
+		//Creating openStreetMap layer
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		});
-		
+		//creating topographic map of NRW
 		var NRWgeoWMS = L.tileLayer.wms("http://www.wms.nrw.de/geobasis/wms_nw_dtk10",{
 			layers: 'nw_dtk10_col',
 			minZoom: 14,
 			format: 'image/png'
 		});
-		
+		//creating the two Googlebaselayer
 		var ggl = new L.Google();
 		var ggl2 = new L.Google('TERRAIN');
 		
 		map.mapLeaflet.addLayer(osm);
-
-		var Topos = L.TileLayer.multi({
-			13: {
-				url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-				subdomains:'1234'
-			},
-			17: {
-				url: 'http://www.wms.nrw.de/geobasis/wms_nw_dtk10',
-				layers: 'nw_dtk10_col',
-					format: 'image/png'
-			}
-		}, {
-			minZoom: 0,
-			maxZoom: 17,
-		});
-		
+		//creating Baselayer-chooser
 		map.mapLeaflet.addControl(new L.Control.Layers( {'OpenStreetMap':osm, 'Google Satellit':ggl, 'Google Geländekarte':ggl2, 'Topografische Karte':NRWgeoWMS}, {}));
 
 	};
@@ -298,7 +284,7 @@ var map = new function() {
 
 	// Load the sidebar control
 	this.loadSidebar = function() {
-
+		//initialize the sidebar
 		map.sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
@@ -436,7 +422,7 @@ var map = new function() {
 				featureGroup: drawnItems
 			}
 		});
-		//this.changeLanguageOfDrawTool();
+		//translate button layout and tooltips
 		L.drawLocal.draw.toolbar.buttons.polygon = 'Polygon zeichnen';
 		L.drawLocal.draw.toolbar.buttons.rectangle = 'Rechteck zeichnen';
 		L.drawLocal.draw.toolbar.actions.text = 'Abbrechen';
@@ -459,11 +445,13 @@ var map = new function() {
 		L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
 		L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
 		map.mapLeaflet.addControl(drawControl);
+		//chaning deletestart behavior of the DrawControl
 		map.mapLeaflet.on('draw:deletestart', function (e) {
 			$("#filter_btn").fadeOut();
 			drawnItems.clearLayers();
 			filter.filterPolygon=[];
 		});
+		//chaning created behavior of the DrawControl
 		map.mapLeaflet.on('draw:created', function (e) {
 			$("#filter_btn").fadeIn();
 			drawnItems.clearLayers();
@@ -482,6 +470,7 @@ var map = new function() {
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
+		//chaning edited behavior of the DrawControl
 		map.mapLeaflet.on('draw:edited', function (e) {
 			var layers = e.layers;
 			var countOfEditedLayers = 0;
@@ -493,6 +482,7 @@ var map = new function() {
 			console.log("Edited " + countOfEditedLayers + " layers");
 			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
 		});
+		//setting the drawingOption to meet our Webdesign
 		drawControl.setDrawingOptions({
 			rectangle: {
 				shapeOptions: {
@@ -510,15 +500,14 @@ var map = new function() {
 				allowIntersection: false,
 			}
 		});	
-						
+		//changing the position of the toolbar
 		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
-		//$(".leaflet-draw-draw-polygon").html("Polygon");
 		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
 		$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
 		$("#draw_buttons").append($(".leaflet-draw-edit-remove"))
 		$("#draw_buttons").append($(".leaflet-draw-actions"));
 		$("#draw_buttons").append($(".leaflet-draw-actions"));
-
+		//adding some moving behavior for the toolbar buttons
 		$(".leaflet-draw-draw-polygon").click(function(){
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'98px'});
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
@@ -580,20 +569,13 @@ var map = new function() {
 	this.loadTracks = function(tracks) {
 
 		if (tracks != null && tracks != undefined) {
-
 			console.log("Data loaded "+ tracks.length);
-
 			map.tracks = tracks;
-
 			map.clearTrackLayers();
-
 			for (i = 0; i < tracks.length; i++){
-
 				map.loadTrackJSON(tracks[i]);
 			};
-
 			$("#analyse_btn").fadeIn();
-			
 			page.toggleLoadingOverlay(false);
 		}
 		else {
@@ -632,7 +614,6 @@ var map = new function() {
                         {
                             map.unHighlightPoint(map.oldselectedPoint);
                         }
-						//var index = feature.properties.indexOf("id");
                         //highlighting the clicked point
                         selectedPoint = e.target;
 						map.highlightPoint(selectedPoint);
@@ -642,7 +623,7 @@ var map = new function() {
 						var d = new Date(Date.parse(feature.properties.time));
 
 						var car = map.getCar(feature.properties.trackID);
-
+						//setting the sphenomenon to display in the sidebar
 						var sphenomenon = "<h3>Attribute</h3>" +
 							"<table width=100%>" +
 							"<tr><td>ID</td><td>" + feature.properties.id + "</td></tr>" + 
@@ -654,7 +635,7 @@ var map = new function() {
 							"</table>" + 
 							"<hr> <table width=100%>";
 						
-
+						
 						for (var i = 0; i < map.phenomenons.length; i++) {
 							p = map.phenomenons[i];
 						
@@ -684,11 +665,8 @@ var map = new function() {
 						map.sidebar.setContent(sphenomenon);
 						// show track
 						$("#show_Track").click(function() {
-
 							page.toggleLoadingOverlay(true);
-							
 							map.sidebar.hide();
-
 							$.post( "php/filter.php", 
 									{ 
 										f: "getFullTrack_fromTrackID",
@@ -705,14 +683,12 @@ var map = new function() {
 						// show statistic
 						$("#show_Stat").click(function() {
 							map.resultBoxplot = true;
-
 							page.load("result");
 							map.showBoxplot(feature.properties.trackID);
 						});
 						map.sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
-						
 					});
-				
+				//highlighting or unhighlighting s point by mouseover/mouseout
 				layer.on('mouseover', function (e) {
 					map.highlightPoint(e.target);
 				});
@@ -722,18 +698,15 @@ var map = new function() {
 				});
 					
 				},
-								
+					
 				pointToLayer: function (feature, latlng) {
         			return L.circleMarker(latlng);
-    			},
-    			// filter: function(feature, layer) {
-				// 	return (feature.properties.phenomenons.Speed.value > 60);
-				// }
-
+    			}
 			})
 			);
 
 	};
+	
 	// Get a car info string matching the trackID
 	this.getCar = function(trackID) {
 
@@ -756,20 +729,6 @@ var map = new function() {
 		for (var i = 0; i < layers.length; i++) {
 			this.LayerGroup.removeLayer(layers[i]);
 		};
-	};
-
-	// 
-	this.getIndex = function(json, PointID){
-		//console.log("länge des json: "+json.features.length);
-			var jsonLength = json.features.length;
-			for ( var i=0; i < jsonLength; i++ ){
-				var chx = json.features[i].properties.id;
-				//alert(data.features[i].properties.id.toString());
-				if(chx === PointID){
-					var Index = i;
-				}
-			}
-			return Index;
 	};
 
 	// Set and update the legend
@@ -864,7 +823,7 @@ var filter = new function() {
 	// Filter variables
 	this.filterPolygon = new Array();
 	this.weekArray;
-	
+	//creating the polygon for the drawn spatial filter
 	this.createDrawPolygon = function(latLngs){
 		for(var i=0; i < latLngs.length; i++){
 			var latLngString = latLngs[i].toString();
@@ -954,7 +913,7 @@ var filter = new function() {
 		$( "#from_dt" ).datetimepicker('setDate', startdate);
 		$( "#to_dt" ).datetimepicker('setDate', enddate);
 
-
+		//setting the locigal workflow for the buttons ins the filterpanel
 		$("#timeFilterCheck").click(function(){
 			$("#filter_btn").fadeIn();
 			if($(this).is(':checked')){
@@ -1057,7 +1016,7 @@ var analyse = new function() {
 
 	// Initialization
 	this.init = function() {
-
+		//setting the locigal workflow for the buttons in the analysepanel
 		$("#results_btn").click(function() {
 			page.load("result");
 		});
