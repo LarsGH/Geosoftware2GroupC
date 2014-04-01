@@ -707,31 +707,17 @@ var map = new function() {
 							
 							map.sidebar.hide();
 
-							if($("#spacialFilterCheck").is(":checked")){
-								for (i = 0; i < map.tracks.length; i++){
-
-									if (map.tracks[i].properties.id == feature.properties.trackID)
-									{
-										map.loadTracks([map.tracks[i]]);
-										break;
-									}
-								};
-							}
-							else{
-
-								$.post( "php/filter.php", 
+							$.post( "php/filter.php", 
 									{ 
-										f: "createTrackFromID",
+										f: "getFullTrack_fromTrackID",
 										trackID: feature.properties.trackID,
 										encoded: false
 									},
 									function( data ) {
 										map.loadTracks(data.tracks);
-										// not map.loadTrackJSON(data);
 									},
 									"json"
 								);
-							}
 						});
 						
 						// show statistic
