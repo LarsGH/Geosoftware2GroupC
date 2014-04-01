@@ -182,7 +182,7 @@ var map = new function() {
 
 	this.tracks = null;
 
-	this.phenomenons = ["Speed", "Rpm", "Consumption", "C02", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
+	this.phenomenons = ["Speed", "Rpm", "Consumption", "CO2", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/h', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
