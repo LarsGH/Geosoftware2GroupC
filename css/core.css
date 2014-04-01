@@ -133,6 +133,9 @@ body, html {
   margin: 0px;
 
 }
+.scroll {
+  cursor: pointer;
+}
 
 #page_inner {
   left: 250px;

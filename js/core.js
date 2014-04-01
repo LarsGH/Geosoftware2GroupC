@@ -1078,7 +1078,6 @@ var analyse = new function() {
 		
 		$("#selectedAttributes").change(function() {
 			if($("#selectedAttributes").val()!=""){
-				$("#results_btn").fadeIn();
 				if($("#expertMod").is(':checked')){
 					$("#methodExp").fadeIn();
 				}
@@ -1090,7 +1089,6 @@ var analyse = new function() {
 		$("#selectedMethod").change(function() {
 			if($("#selectedMethod").val()!=""){
 				$("#rasterSize").fadeIn();
-				$("#results_btn").fadeIn();
 			}
 			else{
 				$("#rasterSize").fadeOut();
