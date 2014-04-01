@@ -115,9 +115,11 @@ class filteroptions{
 		if($info == true){
 			echo "<u> function getFullTrack_fromTrackID() </u> </br>"; // Infoprint for testing
 		}
-		$track = $this->createTrackFromID ($trackID, false); //decoded
-		$result = array("tracks"=>$track); // get the structure from the filterURL again
-		$encodedResult = json_encode($result); // encode the array
+		$trackArray = array(); // array to store the track
+		$trackWithData = $this->createTrackFromID ($trackID); // get decoded track from track-ID
+		array_push($trackArray, $trackWithData); // push the track to the trackArray
+		$resultArray = array("tracks"=>$trackArray); // get the structure from the filterURL again
+		$encodedResult = json_encode($resultArray); // encode the array
 		if($info == true){
 			echo "A new json containing one track ($trackID) only - has been created! </br>"; // Infoprint for testing
 		}
