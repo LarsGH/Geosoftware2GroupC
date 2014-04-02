@@ -1,4 +1,3 @@
-
 ###
 #
 # Description: Function to calculate the requested cell size and dimension of the
@@ -126,7 +125,7 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
         csizeX_Meter <- round(bbMeterLengthX/gridDimX)
         csizeY_Meter <- round(bbMeterHeightY/gridDimY)
         
-	      # Create return list with named elements
+	# Create return list with named elements
         paramList <- list(sizeX = csizeX_Meter, sizeY = csizeY_Meter, dimX = gridDimX, dimY = gridDimY, modus = NULL, com = NULL)
         
       }else{
@@ -143,7 +142,7 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
         comment <- paste("Umgesetzte Zellengröße weicht (i.d.R.) leicht von gewünschter Größe (",
                          abs(cellSizeX_Meter), " x ", abs(cellSizeY_Meter)," m) ab.", sep="")
         
-	      # Create return list with named elements
+	# Create return list with named elements
         paramList <- list(sizeX = csizeX_Meter, sizeY = csizeY_Meter, dimX = gridDimX, dimY = gridDimY, modus = NULL, com = NULL)
             
       }
