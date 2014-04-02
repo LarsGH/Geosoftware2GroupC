@@ -2,7 +2,8 @@
 ###
 #
 # Description: Function that will be run by FastRWeb. This function calls the
-#   boxplotMain() function and saves the boxplot output to a png-file.
+#   boxplotMain() function, saves the plot output to a png-file with random name
+#   and returns the filename (with path) of the png-file.
 #
 # @author : Roland Harhoff
 #
