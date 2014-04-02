@@ -182,6 +182,8 @@ var map = new function() {
 
 	this.tracks = null;
 	
+	this.colorMap = 	['#0e0', '#9f0', '#ff0', '#f90', '#f00'];
+
 	//initialize the legend values
 	this.phenomenons = ["Speed", "Rpm", "Consumption", "CO2", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
@@ -755,12 +757,12 @@ var map = new function() {
 			for (var i = 1; i < this.selectedPhenomenonValues.length; i++) {
 				if ((value-0.001) < this.selectedPhenomenonValues[i]) {
 
-					col = map.getGreenToRed((i-1) / (this.selectedPhenomenonValues.length - 1) * 100);
+					col = map.colorMap[i-1];
 					break;
 				}
 				else if (i == (this.selectedPhenomenonValues.length - 1) && value > this.selectedPhenomenonValues[i]) {
 
-					col = map.getGreenToRed(100);
+					col = map.colorMap[(map.colorMap.length - 1)];
 					break;
 				}
 			};
