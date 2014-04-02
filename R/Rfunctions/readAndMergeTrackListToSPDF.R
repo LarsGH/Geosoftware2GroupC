@@ -36,28 +36,7 @@ readAndMergeTrackListToSPDF <- function(trackListFromJSON, attributeO){
 
   # Merge the list of data.frames containing the
   # requested phenomenon to one data.frame
-  df <- do.call(rbind, dfl)
-  
-
-
-  ###
-  # ! NEU 4 spdf_wgs
-##  myldf_comp <- compact(myldf)
-  # !! ALTE IMPL
-  #dfcompl <- do.call(rbind, myldf) # kein Problem mit NULL ! : ) !
-  # ! NEU 4 spdf_wgs
-##  dfcompl <- do.call(rbind.fill, myldf_comp) # kein Problem mit NULL ! : ) ! ??
-
-  ###
-  #str(df)
-  #spdfAll <- dfcompl
-  
-  #attr(df, "units") <- NULL
-    
-  #spdfAll@units[["Speed"]]
-  #a <- attr(unitsDf, "units")
-
-  
+  df <- do.call(rbind, dfl)  
 
   # Check if the data.frame is NULL.
   # That might be the case if there are no measurements points / features 
@@ -75,23 +54,6 @@ readAndMergeTrackListToSPDF <- function(trackListFromJSON, attributeO){
   
     flog.info("SPDF created.")
     
-
-
-    #str(df)
-  # Hier auswählen welche Attribute überhaupt gebraucht werden
-  # xxx achtung !!!
-  
-  # unitsDF: wo brauch ich das ? attr, ... ?!
-  # Aufpassen dass ich das ich die Fkt nicht zu oft aufrufe...!
-  #Hier sollte ich im folgenden genau angeben welche jetzt von interrsse sind, und diese auch vorher ausgewählt haben...
-  #unitsDfSmall <- unitsDf[c("Speed", "Consumption", "Calculated.MAF", "Intake.Pressure", "CO2", "Intake.Temperature", "MAF", "Rpm", "GPS.Accuracy")]
-  #unitsDfSmall <- unitsDf[c("Speed", "Consumption", "Calculated.MAF", "Intake.Pressure", "CO2", "Intake.Temperature", "MAF", "Rpm", "GPS.Accuracy", "O2.Lambda.Current.ER")]  
-    #alt
-  #attr(df, "units") <- unitsDf#Small
-
-  
-    
-
     # To retrieve the "units" of the requested attribute,
     # first create a vector that is populated with the units "value"
     # of each data.frame from the data.frame list. This vector might

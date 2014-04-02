@@ -1,8 +1,8 @@
 
 ###
 #
-# Description: Function that returns the german translation of
-#   the phenomenon names.
+# Description: Function that provides the german translations of
+#   the phenomenon names and returns the translation of the requested attribute.
 #
 # @author : Roland Harhoff
 #
@@ -24,15 +24,15 @@ getGermanVariableName <- function(attr){
 
   # Switch to get the corresponding name
   name <- switch(attr,
-                 CO2="CO2", #### 
-                 Calculated.MAF="Ber. MAF", ####
-                 Consumption="Verbrauch", ####
-                 Engine.Load="Last", ####
-                 Intake.Pressure="Ansaugdruck", ####
-                 Intake.Temperature="Ansaugtemperatur", ####
-                 MAF="MAF", ####
-                 Rpm="Upm", ####
-                 Speed="Geschwindigkeit", ####
+                 CO2="CO2", 
+                 Calculated.MAF="Ber. MAF", 
+                 Consumption="Verbrauch", 
+                 Engine.Load="Last", 
+                 Intake.Pressure="Ansaugdruck", 
+                 Intake.Temperature="Ansaugtemperatur", 
+                 MAF="MAF", 
+                 Rpm="Upm", 
+                 Speed="Geschwindigkeit", 
                  GPS.Accuracy="GPS Genauigkeit",
                  GPS.Altitude="GPS Höhe",
                  GPS.Bearing="GPS Peilung",

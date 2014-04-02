@@ -50,9 +50,6 @@ calcCellSizeAndDimStdMode <- function(bb_wgs){
   # Call the default function to calculate the cell size and dimension
   paramList <- calcCellSizeAndDimDefault(bb_wgs, defaultCellCount)
   
-  ## An alternative approach with sp
-  ##paramList <- calcGrid4SpDefaultTest(bb_wgs, defaultCellCount)
-  
   # Assign values to the named list elements 'modus'
   paramList$modus <- aggMode
   # ... and 'com'
