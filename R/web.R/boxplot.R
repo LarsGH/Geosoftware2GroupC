@@ -23,8 +23,8 @@ run <- function(...) {
   require(rjson)   
   data <- fromJSON(rawToChar(request$body, multiple=FALSE))
   
-  # Adjust the data structure
-  layerJSON <- list(data[["tracks"]])
+  # Get the data
+  layerJSON <- data[["tracks"]]
   names(layerJSON) <- "tracks"
   
   # Create a random filename
@@ -38,7 +38,8 @@ run <- function(...) {
   Cairo(file = pathWithFilename2, width = 960, height = 960)
   
   # Set graphics parameter
-  par(cex=1.15, las=1)
+  #par(cex=1.15, las=1)
+  par(cex=1.29, las=1, tck=0.01)
   
   # Run the boxplotMain() function that returns a plot
   boxplotMain(layerJSON)
