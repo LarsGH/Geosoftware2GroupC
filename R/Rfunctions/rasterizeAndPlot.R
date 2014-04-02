@@ -81,9 +81,10 @@ rasterizeAndPlot <- function(spdf_wgs, attribute, statistic, myMap, rasterParam,
   sp_NA <- subset(x=spdf_wgs, subset=naIndexVec, select=attribute)
   sp_NotNA <- subset(x=spdf_wgs, subset=notNAIndexVec, select=attribute)
   
-  # Get the number of missing values.
+  # Get the number of values and missing values.
+  nmbrOfValues <- length(sp_NotNA)
   nmbrOfNA <- length(sp_NA)
-
+  
   # Get the units of the attribute
   unit <- spdf_wgs@units[[attribute]]
   
@@ -114,14 +115,16 @@ rasterizeAndPlot <- function(spdf_wgs, attribute, statistic, myMap, rasterParam,
                  main = paste("\n", statistic, " des Attributes \"",attributeG, "\" [", unit, "]\nin Aggregationszellen der Größe ",rasterParam$sizeX," x ",rasterParam$sizeY, " Meter (",rasterParam$modus,").", sep=""),
                  sub = if(points == TRUE){
                    # Subtitle for plot with measurement points
-                   paste(nmbrOfTracks ," Fahrt(en) mit ",nmbrOfPoints,
-                        " Messpunkten (schwarz) ausgewertet, davon fehlende Messwerte: ", nmbrOfNA, " (blau).",
+                   paste(nmbrOfTracks ," Fahrt(en) mit insgesamt ",nmbrOfPoints,
+                        " Messpunkten ausgewertet.\nVorhandene Messwerte: ", nmbrOfValues,
+                        " (schwarz), fehlende Messwerte: ", nmbrOfNA, " (hellblau).",
                         "\n", rasterParam$com, "\n",
                         sep="")
                   }else{
                     # Subtitle for plot without measurement points
-                    paste(nmbrOfTracks ," Fahrt(en) mit ",nmbrOfPoints,
-                        " Messpunkten ausgewertet, davon fehlende Messwerte: ", nmbrOfNA, ".",
+                    paste(nmbrOfTracks ," Fahrt(en) mit insgesamt ",nmbrOfPoints,
+                        " Messpunkten ausgewertet.\nVorhandene Messwerte: ", nmbrOfValues,
+                        ", fehlende Messwerte: ", nmbrOfNA, ".",
                         "\n", rasterParam$com, "\n",
                         sep="")
                   }
@@ -145,16 +148,18 @@ rasterizeAndPlot <- function(spdf_wgs, attribute, statistic, myMap, rasterParam,
                  main = paste("\n", statistic, " des Attributes \"",attributeG, "\" [", unit, "]\nin Aggregationszellen der Größe ",rasterParam$sizeX," x ",rasterParam$sizeY, " Meter (",rasterParam$modus,").", sep=""),
                  sub = if(points == TRUE){
                    # Subtitle for plot with measurement points
-                   paste(nmbrOfTracks ," Fahrt(en) mit ",nmbrOfPoints,
-                         " Messpunkten (schwarz) ausgewertet, davon fehlende Messwerte: ", nmbrOfNA, " (blau).",
-                         "\nHintergrundkarte konnte nicht geladen werden.",
+                   paste(nmbrOfTracks ," Fahrt(en) mit insgesamt ",nmbrOfPoints,
+                         " Messpunkten ausgewertet.\nVorhandene Messwerte: ", nmbrOfValues,
+                         " (schwarz), fehlende Messwerte: ", nmbrOfNA, " (hellblau).",
+                         "\nDie Hintergrundkarte konnte nicht geladen werden.",
                          "\n", rasterParam$com, "\n",
                          sep="")
                  }else{
                    # Subtitle for plot without measurement points
-                   paste(nmbrOfTracks ," Fahrt(en) mit ",nmbrOfPoints,
-                         " Messpunkten ausgewertet, davon fehlende Messwerte: ", nmbrOfNA, ".",
-                         "\nHintergrundkarte konnte nicht geladen werden.",
+                   paste(nmbrOfTracks ," Fahrt(en) mit insgesamt ",nmbrOfPoints,
+                         " Messpunkten ausgewertet.\nVorhandene Messwerte: ", nmbrOfValues,
+                         ", fehlende Messwerte: ", nmbrOfNA, ".",
+                         " Die Hintergrundkarte konnte nicht geladen werden.",
                          "\n", rasterParam$com, "\n",
                          sep="")
                  }

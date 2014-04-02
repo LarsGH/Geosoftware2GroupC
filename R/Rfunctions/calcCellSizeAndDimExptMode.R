@@ -45,7 +45,7 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
     defCount <- getDefaultCellCount()
     
     # Providing a comment that explains the situation and will be used in the plot.
-    comment <- "Hinweis: Gewünschte Zellenbreite oder/und -höhe war Null. Zellen nach Standardmodus berechnet."
+    comment <- "Hinweis: Angegebene Zellenbreite und/oder -höhe war Null. Zellen nach Standardmodus berechnet."
     
     # Call the default calculation function.
     paramList <- calcCellSizeAndDimDefault(bb_wgs, defCount)
@@ -79,7 +79,8 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
       cellCnt <- 2
       
       # Providing a comment that explains the situation and will be used in the plot.
-      comment <- paste("Hinweis: Gewünschtes Zellenausmaß ", format(abs(cellSizeX_Meter), sci=F), " x ", format(abs(cellSizeY_Meter), sci=F), " m war zu groß. Minimum: 2 Zellen. Zellen angepasst.", sep="")
+      comment <- paste("Hinweis: Die angegebene Zellengröße von ", format(abs(cellSizeX_Meter), sci=F), " x ", format(abs(cellSizeY_Meter), sci=F),
+                       " Metern war zu groß.\nMinimum sind 2 Zellen. Die Zellengröße wurde angepasst.", sep="")
       
       # Call the default calculation function.
       paramList <- calcCellSizeAndDimDefault(bb_wgs, cellCnt)
@@ -101,7 +102,8 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
                   --> Cell size will be adjusted.")
         
         # Providing a comment that explains the situation and will be used in the plot.
-        comment <- paste("Hinweis: Gewünschtes Zellenausmaß ", abs(cellSizeX_Meter), " x ", abs(cellSizeY_Meter), " m war zu klein. Maximum: ", maxCellSum, " Zellen. Zellen vergrößert.", sep="")
+        comment <- paste("Hinweis: Die angegebene Zellengröße von ", abs(cellSizeX_Meter), " x ", abs(cellSizeY_Meter),
+                         " Metern war zu klein.\nMaximum sind insgesamt ", maxCellSum, " Zellen. Die Zellen wurden vergrößert.", sep="")
         
         # Recalculate the grid cell size and dimension as long
         # as the cell sum is larger than the maximum cell sum
@@ -124,7 +126,7 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
         csizeX_Meter <- round(bbMeterLengthX/gridDimX)
         csizeY_Meter <- round(bbMeterHeightY/gridDimY)
         
-	  # Create return list with named elements
+	      # Create return list with named elements
         paramList <- list(sizeX = csizeX_Meter, sizeY = csizeY_Meter, dimX = gridDimX, dimY = gridDimY, modus = NULL, com = NULL)
         
       }else{
@@ -138,9 +140,10 @@ calcCellSizeAndDimExptMode <- function(bb_wgs, cellSizeX_Meter, cellSizeY_Meter)
         csizeY_Meter <- round(bbMeterHeightY/gridDimY)
         
         # Providing a comment that explains the situation and will be used in the plot.
-        comment <- paste("Hinweis: Gewünschtes Zellenausmaß war ", abs(cellSizeX_Meter), " x ", abs(cellSizeY_Meter), " Meter. Reales Ausmaß weicht (leicht) davon ab.", sep="")
+        comment <- paste("Umgesetzte Zellengröße weicht (i.d.R.) leicht von gewünschter Größe (",
+                         abs(cellSizeX_Meter), " x ", abs(cellSizeY_Meter)," m) ab.", sep="")
         
-	  # Create return list with named elements
+	      # Create return list with named elements
         paramList <- list(sizeX = csizeX_Meter, sizeY = csizeY_Meter, dimX = gridDimX, dimY = gridDimY, modus = NULL, com = NULL)
             
       }
