@@ -28,6 +28,9 @@ boxplotMain <- function(layerJSON){
     # Get the track from the list
     track <- layerJSON$tracks
     
+    # Get number of measurement points
+    nmbrOfPoints <- length(track$features)
+    
     # Check if track is populated with measurement points
     if (length(track$features) > 0){
       
@@ -113,7 +116,7 @@ boxplotMain <- function(layerJSON){
               names = namesVec,
               main=paste("Verteilung der Attributwerte der ausgewählten Fahrt.\nFahrzeug: ",
                          car,", Datum: ", date, ", Fahrt-ID: ",trackId,".\n", sep=""),
-              sub="Nur die zur Verfügung stehenden Attribute werden dargestellt.\n"
+              sub=paste(nmbrOfPoints, " Messpunkte\n", sep="")
       )
       
       flog.info("boxplotMain function finished successfully.#")
