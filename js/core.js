@@ -53,7 +53,7 @@ var page = new function(){
 
 		page.currentPage = name;
 
-		// 
+		// Load panel content
 		$( "#panel_left_container" ).load( "pages.html #" + name + "_panel", function () {
 
 			// Only load page content when it's not the analyse page
@@ -75,6 +75,7 @@ var page = new function(){
 	// Before page unloading
 	this.beforeUnload = function(name) {
 
+		// Open loading overlay
 		page.toggleLoadingOverlay(true);
 
 		switch (name) {
@@ -180,15 +181,18 @@ var map = new function() {
 	this.Index;
 	this.polygon = new Array();
 
+	// Variable holding the last tracks
 	this.tracks = null;
 	
+	// Hardcoded color map
 	this.colorMap = 	['#0e0', '#9f0', '#ff0', '#f90', '#f00'];
 
-	//initialize the legend values
+	// Initialize the legend values
 	this.phenomenons = ["Speed", "Rpm", "Consumption", "CO2", "MAF", "Calculated MAF", "Engine Load", "Intake Pressure", "Intake Temperature"];
 	this.phenomenonsDE = ["Geschwindigkeit", "Upm", "Verbrauch", "C02", "MAF", "Ber. MAF", "Last", "Ansaugdruck", "Ansaugtemperatur"];
 	this.phenomenonUnits = ['km/h', 'u/min', 'l/h', 'kg/h', 'l/s', 'g/s', '%', 'kPa', '°C'];
 
+	// Interval values for the phenomenons
 	this.SpeedValues = 	[0,		30, 	60, 	90, 	120];
 	this.RpmValues = 	[0, 	750, 	1500, 	2250, 	3000];
 	this.ConsumValues = [0,		4,		8,		13,		16],
@@ -199,16 +203,19 @@ var map = new function() {
 	this.PressValues = 	[0, 	25, 	50, 	75, 	100];
 	this.TempValues = 	[0, 	10, 	20, 	30, 	40];
 
+	// Selected phenomenon attributes
 	this.selectedPhenomenon;
 	this.selectedPhenomenonUnit;
 
 	this.selectedPhenomenonValues;
 	
+	// Variable if a boxplot will be loaded
 	this.resultBoxplot = false;
 
 	// Initialization of map
 	this.init = function() {
-		//creating the map
+
+		// Creating the map
 		map.mapLeaflet = L.map('map', {
 			zoomControl: false,
 		}).setView([51.963491, 7.625840], 14);
@@ -216,7 +223,7 @@ var map = new function() {
 		this.LayerGroup = new L.LayerGroup();
 		this.LayerGroup.addTo(map.mapLeaflet);
 		
-		//initialize pan-, zoomslider-, locate and mousePosition-Control
+		// Initialize pan-, zoomslider-, locate and mousePosition-Control
 		L.control.pan().addTo(map.mapLeaflet);
 		L.control.zoomslider().addTo(map.mapLeaflet);
 		L.control.locate().addTo(map.mapLeaflet);
@@ -249,28 +256,32 @@ var map = new function() {
 			db.loadInitSpaceTracks();
 		}
 
+		// Map click event
 		map.mapLeaflet.on('click', map.onMapClick);
 	};
 
 	// Load the layer control
 	this.loadLayers = function() {
-		//Creating openStreetMap layer
+		// Creating openStreetMap layer
 		var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		});
-		//creating topographic map of NRW
+
+		// Creating topographic map of NRW
 		var NRWgeoWMS = L.tileLayer.wms("http://www.wms.nrw.de/geobasis/wms_nw_dtk10",{
 			layers: 'nw_dtk10_col',
 			minZoom: 14,
 			format: 'image/png'
 		});
-		//creating the two Googlebaselayer
+
+		// Creating the two Googlebaselayer
 		var ggl = new L.Google();
 		var ggl2 = new L.Google('TERRAIN');
 		
 		map.mapLeaflet.addLayer(osm);
-		//creating Baselayer-chooser
+
+		// Creating Baselayer-chooser
 		map.mapLeaflet.addControl(new L.Control.Layers( {'OpenStreetMap':osm, 'Google Satellit':ggl, 'Google Geländekarte':ggl2, 'Topografische Karte':NRWgeoWMS}, {}));
 
 	};
@@ -286,7 +297,8 @@ var map = new function() {
 
 	// Load the sidebar control
 	this.loadSidebar = function() {
-		//initialize the sidebar
+		
+		// Initialize the sidebar
 		map.sidebar = L.control.sidebar('sidebar', {
 			position: 'right'
 		});
@@ -301,6 +313,7 @@ var map = new function() {
 
 		legend.onAdd = function (Lmap) {
 
+			// Add the phenomenon option control
 		    var div = L.DomUtil.create('div', 'info legend');
 		        div.id = "legend";
 		        div.innerHTML += '<select id="select_phenomenon">' +
@@ -320,9 +333,11 @@ var map = new function() {
 		};
 
 		legend.addTo(map.mapLeaflet);
+
+		// Set the intervals and unit
 		map.setLegend();
 
-		//Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
+		// Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
 		document.getElementById("legend").onmouseover = function(e) {
 		    map.mapLeaflet.dragging.disable();
 			map.mapLeaflet.touchZoom.disable();
@@ -340,10 +355,12 @@ var map = new function() {
 			map.mapLeaflet.keyboard.enable();
 		};
 
+		// Phenomenon changed
 		$( "#select_phenomenon" ).change(function() {
 
 			map.selectedPhenomenon = $("#select_phenomenon").val();
 
+			// Set selected phenomenon values
 			if (map.selectedPhenomenon == map.phenomenons[0]) {
 				map.selectedPhenomenonValues = map.SpeedValues;
 				map.selectedPhenomenonUnit = map.phenomenonUnits[0];
@@ -381,8 +398,10 @@ var map = new function() {
 				map.selectedPhenomenonUnit = map.phenomenonUnits[8];
 			}
 
+			// Reload the legend intervals and units
 			map.setLegend();
 
+			// Apply the intervals and colors on the tracks
 			for (var i = 0; i < map.LayerGroup.getLayers().length; i++) {
 				map.LayerGroup.getLayers()[i].setStyle(function (feature) {
 
@@ -424,7 +443,8 @@ var map = new function() {
 				featureGroup: drawnItems
 			}
 		});
-		//translate button layout and tooltips
+
+		// Translate button layout and tooltips
 		L.drawLocal.draw.toolbar.buttons.polygon = 'Polygon zeichnen';
 		L.drawLocal.draw.toolbar.buttons.rectangle = 'Rechteck zeichnen';
 		L.drawLocal.draw.toolbar.actions.text = 'Abbrechen';
@@ -447,13 +467,15 @@ var map = new function() {
 		L.drawLocal.edit.handlers.edit.tooltip.text = 'Ziehen Sie die Marker um die Zeichnung zu bearbeiten';
 		L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Drücken Sie auf Abbrechen um die Änderungen zu verwerfen';
 		map.mapLeaflet.addControl(drawControl);
-		//chaning deletestart behavior of the DrawControl
+
+		// Chaning deletestart behavior of the DrawControl
 		map.mapLeaflet.on('draw:deletestart', function (e) {
 			$("#filter_btn").fadeOut();
 			drawnItems.clearLayers();
 			filter.filterPolygon=[];
 		});
-		//chaning created behavior of the DrawControl
+
+		// Chaning created behavior of the DrawControl
 		map.mapLeaflet.on('draw:created', function (e) {
 			$("#filter_btn").fadeIn();
 			drawnItems.clearLayers();
@@ -472,7 +494,8 @@ var map = new function() {
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'0px'});
 		});
-		//chaning edited behavior of the DrawControl
+
+		// Chaning edited behavior of the DrawControl
 		map.mapLeaflet.on('draw:edited', function (e) {
 			var layers = e.layers;
 			var countOfEditedLayers = 0;
@@ -484,7 +507,8 @@ var map = new function() {
 			console.log("Edited " + countOfEditedLayers + " layers");
 			$(".leaflet-draw-edit-remove").animate({marginLeft:'0px'});
 		});
-		//setting the drawingOption to meet our Webdesign
+
+		// Setting the drawingOption to meet our Webdesign
 		drawControl.setDrawingOptions({
 			rectangle: {
 				shapeOptions: {
@@ -502,14 +526,16 @@ var map = new function() {
 				allowIntersection: false,
 			}
 		});	
-		//changing the position of the toolbar
+
+		// Changing the position of the toolbar
 		$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
 		$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
 		$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
 		$("#draw_buttons").append($(".leaflet-draw-edit-remove"))
 		$("#draw_buttons").append($(".leaflet-draw-actions"));
 		$("#draw_buttons").append($(".leaflet-draw-actions"));
-		//adding some moving behavior for the toolbar buttons
+
+		// Adding some moving behavior for the toolbar buttons
 		$(".leaflet-draw-draw-polygon").click(function(){
 			$(".leaflet-draw-draw-rectangle").animate({marginLeft:'98px'});
 			$(".leaflet-draw-edit-edit").animate({marginLeft:'0px'});
@@ -536,9 +562,10 @@ var map = new function() {
 	// Map click event function
 	this.onMapClick = function(e) {
 		
-		//if the sidebar is open it's gonna close now
+		// If the sidebar is open it's gonna close now
 		map.sidebar.hide();
-		//if there is a highlighted Point, it will be unHighlighted
+		
+		// If there is a highlighted Point, it will be unHighlighted
 		if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != ""){
              map.unHighlightPoint(map.oldselectedPoint);
         }
@@ -611,12 +638,12 @@ var map = new function() {
 				onEachFeature: function (feature, layer) {
 					layer.on('click', function (e) {
 						
-						//highlighting the clicked point
+						// Highlighting the clicked point
 						if (map.oldselectedPoint != undefined && map.oldselectedPoint != null && map.oldselectedPoint != "")
                         {
                             map.unHighlightPoint(map.oldselectedPoint);
                         }
-                        //highlighting the clicked point
+                        // Highlighting the clicked point
                         selectedPoint = e.target;
 						map.highlightPoint(selectedPoint);
                         
@@ -625,7 +652,8 @@ var map = new function() {
 						var d = new Date(Date.parse(feature.properties.time));
 
 						var car = map.getCar(feature.properties.trackID);
-						//setting the sphenomenon to display in the sidebar
+						
+						// Setting the sphenomenon to display in the sidebar
 						var sphenomenon = "<h3>Attribute</h3>" +
 							"<table width=100%>" +
 							"<tr><td>ID</td><td>" + feature.properties.id + "</td></tr>" + 
@@ -660,12 +688,13 @@ var map = new function() {
 							}
 						};
 						
-						sphenomenon += "</table><hr>" + //index + 
+						sphenomenon += "</table><hr>" + // index + 
 						"<button id=show_Track>Fahrt zu diesem Punkt anzeigen</button><br>" +
 						"<button id=show_Stat>Statistik zur ausgewählten Fahrt anzeigen</button>";
 						
 						map.sidebar.setContent(sphenomenon);
-						// show track
+						
+						// Show track
 						$("#show_Track").click(function() {
 							page.toggleLoadingOverlay(true);
 							map.sidebar.hide();
@@ -682,15 +711,17 @@ var map = new function() {
 								);
 						});
 						
-						// show statistic
+						// Show statistic
 						$("#show_Stat").click(function() {
 							map.resultBoxplot = true;
 							page.load("result");
 							map.showBoxplot(feature.properties.trackID);
 						});
+
 						map.sidebar.show(feature.geometry.coordinates[1],feature.geometry.coordinates[0]);
 					});
-				//highlighting or unhighlighting s point by mouseover/mouseout
+
+				// Highlighting or unhighlighting s point by mouseover/mouseout
 				layer.on('mouseover', function (e) {
 					map.highlightPoint(e.target);
 				});
@@ -787,14 +818,19 @@ var map = new function() {
 	
 	// Load and show the calculated image
 	this.showBoxplot = function(trackID) {
+		
 		page.toggleLoadingOverlay(true);
+		
 		var json_track;
+		
 		for (var i = 0; i < map.tracks.length; i++) {
 			if(map.tracks[i].properties.id==trackID)
 				json_track = {tracks:[map.tracks[i]]};
 		}
+		
 		if(json_track != null && json_track != undefined){
-			// !!! Analyse-TEST !!!
+			
+			// Load the boxplot
 			var url = 'cgi-bin/Rcgi/boxplot';
 			$.ajax({ 
 				type: "POST",
@@ -803,12 +839,15 @@ var map = new function() {
 			    data : JSON.stringify(json_track),
 			    processData : false,
 			}).done(function(data){
+
+				// Add the image to the document
 			    var img = '<img src="img/r/' + data.toString() + '"></img>';
 			    $("#result_page").append(img);
+
+			    // Remove overlay
 			    page.toggleLoadingOverlay(false);
 			}); 
 		}
-
 
 	};
 
@@ -825,7 +864,8 @@ var filter = new function() {
 	// Filter variables
 	this.filterPolygon = new Array();
 	this.weekArray;
-	//creating the polygon for the drawn spatial filter
+
+	// Creating the polygon for the drawn spatial filter
 	this.createDrawPolygon = function(latLngs){
 		for(var i=0; i < latLngs.length; i++){
 			var latLngString = latLngs[i].toString();
@@ -866,6 +906,7 @@ var filter = new function() {
 		var startDateTextBox = $('#from_dt');
 		var endDateTextBox = $('#to_dt');
 
+		// Datetimepicker and selection logic
 		startDateTextBox.datetimepicker({
 			onClose: function(dateText, inst) {
 				if (endDateTextBox.val() != '') {
@@ -882,6 +923,8 @@ var filter = new function() {
 				endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
 			}
 		});
+
+		// Datetimepicker and selection logic
 		endDateTextBox.datetimepicker({
 			onClose: function(dateText, inst) {
 				if (startDateTextBox.val() != '') {
@@ -912,10 +955,11 @@ var filter = new function() {
 		enddate.setMinutes(59);
 		enddate.setSeconds(59);
 
+		// Set start and end date preselection
 		$( "#from_dt" ).datetimepicker('setDate', startdate);
 		$( "#to_dt" ).datetimepicker('setDate', enddate);
 
-		//setting the locigal workflow for the buttons ins the filterpanel
+		// Setting the locigal workflow for the buttons ins the filterpanel
 		$("#timeFilterCheck").click(function(){
 			$("#filter_btn").fadeIn();
 			if($(this).is(':checked')){
@@ -928,6 +972,7 @@ var filter = new function() {
 				}
 			}
 		});
+
 		var oldPolygon;
 		$("#spacialFilterCheck").click(function(){
 			
@@ -1018,7 +1063,8 @@ var analyse = new function() {
 
 	// Initialization
 	this.init = function() {
-		//setting the locigal workflow for the buttons in the analysepanel
+		
+		// Setting the locigal workflow for the buttons in the analysepanel
 		$("#results_btn").click(function() {
 			page.load("result");
 		});
@@ -1056,6 +1102,7 @@ var analyse = new function() {
 			}
 		});				
 		
+		// Assure that only number can be entered
 		$('.numbersOnly').keyup(function () {
 		    if (this.value != this.value.replace(/[^0-9]/g, '')) {
 		       this.value = this.value.replace(/[^0-9]/g, '');
@@ -1099,7 +1146,7 @@ var analyse = new function() {
 
 		var json = analyse.getValues();
 
-		// !!! Analyse-TEST !!!
+		// Load the raster plot
 		var url = 'cgi-bin/Rcgi/aggregation';
 			$.ajax({ 
 				type: "POST",
@@ -1108,8 +1155,12 @@ var analyse = new function() {
 			    data : JSON.stringify(json),
 			    processData : false,
 			}).done(function(data){
+
+				// Add the image to the document
 			    var img = '<img id="result_img" src="img/r/' + data + '"></img>';
 			    $("#result_page").append(img);
+
+			    // Remove overlay
 			    page.toggleLoadingOverlay(false);
 			}); 
 	};
