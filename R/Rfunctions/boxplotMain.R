@@ -1,4 +1,3 @@
-
 ###
 #
 # Description: Function that creates a plot containing boxplots of
@@ -28,11 +27,11 @@ boxplotMain <- function(layerJSON){
     # Get the track from the list
     track <- layerJSON$tracks
     
-    # Get number of measurement points
-    nmbrOfPoints <- length(track$features)
-    
     # Check if track is populated with measurement points
     if (length(track$features) > 0){
+      
+      # Get number of measurement points
+      nmbrOfPoints <- length(track$features)
       
       # Get track-ID and model + manufacturer of the car
       # to be used in the plot.
